@@ -126,16 +126,16 @@ export function Modal({ open, onClose, title, children, footer, size = "md", des
       closeMs={220}
       initialFocus={initialFocus}
       className={cn(
-        "m-auto max-h-[calc(100dvh-32px)] w-[calc(100%-32px)] rounded-control bg-raised shadow-xl",
+        "m-auto max-h-[calc(100dvh-32px)] w-[calc(100%-32px)] rounded-none bg-mount shadow-xl",
         size === "lg" ? "max-w-[720px]" : "max-w-[560px]",
-        "data-[phase=open]:animate-rise-in data-[phase=closing]:translate-y-2 data-[phase=closing]:opacity-0 transition-[opacity,transform] duration-[220ms] ease-[var(--ease-instrument)]",
+        "data-[phase=open]:animate-panel-in data-[phase=closing]:translate-y-2.5 data-[phase=closing]:opacity-0 transition-[opacity,transform] duration-[300ms] ease-[var(--ease-hang)]",
         className,
       )}
     >
       <div className="flex max-h-[calc(100dvh-32px)] flex-col">
         <div className="flex items-start justify-between gap-4 px-6 pt-6 sm:px-8 sm:pt-8">
           <div className="min-w-0">
-            <h2 id={titleId} className="text-step-2 font-semibold leading-[1.12] text-ink">
+            <h2 id={titleId} className="font-display text-step-2 font-medium leading-[1.2] text-ink">
               {title}
             </h2>
             {description ? <p className="mt-2 text-ink-muted">{description}</p> : null}
@@ -173,7 +173,7 @@ export function Sheet({ open, onClose, side, label, labelledBy, children, classN
     side === "right"
       ? "ml-auto mr-0 h-dvh max-h-none w-full max-w-[420px] shadow-panel data-[phase=open]:animate-sheet-in-right data-[phase=closing]:animate-sheet-out-right"
       : side === "left"
-        ? "ml-0 mr-auto h-dvh max-h-none w-[min(100%,400px)] max-w-none shadow-panel-left data-[phase=open]:animate-fade-in data-[phase=closing]:opacity-0"
+        ? "ml-0 mr-auto h-dvh max-h-none w-[min(100%,400px)] max-w-none shadow-panel-left data-[phase=open]:animate-sheet-in-left data-[phase=closing]:animate-sheet-out-left"
         : side === "bottom"
           ? "mb-0 mt-auto h-dvh max-h-none w-full max-w-none shadow-xl data-[phase=open]:animate-sheet-in-bottom data-[phase=closing]:animate-sheet-out-bottom"
           : "mt-0 mb-auto w-full max-w-none max-h-[80vh] shadow-lg data-[phase=open]:animate-panel-in data-[phase=closing]:-translate-y-1.5 data-[phase=closing]:opacity-0";
@@ -187,7 +187,7 @@ export function Sheet({ open, onClose, side, label, labelledBy, children, classN
       initialFocus={initialFocus}
       dataAttrs={motion ? { "data-motion": motion } : undefined}
       className={cn(
-        "inset-y-0 bg-raised transition-[opacity,transform] duration-[220ms] ease-[var(--ease-instrument)]",
+        "inset-y-0 bg-mount transition-[opacity,transform] duration-[300ms] ease-[var(--ease-hang)]",
         sideClass,
         className,
       )}

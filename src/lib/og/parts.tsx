@@ -11,58 +11,145 @@ export async function ogResponse(element: ReactElement, cacheSeconds = 86400) {
   });
 }
 
+export function Mark({ size }: { size: number }) {
+  const u = size / 512;
+  return (
+    <div style={{ display: "flex", position: "relative", width: size, height: size, background: P.accent }}>
+      <div style={{ position: "absolute", left: 48 * u, top: 141 * u, width: 416 * u, height: 14 * u, background: P.onAccent }} />
+      <div style={{ position: "absolute", left: 138 * u, top: 115 * u, width: 14 * u, height: 26 * u, background: P.onAccent }} />
+      <div style={{ position: "absolute", left: 360 * u, top: 115 * u, width: 14 * u, height: 26 * u, background: P.onAccent }} />
+      <div style={{ position: "absolute", left: 150 * u, top: 335 * u, width: 212 * u, height: 32 * u, background: P.onAccent }} />
+      <div style={{ position: "absolute", left: 186 * u, top: 381 * u, width: 140 * u, height: 16 * u, background: P.onAccent }} />
+      <div
+        style={{
+          position: "absolute",
+          left: 145 * u,
+          top: 155 * u,
+          width: 14 * u,
+          height: 215 * u,
+          background: P.onAccent,
+          transform: `rotate(-31.6deg)`,
+          transformOrigin: "top left",
+        }}
+      />
+      <div
+        style={{
+          position: "absolute",
+          left: 367 * u,
+          top: 155 * u,
+          width: 14 * u,
+          height: 215 * u,
+          background: P.onAccent,
+          transform: `rotate(31.6deg)`,
+          transformOrigin: "top right",
+        }}
+      />
+    </div>
+  );
+}
+
 export function Wordmark({ size, color = P.ink }: { size: number; color?: string }) {
-  const square = Math.round(size * 0.105);
   return (
-    <div style={{ display: "flex", alignItems: "flex-end", fontFamily: "Sofia Sans Condensed", fontWeight: 700, fontSize: size, lineHeight: 1, letterSpacing: -size * 0.01, color }}>
-      <span>Pat</span>
-      <span style={{ display: "flex", position: "relative" }}>
-        <span>{"ı"}</span>
-        <span style={{ position: "absolute", left: "50%", top: size * 0.06, width: square, height: square, marginLeft: -square / 2, background: P.accent }} />
-      </span>
-      <span>naskins</span>
+    <div style={{ display: "flex", flexDirection: "column", alignItems: "flex-start" }}>
+      <div style={{ display: "flex", width: size * 6.4, height: Math.max(1, size * 0.02), background: P.accent, marginBottom: size * 0.26 }} />
+      <div style={{ display: "flex", fontFamily: "Newsreader", fontWeight: 500, fontSize: size * 1.5, lineHeight: 1, letterSpacing: -size * 0.0075, color }}>Veltskins</div>
     </div>
   );
 }
 
-export function Stage({ src, width, height }: { src: string | null; width: number; height: number }) {
-  const inset = Math.round(width * 0.12);
+export function Lockup({ size }: { size: number }) {
   return (
-    <div
-      style={{
-        display: "flex",
-        position: "relative",
-        width,
-        height,
-        background: P.stage,
-        backgroundImage: `radial-gradient(ellipse 70% 62% at 50% 0%, ${P.lampPool}, transparent 72%)`,
-        borderRadius: 4,
-        overflow: "hidden",
-      }}
-    >
-      <div style={{ position: "absolute", top: 0, left: inset, right: inset, height: 1, background: P.lampLine }} />
-      <div style={{ position: "absolute", left: "18%", right: "18%", bottom: "8%", height: 12, borderRadius: "50%", background: P.contact, filter: "blur(6px)" }} />
-      {src ? (
-        <img src={src} alt="" style={{ position: "absolute", left: "9%", top: "12%", width: "82%", height: "72%", objectFit: "contain" }} />
+    <div style={{ display: "flex", alignItems: "center", gap: size * 0.6 }}>
+      <Mark size={size * 2.4} />
+      <Wordmark size={size} />
+    </div>
+  );
+}
+
+export function Rail({ width, hooks = 2 }: { width: number; hooks?: number }) {
+  return (
+    <div style={{ display: "flex", position: "relative", width, height: 8 }}>
+      <div style={{ position: "absolute", left: 0, right: 0, bottom: 0, height: 1, background: P.rail }} />
+      {Array.from({ length: hooks }, (_, i) => ((i + 0.5) / hooks) * width).map((left) => (
+        <div key={left} style={{ position: "absolute", left, bottom: 0, width: 2, height: 7, background: P.rail }} />
+      ))}
+    </div>
+  );
+}
+
+export function HungLot({
+  src,
+  width,
+  height,
+  label,
+  spot = true,
+}: {
+  src: string | null;
+  width: number;
+  height: number;
+  label?: { lot?: string | null; weapon?: string | null; name?: string | null; condition?: string | null; classification?: string | null; rarity?: string };
+  spot?: boolean;
+}) {
+  return (
+    <div style={{ display: "flex", flexDirection: "column", width }}>
+      <Rail width={width} hooks={1} />
+      <div style={{ display: "flex", width: 1, height: 26, background: P.rule, marginLeft: width * 0.5 - 0.5 }} />
+      <div style={{ display: "flex", position: "relative", width, height }}>
+        {spot ? (
+          <div style={{ position: "absolute", inset: 0, backgroundImage: `radial-gradient(ellipse 76% 64% at 32% 8%, ${P.spot}, transparent 70%)` }} />
+        ) : null}
+        <div style={{ position: "absolute", left: "12%", bottom: "4%", width: "62%", height: 14, borderRadius: "50%", background: P.contact, filter: "blur(7px)" }} />
+        {src ? <img src={src} alt="" style={{ position: "absolute", left: "8%", top: "10%", width: "84%", height: "72%", objectFit: "contain" }} /> : null}
+      </div>
+      {label ? (
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            width: width * 0.84,
+            marginTop: 16,
+            background: P.mount,
+            borderLeft: `1px solid ${P.line}`,
+            borderRight: `1px solid ${P.line}`,
+            borderBottom: `1px solid ${P.line}`,
+            borderTop: `2px solid ${label.rarity ?? P.rule}`,
+            padding: "14px 16px 16px",
+          }}
+        >
+          {label.lot ? (
+            <div style={{ display: "flex", fontFamily: "Azeret Mono", fontWeight: 500, fontSize: 13, letterSpacing: 1.3, textTransform: "uppercase", color: P.inkFaint }}>{label.lot}</div>
+          ) : null}
+          {label.weapon ? (
+            <div style={{ display: "flex", marginTop: 10, fontFamily: "Azeret Mono", fontWeight: 500, fontSize: 13, letterSpacing: 1.3, textTransform: "uppercase", color: P.inkMuted }}>
+              {label.weapon}
+            </div>
+          ) : null}
+          {label.name ? (
+            <div style={{ display: "block", marginTop: 8, fontFamily: "Newsreader", fontWeight: 500, fontSize: 28, lineHeight: 1.2, color: P.ink, lineClamp: 2, overflow: "hidden" }}>
+              {label.name}
+            </div>
+          ) : null}
+          {label.condition ? (
+            <div style={{ display: "flex", marginTop: 10, fontFamily: "Instrument Sans", fontSize: 18, color: P.ink }}>{label.condition}</div>
+          ) : null}
+          {label.classification ? (
+            <div
+              style={{
+                display: "flex",
+                marginTop: 10,
+                fontFamily: "Azeret Mono",
+                fontWeight: 500,
+                fontSize: 13,
+                letterSpacing: 1.3,
+                textTransform: "uppercase",
+                color: label.rarity ?? P.inkMuted,
+              }}
+            >
+              {label.classification}
+            </div>
+          ) : null}
+        </div>
       ) : null}
-    </div>
-  );
-}
-
-export function Ruler({ width, lit = "FT" }: { width: number; lit?: "FN" | "MW" | "FT" | "WW" | "BS" }) {
-  const zones: Record<string, [number, number]> = { FN: [0, 0.07], MW: [0.07, 0.15], FT: [0.15, 0.38], WW: [0.38, 0.45], BS: [0.45, 1] };
-  const majors = [0, 0.07, 0.15, 0.38, 0.45, 1];
-  const [a, b] = zones[lit];
-  return (
-    <div style={{ display: "flex", position: "relative", width, height: 20 }}>
-      <div style={{ position: "absolute", left: a * width, width: (b - a) * width, bottom: 1, height: 6, background: P.ink }} />
-      {Array.from({ length: 21 }, (_, i) => i * 0.05).map((v) => (
-        <div key={v} style={{ position: "absolute", left: v * width, bottom: 1, width: 1, height: 7, background: P.rule }} />
-      ))}
-      {majors.map((v) => (
-        <div key={v} style={{ position: "absolute", left: Math.min(width - 1, v * width), bottom: 1, width: 1, height: 14, background: P.ink }} />
-      ))}
-      <div style={{ position: "absolute", left: 0, right: 0, bottom: 0, height: 1, background: P.rule }} />
     </div>
   );
 }

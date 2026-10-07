@@ -4,7 +4,7 @@ import { useState, useTransition } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useTranslations } from "next-intl";
-import { SlidersHorizontal } from "lucide-react";
+import { ListFilter as ListFilterIcon } from "lucide-react";
 import { cn } from "@/lib/utils/cn";
 import { Button } from "@/components/ui/Button";
 import { Pagination } from "@/components/ui/Pagination";
@@ -13,9 +13,9 @@ import { EmptyState } from "@/components/shared/EmptyState/EmptyState";
 import { ProductGrid } from "@/components/product/ProductGrid/ProductGrid";
 import { ProductSort, CATALOG_SORTS } from "@/components/product/ProductSort/ProductSort";
 import { FilterSummary, ProductFilters, ProductFiltersSheet, useDisplayPrice, type FilterSelection } from "@/components/product/ProductFilters/ProductFilters";
-import type { SkinProduct } from "@/components/skin/SkinTray";
+import type { SkinProduct } from "@/components/skin/Lot";
 import { raritySlug } from "@/lib/skins/cs2";
-import { CATALOG_PAGE_SIZE, LIST_FILTERS, buildCatalogHref, clearedParams, hasActiveFilters, type CatalogFacets, type CatalogParams, type ListFilter, type SortKey } from "./catalog-url";
+import { CATALOG_DEFAULT_SORT, CATALOG_PAGE_SIZE, LIST_FILTERS, buildCatalogHref, clearedParams, hasActiveFilters, type CatalogFacets, type CatalogParams, type ListFilter, type SortKey } from "./catalog-url";
 
 export interface CatalogBrowserProps {
   basePath: string;
@@ -40,7 +40,7 @@ const QUALITY_CHIP: Record<string, string> = { stattrak: "StatTrak™", souvenir
 export function CatalogBrowser({
   basePath,
   fixed,
-  defaultSort = "newest",
+  defaultSort = CATALOG_DEFAULT_SORT,
   sortOptions = CATALOG_SORTS,
   params,
   products,
@@ -101,7 +101,11 @@ export function CatalogBrowser({
     });
   }
 
-  const parts = [contextLabel].filter((p): p is string => Boolean(p));
+  const sentenceFacets: ListFilter[] = ["types", "weapons", "exteriors", "rarities", "qualities"];
+  const facetWords = sentenceFacets.flatMap((filter) =>
+    params[filter].map((key) => (filter === "qualities" ? QUALITY_CHIP[key] ?? key : facets[filter].find((o) => o.key === key)?.label ?? key)),
+  );
+  const parts = [contextLabel, ...facetWords, priceLabel].filter((p): p is string => Boolean(p));
   const selection: FilterSelection = {
     brand: params.brand,
     minPrice: params.minPrice,
@@ -135,7 +139,7 @@ export function CatalogBrowser({
   const filters = <ProductFilters facets={facets} selection={selection} onChange={(next) => apply(next)} />;
 
   return (
-    <div data-catalog="" className="lg:grid lg:grid-cols-[288px_minmax(0,1fr)] lg:items-start lg:gap-10">
+    <div data-catalog="" className="lg:grid lg:grid-cols-[272px_minmax(0,1fr)] lg:items-start lg:gap-10">
       <aside
         aria-label="Filters"
         className="hidden lg:sticky lg:top-[calc(var(--header-height-compact)+16px)] lg:block lg:max-h-[calc(100dvh-var(--header-height-compact)-32px)] lg:overflow-y-auto lg:pb-6 lg:pr-1"
@@ -151,9 +155,9 @@ export function CatalogBrowser({
           data-catalog-toolbar=""
           className="sticky top-[var(--header-height-mobile)] z-30 -mx-gutter flex items-center justify-between gap-3 border-b border-line bg-surface px-gutter py-2 lg:hidden"
         >
-          <Button variant="outline" size="sm" onPress={() => setSheetOpen(true)} startContent={<SlidersHorizontal size={16} aria-hidden="true" />}>
+          <Button variant="outline" size="sm" onPress={() => setSheetOpen(true)} startContent={<ListFilterIcon size={16} aria-hidden="true" />}>
             Filter
-            {filterCount > 0 ? <span className="font-mono text-[0.75rem] normal-case tracking-normal">{filterCount}</span> : null}
+            {filterCount > 0 ? <span className="font-mono text-data-sm normal-case tracking-normal">{filterCount}</span> : null}
           </Button>
           <ProductSort value={params.sort} options={sortOptions} onChange={(sort) => apply({ sort })} />
         </div>
@@ -167,7 +171,7 @@ export function CatalogBrowser({
           {pending ? t("updating") : ""}
         </span>
 
-        <div aria-busy={pending || undefined} className={cn("transition-opacity duration-[140ms]", pending && "opacity-50")}>
+        <div aria-busy={pending || undefined} className={cn("transition-opacity duration-[120ms]", pending && "opacity-50")}>
           {total === 0 ? (
             filtering ? (
               <EmptyState title={t("emptyFiltersTitle")} subtitle={suggestions.length ? "Loosen one filter to widen the results." : t("emptyFiltersBody")}>
@@ -178,7 +182,7 @@ export function CatalogBrowser({
                         <button
                           type="button"
                           onClick={() => apply({ [s.filter]: [] } as Partial<CatalogParams>)}
-                          className="min-h-10 cursor-pointer text-ui-md font-semibold text-ink decoration-1 underline-offset-4 hover-device:hover:underline"
+                          className="min-h-10 cursor-pointer text-ui-md font-medium text-ink decoration-1 underline-offset-[5px] hover-device:hover:underline"
                         >
                           Remove {s.label} to see <span className="font-mono text-data">{s.gain.toLocaleString("en-GB")}</span> more
                         </button>
@@ -200,7 +204,7 @@ export function CatalogBrowser({
                   <ul className="m-0 flex list-none flex-wrap justify-center gap-x-6 gap-y-2 p-0">
                     {related.map((r) => (
                       <li key={r.href}>
-                        <Link href={r.href} className="text-ui-md font-semibold text-ink decoration-1 underline-offset-4 hover-device:hover:underline">
+                        <Link href={r.href} className="text-ui-md font-medium text-ink decoration-1 underline-offset-[5px] hover-device:hover:underline">
                           {r.name}
                         </Link>
                       </li>
@@ -212,7 +216,7 @@ export function CatalogBrowser({
           ) : (
             <>
               <ProductGrid products={products} priorityCount={2} />
-              <Pagination page={page} totalPages={totalPages} hrefForPage={(p) => buildCatalogHref(basePath, params, { page: p }, hrefOpts)} className="mt-14 pb-4" />
+              <Pagination page={page} totalPages={totalPages} hrefForPage={(p) => buildCatalogHref(basePath, params, { page: p }, hrefOpts)} className="mt-16 pb-4" />
               {totalPages > 1 ? (
                 <p className="m-0 mt-2 text-center font-mono text-data text-ink-muted">
                   {t("showingRange", { from: ((page - 1) * CATALOG_PAGE_SIZE + 1).toLocaleString("en-GB"), to: Math.min(page * CATALOG_PAGE_SIZE, total).toLocaleString("en-GB"), total: total.toLocaleString("en-GB") })}

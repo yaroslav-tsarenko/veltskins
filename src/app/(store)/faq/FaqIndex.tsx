@@ -46,7 +46,7 @@ export function FaqIndex({ label, groups }: { label: string; groups: { id: strin
                 aria-current={isActive ? "true" : undefined}
                 onClick={() => setActive(group.id)}
                 className={cn(
-                  "relative flex min-h-11 items-center whitespace-nowrap text-ui-md transition-colors duration-[140ms] lg:py-2 lg:pl-4",
+                  "relative flex min-h-11 items-center whitespace-nowrap text-ui-md transition-colors duration-[120ms] lg:py-2 lg:pl-4",
                   isActive ? "font-semibold text-ink" : "text-ink-muted hover-device:hover:text-ink",
                 )}
               >

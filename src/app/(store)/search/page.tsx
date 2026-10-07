@@ -47,7 +47,7 @@ export default async function SearchPage({ searchParams }: SearchPageProps) {
       </div>
 
       <header className="pb-8">
-        <h1 className="m-0 flex flex-wrap items-baseline gap-x-4 gap-y-1 text-step-5 font-[650] leading-none tracking-[-0.01em] text-ink [overflow-wrap:anywhere]">
+        <h1 className="m-0 flex flex-wrap items-baseline gap-x-4 gap-y-1 text-step-5 font-medium leading-none tracking-[-0.01em] text-ink [overflow-wrap:anywhere]">
           {searchable ? t("queryHeading", { query }) : t("searchTitle")}
           {result ? <span className="font-mono text-data font-normal tracking-normal text-ink-muted">{result.scopeTotal.toLocaleString("en-GB")}</span> : null}
         </h1>
@@ -58,9 +58,9 @@ export default async function SearchPage({ searchParams }: SearchPageProps) {
               .slice(0, 8)
               .map((w) => (
                 <li key={w.key}>
-                  <a href={`/search?q=${encodeURIComponent(query)}&weapon=${w.key}`} className="inline-flex min-h-9 items-baseline gap-1.5 font-display text-[0.9375rem] font-semibold text-ink decoration-1 underline-offset-4 hover-device:hover:underline">
+                  <a href={`/search?q=${encodeURIComponent(query)}&weapon=${w.key}`} className="inline-flex min-h-9 items-baseline gap-1.5 font-display text-[0.9375rem] font-medium text-ink decoration-1 underline-offset-[5px] hover-device:hover:underline">
                     {w.label}
-                    <span className="font-mono text-[0.75rem] font-normal text-ink-subtle">· {w.count}</span>
+                    <span className="font-mono text-data-sm font-normal text-ink-faint">· {w.count}</span>
                   </a>
                 </li>
               ))}

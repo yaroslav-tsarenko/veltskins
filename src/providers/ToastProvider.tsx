@@ -29,7 +29,7 @@ export function ToastProvider() {
         unstyled: true,
         classNames: {
           toast:
-            "group relative flex w-[min(380px,calc(100vw-32px))] items-start gap-3 border border-line bg-raised p-4 pr-11 font-sans text-ui-sm text-ink shadow-lg",
+            "group relative flex w-[min(380px,calc(100vw-32px))] items-start gap-3 border border-line bg-mount p-4 pr-11 font-sans text-ui-sm text-ink shadow-lg",
           title: "font-medium text-ink",
           description: "meta mt-0.5 text-ink-muted",
           icon: "mt-0.5 shrink-0",

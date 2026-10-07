@@ -14,7 +14,7 @@ const sections: PolicySection[] = [
     body: (
       <ul>
         <li>If we cannot deliver an item within {F.deliveryDeadlineHours} hours of payment confirmation, we refund the price you paid for it.</li>
-        <li>If Steam reverses the trade while the item is under trade protection, we refund the item.</li>
+        <li>If Steam reverses the trade while the item is under trade protection, we put the price of that item back on your card.</li>
         <li>You can cancel free of charge before {F.cancelBefore}.</li>
         <li>Once delivery has begun, the {F.withdrawalDays}-day right to cancel no longer applies, because you asked us at checkout to start delivery straight away.</li>
         <li>Refunds are made within {F.refundDays} days to {F.refundMethod}, in the currency you paid in.</li>
@@ -45,7 +45,7 @@ const sections: PolicySection[] = [
   },
   {
     id: "when-we-refund",
-    title: "When we refund",
+    title: "The cases we refund",
     body: (
       <>
         <ul>
@@ -53,11 +53,11 @@ const sections: PolicySection[] = [
           <li>The trade offer failed or expired before you could accept it, for a reason on our side.</li>
           <li>Steam reversed the trade while the item was under trade protection and the item left your inventory.</li>
           <li>The item delivered is not the item named in your order (a different market name, exterior or quality).</li>
-          <li>You cancelled before {F.cancelBefore}.</li>
+          <li>You maycelled before {F.cancelBefore}.</li>
         </ul>
         <p>
           If an offer cannot be completed because of the receiving Steam account, for example an invalid trade URL, a private inventory, a
-          trade ban or cooldown, or a Steam Guard restriction, we refund the item and tell you what to change before buying again.
+          trade ban or cooldown, or a Steam Guard restriction, we put the price of that item back on your card and tell you what to change before buying again.
         </p>
       </>
     ),
@@ -80,11 +80,11 @@ const sections: PolicySection[] = [
   },
   {
     id: "how-refunds",
-    title: "How refunds are paid",
+    title: "How the money comes back",
     body: (
       <>
         <p>
-          We refund within {F.refundDays} days of the day we confirm the refund to you. The money goes to {F.refundMethod}, in the currency you
+          The refund is made within {F.refundDays} days of the day we confirm the refund to you. The money goes to {F.refundMethod}, in the currency you
           paid in. Where an order had several items, we refund only the items affected. We do not charge a fee for refunds. Your bank may take
           a few further working days to show it on your statement.
         </p>
@@ -100,7 +100,7 @@ const sections: PolicySection[] = [
     title: "Asking about a refund",
     body: (
       <p>
-        Email {F.email} or use the <Link href="/contact">contact form</Link> with your order number. We reply {F.replyTime}. If you are not
+        Write to {F.email}, or use the <Link href="/contact">contact form</Link> with your order number. We reply {F.replyTime}. If you are not
         satisfied with our answer, see our <Link href="/policies/complaints">Complaints policy</Link>.
       </p>
     ),

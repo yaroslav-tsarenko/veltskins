@@ -1,8 +1,8 @@
 {
-  "siteDescription": "CS2 skins with exterior, rarity and price in plain view. Pay by card; we send the skin to your Steam account as a trade offer.",
+  "siteDescription": "A catalogue of Counter-Strike 2 skins with the condition, classification and price printed on every lot. Pay by card; we send the skin to your Steam account as a trade offer.",
   "ogFrom": "From {price}",
-  "ogItems": "{count, plural, one {# item} other {# items}}",
-  "ogShop": "Shop",
+  "ogItems": "{count, plural, one {# lot} other {# lots}}",
+  "ogShop": "Catalogue",
   "ogProductAlt": "{name} from {brand}",
   "ogCategoryAlt": "{name} at {brand}",
   "catalogTitle": "Counter-Strike 2 skins, knives and gloves",

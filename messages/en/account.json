@@ -3,10 +3,10 @@
     "overview": "Your account",
     "orders": "Your orders",
     "order": "Order details",
-    "saved": "Saved items",
+    "saved": "Marked lots",
     "addresses": "Your addresses",
     "profile": "Your details",
-    "description": "Your Patinaskins account: orders, Steam delivery, saved items and details.",
+    "description": "Your Veltskins account: purchases, Steam delivery, marked lots and your details.",
     "steam": "Steam account"
   },
   "nav": {
@@ -14,7 +14,7 @@
     "account": "Account",
     "overview": "Overview",
     "orders": "My purchases",
-    "saved": "Saved",
+    "saved": "Marked lots",
     "addresses": "Billing addresses",
     "profile": "Profile",
     "signOut": "Sign out",
@@ -40,12 +40,12 @@
     "welcomeTitle": "Your account is ready",
     "welcomeBody": "We've saved your billing address for checkout and sent a welcome email. Link your Steam account next.",
     "latestTitle": "Latest purchase",
-    "placed": "{date} · {count, plural, one {# item} other {# items}}",
+    "placed": "{date} · {count, plural, one {# lot} other {# lots}}",
     "view": "View",
     "allOrders": "See all {count} purchases",
     "noOrdersTitle": "No purchases yet",
-    "noOrdersBody": "When you buy a skin, you can follow its Steam delivery here.",
-    "browse": "Browse all skins",
+    "noOrdersBody": "When you buy a lot, you can follow its Steam delivery here.",
+    "browse": "Browse the catalogue",
     "linksTitle": "Your account",
     "links": {
       "steam": {
@@ -61,8 +61,8 @@
         "body": "Name, email, phone, date of birth and password"
       },
       "saved": {
-        "title": "Saved",
-        "body": "Skins you saved for later"
+        "title": "Marked lots",
+        "body": "Lots you marked to come back to"
       },
       "orders": {
         "title": "My purchases",
@@ -86,7 +86,7 @@
     "mobileMeta": "{date} · {count, plural, one {# item} other {# items}}",
     "emptyTitle": "No purchases yet",
     "emptyBody": "When you buy a skin, you can follow its Steam delivery here.",
-    "browse": "Browse all skins"
+    "browse": "Browse the catalogue"
   },
   "order": {
     "loading": "Loading the order",
@@ -122,10 +122,11 @@
     "liveUpdates": "This page updates while your items are being delivered."
   },
   "saved": {
-    "title": "Saved",
-    "emptyTitle": "Nothing saved yet",
-    "emptyBody": "Select Save on any skin to keep it here.",
-    "browse": "Browse skins"
+    "title": "Marked lots",
+    "lead": "Lots you've marked to come back to. Marking doesn't reserve a lot or hold its price.",
+    "emptyTitle": "Nothing marked yet",
+    "emptyBody": "Choose Mark on any lot to keep it here.",
+    "browse": "Browse the catalogue"
   },
   "addresses": {
     "title": "Billing addresses",

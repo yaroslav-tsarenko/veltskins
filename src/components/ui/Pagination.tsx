@@ -26,7 +26,7 @@ export interface PaginationProps {
 }
 
 const textLinkCls =
-  "inline-flex min-h-10 items-center gap-1.5 text-ui-sm font-semibold text-ink decoration-1 underline-offset-4 hover-device:hover:underline";
+  "inline-flex min-h-10 items-center gap-1.5 text-ui-sm font-medium text-ink decoration-1 underline-offset-[5px] hover-device:hover:underline";
 
 export function Pagination({ page, totalPages, onPageChange, hrefForPage, className }: PaginationProps) {
   if (totalPages <= 1) return null;
@@ -50,7 +50,7 @@ export function Pagination({ page, totalPages, onPageChange, hrefForPage, classN
     page > 1 ? (
       control(page - 1, (<><ChevronLeft size={16} aria-hidden="true" />Previous</>), { className: cn(textLinkCls, "cursor-pointer") })
     ) : (
-      <span className={cn(textLinkCls, "cursor-not-allowed text-ink-subtle no-underline")} aria-disabled="true">
+      <span className={cn(textLinkCls, "cursor-not-allowed text-ink-faint no-underline")} aria-disabled="true">
         <ChevronLeft size={16} aria-hidden="true" />
         Previous
       </span>
@@ -59,7 +59,7 @@ export function Pagination({ page, totalPages, onPageChange, hrefForPage, classN
     page < totalPages ? (
       control(page + 1, (<>Next<ChevronRight size={16} aria-hidden="true" /></>), { className: cn(textLinkCls, "cursor-pointer") })
     ) : (
-      <span className={cn(textLinkCls, "cursor-not-allowed text-ink-subtle no-underline")} aria-disabled="true">
+      <span className={cn(textLinkCls, "cursor-not-allowed text-ink-faint no-underline")} aria-disabled="true">
         Next
         <ChevronRight size={16} aria-hidden="true" />
       </span>
@@ -73,18 +73,18 @@ export function Pagination({ page, totalPages, onPageChange, hrefForPage, classN
           typeof token === "number" ? (
             <li key={token}>
               {token === page ? (
-                <span aria-current="page" className="relative flex size-10 items-center justify-center rounded-control font-mono text-data text-ink after:absolute after:inset-x-1 after:bottom-0 after:h-0.5 after:bg-brand">
+                <span aria-current="page" className="relative flex size-10 items-center justify-center rounded-control font-mono text-data text-ink after:absolute after:inset-x-0 after:bottom-0 after:h-0.5 after:bg-brand">
                   {token}
                 </span>
               ) : (
                 control(token, token, {
-                  className: "flex size-10 cursor-pointer items-center justify-center rounded-control font-mono text-data text-ink-muted transition-colors duration-[140ms] hover-device:hover:bg-raised hover-device:hover:text-ink",
+                  className: "flex size-10 cursor-pointer items-center justify-center rounded-control font-mono text-data text-ink-muted transition-colors duration-[120ms] hover-device:hover:bg-surface-1 hover-device:hover:text-ink",
                   label: `Page ${token}`,
                 })
               )}
             </li>
           ) : (
-            <li key={token} aria-hidden="true" className="flex size-10 items-center justify-center font-mono text-data text-ink-subtle">
+            <li key={token} aria-hidden="true" className="flex size-10 items-center justify-center font-mono text-data text-ink-faint">
               …
             </li>
           ),

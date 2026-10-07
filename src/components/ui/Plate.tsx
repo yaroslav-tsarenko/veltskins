@@ -1,20 +1,34 @@
 import type { HTMLAttributes, ReactNode } from "react";
 import { cn } from "@/lib/utils/cn";
 
-export type PlateVariant = "rarity" | "stattrak" | "souvenir" | "star" | "phase" | "neutral" | "success" | "warning" | "danger" | "info" | "indicator";
+export type PlateVariant =
+  | "classification"
+  | "rarity"
+  | "stattrak"
+  | "souvenir"
+  | "star"
+  | "phase"
+  | "neutral"
+  | "success"
+  | "warning"
+  | "danger"
+  | "info"
+  | "count"
+  | "indicator";
 
-const VARIANT: Record<PlateVariant, string> = {
-  rarity: "border border-line text-rarity shadow-[inset_2px_0_0_var(--rarity)] pl-2.5",
-  stattrak: "border border-line text-mark-stattrak",
-  souvenir: "border border-line text-mark-souvenir",
+const VARIANT: Record<Exclude<PlateVariant, "souvenir">, string> = {
+  classification: "border border-line text-rarity",
+  rarity: "border border-line text-rarity",
+  stattrak: "border border-ink text-ink",
   star: "border border-line text-rarity-gold",
   phase: "border border-line text-ink",
   neutral: "bg-surface-1 text-ink",
-  success: "bg-success-tint text-success",
-  warning: "bg-warning-tint text-warning",
-  danger: "bg-danger-tint text-danger",
-  info: "bg-info-tint text-info",
-  indicator: "bg-brand text-on-brand",
+  success: "bg-success-wash text-success",
+  warning: "bg-warning-wash text-warning",
+  danger: "bg-danger-wash text-danger",
+  info: "bg-info-wash text-info",
+  count: "bg-brand text-on-brand font-semibold",
+  indicator: "bg-brand text-on-brand font-semibold",
 };
 
 const DOT: Partial<Record<PlateVariant, string>> = {
@@ -31,12 +45,22 @@ export interface PlateProps extends HTMLAttributes<HTMLSpanElement> {
 }
 
 export function Plate({ variant = "neutral", size = "md", className, children, ...rest }: PlateProps) {
+  if (variant === "souvenir") {
+    return (
+      <span
+        className={cn("inline-flex max-w-full shrink-0 items-center whitespace-nowrap font-display text-[0.8125rem] font-normal italic leading-none text-ink-muted", className)}
+        {...rest}
+      >
+        {children}
+      </span>
+    );
+  }
   const dot = DOT[variant];
   return (
     <span
       className={cn(
-        "inline-flex max-w-full shrink-0 items-center gap-1.5 whitespace-nowrap rounded-control font-mono font-medium uppercase leading-none tracking-[0.06em] [font-stretch:87.5%]",
-        size === "sm" ? "h-5 px-1.5 text-[0.6875rem]" : "h-[22px] px-2 text-[0.75rem]",
+        "inline-flex max-w-full shrink-0 items-center gap-1.5 whitespace-nowrap rounded-none font-mono font-medium uppercase leading-none tracking-[0.1em]",
+        size === "sm" ? "h-[18px] px-1.5 text-[0.625rem]" : "h-[22px] px-2 text-data-sm",
         VARIANT[variant],
         className,
       )}

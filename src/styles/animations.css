@@ -1,7 +1,7 @@
-@keyframes tray-in {
+@keyframes hang-in {
   from {
     opacity: 0;
-    transform: translateY(8px);
+    transform: translateY(-14px);
   }
   to {
     opacity: 1;
@@ -9,10 +9,30 @@
   }
 }
 
+@keyframes label-in {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes rail-draw {
+  from {
+    transform: scaleX(0);
+  }
+  to {
+    transform: scaleX(1);
+  }
+}
+
 @keyframes panel-in {
   from {
     opacity: 0;
-    transform: translateY(-6px);
+    transform: translateY(-10px);
   }
   to {
     opacity: 1;
@@ -25,26 +45,6 @@
     transform: translateY(100%);
   }
   to {
-    transform: translateY(0);
-  }
-}
-
-@keyframes lamp-on {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
-}
-
-@keyframes rise-in {
-  from {
-    opacity: 0;
-    transform: translateY(8px);
-  }
-  to {
-    opacity: 1;
     transform: translateY(0);
   }
 }
@@ -76,6 +76,24 @@
   }
 }
 
+@keyframes sheet-in-left {
+  from {
+    transform: translateX(-100%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+
+@keyframes sheet-out-left {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-100%);
+  }
+}
+
 @keyframes sheet-in-bottom {
   from {
     transform: translateY(100%);
@@ -94,46 +112,43 @@
   }
 }
 
-@keyframes readout-led {
-  0%,
-  100% {
-    background-color: var(--color-border-hover);
+@keyframes line-draw {
+  0% {
+    transform: translateX(-100%) scaleX(0.2);
   }
-  20%,
   50% {
-    background-color: var(--color-accent);
+    transform: translateX(0) scaleX(1);
+  }
+  100% {
+    transform: translateX(100%) scaleX(0.2);
   }
 }
 
-@utility animate-tray-in {
-  animation: tray-in var(--dur-ui) var(--ease-instrument) both;
+@utility animate-hang-in {
+  animation: hang-in var(--dur-ui) var(--ease-hang) both;
+  @media (prefers-reduced-motion: reduce) {
+    animation: fade-in var(--dur-reduced) linear both;
+  }
+}
+
+@utility animate-label-in {
+  animation: label-in var(--dur-ui) var(--ease-hang) 40ms both;
   @media (prefers-reduced-motion: reduce) {
     animation: fade-in var(--dur-reduced) linear both;
   }
 }
 
 @utility animate-panel-in {
-  animation: panel-in var(--dur-ui) var(--ease-instrument) both;
+  animation: panel-in var(--dur-ui) var(--ease-hang) both;
   @media (prefers-reduced-motion: reduce) {
     animation: fade-in var(--dur-reduced) linear both;
   }
 }
 
 @utility animate-count-roll {
-  animation: count-roll var(--dur-ui) var(--ease-instrument) both;
+  animation: count-roll var(--dur-ui) var(--ease-hang) both;
   @media (prefers-reduced-motion: reduce) {
     animation: none;
-  }
-}
-
-@utility animate-lamp-on {
-  animation: lamp-on 160ms var(--ease-std) both;
-}
-
-@utility animate-rise-in {
-  animation: rise-in var(--dur-panel) var(--ease-instrument) both;
-  @media (prefers-reduced-motion: reduce) {
-    animation: fade-in var(--dur-reduced) linear both;
   }
 }
 
@@ -142,28 +157,42 @@
 }
 
 @utility animate-sheet-in-right {
-  animation: sheet-in-right var(--dur-panel) var(--ease-instrument) both;
+  animation: sheet-in-right var(--dur-panel) var(--ease-hang) both;
   @media (prefers-reduced-motion: reduce) {
     animation: fade-in var(--dur-reduced) linear both;
   }
 }
 
 @utility animate-sheet-out-right {
-  animation: sheet-out-right var(--dur-panel-close) var(--ease-instrument) both;
+  animation: sheet-out-right var(--dur-panel-close) var(--ease-hang) both;
+  @media (prefers-reduced-motion: reduce) {
+    animation: fade-in var(--dur-reduced) linear reverse both;
+  }
+}
+
+@utility animate-sheet-in-left {
+  animation: sheet-in-left var(--dur-panel) var(--ease-hang) both;
+  @media (prefers-reduced-motion: reduce) {
+    animation: fade-in var(--dur-reduced) linear both;
+  }
+}
+
+@utility animate-sheet-out-left {
+  animation: sheet-out-left var(--dur-panel-close) var(--ease-hang) both;
   @media (prefers-reduced-motion: reduce) {
     animation: fade-in var(--dur-reduced) linear reverse both;
   }
 }
 
 @utility animate-sheet-in-bottom {
-  animation: sheet-in-bottom var(--dur-panel) var(--ease-instrument) both;
+  animation: sheet-in-bottom var(--dur-panel) var(--ease-hang) both;
   @media (prefers-reduced-motion: reduce) {
     animation: fade-in var(--dur-reduced) linear both;
   }
 }
 
 @utility animate-sheet-out-bottom {
-  animation: sheet-out-bottom var(--dur-panel-close) var(--ease-instrument) both;
+  animation: sheet-out-bottom var(--dur-panel-close) var(--ease-hang) both;
   @media (prefers-reduced-motion: reduce) {
     animation: fade-in var(--dur-reduced) linear reverse both;
   }

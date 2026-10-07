@@ -4,7 +4,7 @@ import { STORE_POLICY } from "@/config/store-policy";
 import { defaultLocale } from "@/i18n/config";
 import { formatPrice } from "@/lib/utils/format-price";
 import { OG_PALETTE as P, OG_SIZE, ogImageSource } from "@/lib/og/assets";
-import { Stage, Wordmark, ogResponse, titleSize } from "@/lib/og/parts";
+import { HungLot, Lockup, ogResponse, titleSize } from "@/lib/og/parts";
 import { categoryStats, getCategoryTree } from "@/components/catalog/catalog-query";
 
 export const revalidate = 3600;
@@ -38,23 +38,41 @@ export default async function Image({ params }: { params: CategoryParams }) {
   const nameSize = titleSize(name, [[14, 92], [24, 76], [40, 62], [80, 50]]);
 
   return ogResponse(
-    <div style={{ display: "flex", width: "100%", height: "100%", background: P.room, color: P.ink, padding: "64px 72px", justifyContent: "space-between" }}>
+    <div style={{ display: "flex", width: "100%", height: "100%", background: P.wall, color: P.ink, padding: "56px 64px", justifyContent: "space-between", gap: 56 }}>
       <div style={{ display: "flex", flexDirection: "column", justifyContent: "space-between", width: 560 }}>
-        <Wordmark size={48} />
+        <Lockup size={20} />
         <div style={{ display: "flex", flexDirection: "column" }}>
-          <div style={{ display: "flex", fontFamily: "Martian Mono", fontSize: 20, letterSpacing: 2, textTransform: "uppercase", color: P.inkMuted, marginBottom: 16 }}>{eyebrow}</div>
-          <div style={{ display: "block", fontFamily: "Sofia Sans Condensed", fontWeight: 700, fontSize: nameSize, lineHeight: 1.02, color: P.ink, lineClamp: 3, overflow: "hidden", maxHeight: nameSize * 1.02 * 3 + 4 }}>{name}</div>
+          <div style={{ display: "flex", fontFamily: "Azeret Mono", fontWeight: 500, fontSize: 16, letterSpacing: 1.6, textTransform: "uppercase", color: P.inkMuted, marginBottom: 16 }}>
+            {eyebrow}
+          </div>
+          <div
+            style={{
+              display: "block",
+              fontFamily: "Newsreader",
+              fontWeight: 500,
+              fontSize: nameSize,
+              lineHeight: 1.06,
+              color: P.ink,
+              lineClamp: 3,
+              overflow: "hidden",
+              maxHeight: nameSize * 1.06 * 3 + 4,
+            }}
+          >
+            {name}
+          </div>
           {data && data.stats.count > 0 ? (
-            <div style={{ display: "flex", alignItems: "center", marginTop: 24, fontFamily: "Martian Mono", fontSize: 24, color: P.inkMuted }}>
+            <div style={{ display: "flex", alignItems: "center", marginTop: 24, fontFamily: "Azeret Mono", fontWeight: 500, fontSize: 22, color: P.inkMuted }}>
               {t("ogItems", { count: data.stats.count })}
-              {data.stats.minPrice != null ? <div style={{ display: "flex", marginLeft: 20 }}>{t("ogFrom", { price: formatPrice(data.stats.minPrice, STORE_POLICY.currency) })}</div> : null}
+              {data.stats.minPrice != null ? (
+                <div style={{ display: "flex", marginLeft: 20 }}>{t("ogFrom", { price: formatPrice(data.stats.minPrice, STORE_POLICY.currency) })}</div>
+              ) : null}
             </div>
           ) : null}
         </div>
-        <div style={{ display: "flex", fontFamily: "Martian Mono", fontSize: 18, color: P.inkMuted }}>{BRAND.domain}</div>
+        <div style={{ display: "flex", fontFamily: "Azeret Mono", fontWeight: 500, fontSize: 18, color: P.inkMuted }}>{BRAND.domain}</div>
       </div>
-      <div style={{ display: "flex", alignItems: "center" }}>
-        <Stage src={src} width={480} height={480} />
+      <div style={{ display: "flex", alignItems: "flex-start" }}>
+        <HungLot src={src} width={440} height={340} />
       </div>
     </div>,
     3600,

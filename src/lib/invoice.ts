@@ -17,7 +17,7 @@ export interface InvoiceSource extends OrderAmountsSource {
   createdAt?: Date | string;
   paidAt?: Date | string | null;
   steamId?: string | null;
-  items: { productName: string; variantName?: string | null; quantity: number; price: Numeric }[];
+  items: { productName: string; productSku?: string | null; variantName?: string | null; quantity: number; price: Numeric }[];
 }
 
 export interface InvoiceFile {
@@ -33,24 +33,24 @@ function hex(value: string): RGB {
   return rgb(((n >> 16) & 255) / 255, ((n >> 8) & 255) / 255, (n & 255) / 255);
 }
 
-const INK = hex("#141517");
-const MUTED = hex("#45474b");
-const SUBTLE = hex("#54565b");
-const PAINT = hex("#141517");
-const LAMP = hex("#c77a12");
-const LINE = hex("#a9abaf");
+const INK = hex("#221E1A");
+const MUTED = hex("#58504A");
+const SUBTLE = hex("#5F5750");
+const RULE = hex("#B8AC99");
+const LINE = hex("#D3C9B9");
+const ACCENT = hex("#86203A");
 
 const FONT_FILES = {
-  display: "sofia-sans-condensed-latin-700-normal.woff",
-  body: "source-sans-3-latin-400-normal.woff",
-  strong: "source-sans-3-latin-600-normal.woff",
-  mono: "martian-mono-latin-500-normal.woff",
+  display: "newsreader-latin-500-normal.woff",
+  body: "instrument-sans-latin-400-normal.woff",
+  strong: "instrument-sans-latin-600-normal.woff",
+  mono: "azeret-mono-latin-500-normal.woff",
 } as const;
 
 const FALLBACK_LETTERS: Record<string, string> = {
-  "Ł": "L", "ł": "l", "Đ": "D", "đ": "d", "Ħ": "H", "ħ": "h", "ı": "i", "Ŀ": "L", "ŀ": "l", "Ŧ": "T", "ŧ": "t",
+  "Ł": "L", "ł": "l", "Đ": "D", "đ": "d", "Ħ": "H", "ħ": "h", "Ŀ": "L", "ŀ": "l", "Ŧ": "T", "ŧ": "t",
   "Ø": "O", "ø": "o", "Æ": "AE", "æ": "ae", "Œ": "OE", "œ": "oe", "ß": "ss", "Þ": "Th", "þ": "th", "Ð": "D", "ð": "d",
-  "‘": "'", "’": "'", "“": "\"", "”": "\"", "−": "-", "—": "-", "–": "-", "…": "...",
+  "★": "", "‘": "'", "’": "'", "“": "\"", "”": "\"", "−": "-", "—": "-", "–": "-", "…": "...",
 };
 
 interface Fonts {
@@ -92,12 +92,14 @@ function printable(font: PDFFont, text: string): string {
     .map((char) => {
       if (supported.has(char.codePointAt(0) ?? 0)) return char;
       const mapped = FALLBACK_LETTERS[char];
-      if (mapped && Array.from(mapped).every((c) => supported.has(c.codePointAt(0) ?? 0))) return mapped;
+      if (mapped !== undefined && Array.from(mapped).every((c) => supported.has(c.codePointAt(0) ?? 0))) return mapped;
       const base = char.normalize("NFD").replace(/\p{M}/gu, "");
       if (base && Array.from(base).every((c) => supported.has(c.codePointAt(0) ?? 0))) return base;
       return "?";
     })
-    .join("");
+    .join("")
+    .replace(/\s{2,}/g, " ")
+    .trimStart();
 }
 
 function wrap(font: PDFFont, text: string, size: number, width: number): string[] {
@@ -213,37 +215,22 @@ function tableHeader(w: Writer) {
   w.label("Unit price", COLUMNS.unit, w.y, "right");
   w.label("Amount", COLUMNS.amount, w.y, "right");
   w.y -= 7;
-  w.rule(w.y, 1.25, PAINT);
+  w.rule(w.y, 1, RULE);
   w.y -= 16;
 }
 
 function wordmark(w: Writer, x: number, y: number, size: number) {
-  const font = w.fonts.display;
-  const name = BRAND.name;
-  const cut = name.indexOf("i");
-  const dotless = font.getCharacterSet().includes(0x131);
-  if (cut < 0 || !dotless) {
-    w.text(name, x, y, { font, size, color: PAINT });
-    return;
-  }
-  const head = name.slice(0, cut);
-  const tail = name.slice(cut + 1);
-  const headWidth = font.widthOfTextAtSize(head, size);
-  const stemWidth = font.widthOfTextAtSize("\u0131", size);
-  w.page.drawText(head, { x, y, size, font, color: PAINT });
-  w.page.drawText("\u0131", { x: x + headWidth, y, size, font, color: PAINT });
-  const side = size * 0.105;
-  w.page.drawRectangle({ x: x + headWidth + (stemWidth - side) / 2, y: y + size * 0.6, width: side, height: side, color: LAMP });
-  w.page.drawText(tail, { x: x + headWidth + stemWidth, y, size, font, color: PAINT });
+  w.page.drawText(BRAND.name, { x, y, size, font: w.fonts.display, color: INK });
 }
 
 function masthead(w: Writer, number: string, compact: boolean) {
   const top = PAGE.height - PAGE.margin;
-  wordmark(w, PAGE.margin, top - 22, compact ? 20 : 28);
-  w.label("Invoice", PAGE.width - PAGE.margin, top - 8, "right");
-  w.text(number, PAGE.width - PAGE.margin, top - 24, { font: w.fonts.mono, size: 11, align: "right" });
-  w.rule(top - 36, 2, PAINT);
-  w.y = top - 36 - 28;
+  w.rule(top, 1, ACCENT);
+  const base = top - 16 - (compact ? 16 : 22);
+  wordmark(w, PAGE.margin, base, compact ? 18 : 22);
+  w.label("Invoice", PAGE.width - PAGE.margin, base + 12, "right");
+  w.text(number, PAGE.width - PAGE.margin, base, { font: w.fonts.mono, size: 10.5, align: "right" });
+  w.y = base - 30;
 }
 
 function factRows(w: Writer, rows: [string, string][], x: number, width: number) {
@@ -333,7 +320,7 @@ export async function renderInvoicePdf(order: InvoiceSource): Promise<Uint8Array
     const line = totals.lines[index];
     const nameLines = wrap(fonts.body, item.productName, 9.5, DESCRIPTION_WIDTH);
     const variantLines = item.variantName ? wrap(fonts.body, item.variantName, 8.5, DESCRIPTION_WIDTH) : [];
-    const height = nameLines.length * 13 + variantLines.length * 11.5 + 10;
+    const height = nameLines.length * 13 + 10 + variantLines.length * 11.5 + 10;
     if (w.y - height < PAGE.margin + FOOTER_SPACE) {
       w.addPage();
       masthead(w, number, true);
@@ -341,7 +328,8 @@ export async function renderInvoicePdf(order: InvoiceSource): Promise<Uint8Array
     }
     const rowTop = w.y;
     nameLines.forEach((part, i) => w.text(part, PAGE.margin, rowTop - i * 13, { size: 9.5 }));
-    variantLines.forEach((part, i) => w.text(part, PAGE.margin, rowTop - nameLines.length * 13 - i * 11.5 + 1, { size: 8.5, color: MUTED }));
+    if (item.productSku) w.text(`LOT ${item.productSku.toUpperCase()}`, PAGE.margin, rowTop - nameLines.length * 13 + 1, { font: fonts.mono, size: 7, color: SUBTLE });
+    variantLines.forEach((part, i) => w.text(part, PAGE.margin, rowTop - nameLines.length * 13 - 10 - i * 11.5 + 1, { size: 8.5, color: MUTED }));
     w.text(String(item.quantity), COLUMNS.qty, rowTop, { size: 9.5, color: MUTED, align: "right" });
     w.text(money(line?.unit ?? 0, currency), COLUMNS.unit, rowTop, { font: fonts.mono, size: 8.5, color: MUTED, align: "right" });
     w.text(money(line?.total ?? 0, currency), COLUMNS.amount, rowTop, { font: fonts.mono, size: 8.5, align: "right" });
@@ -366,10 +354,10 @@ export async function renderInvoicePdf(order: InvoiceSource): Promise<Uint8Array
     w.text(value, COLUMNS.amount, w.y, { font: fonts.mono, size: 8.5, align: "right" });
     w.y -= 16;
   }
-  w.rule(w.y + 6, 1.25, PAINT, labelX - 150, COLUMNS.amount);
+  w.rule(w.y + 6, 1, ACCENT, labelX - 150, COLUMNS.amount);
   w.y -= 14;
-  w.text(`Total (${currency})`, labelX, w.y, { font: fonts.strong, size: 11, align: "right" });
-  w.text(money(totals.total, currency), COLUMNS.amount, w.y, { font: fonts.mono, size: 12, align: "right" });
+  w.text(`Total (${currency})`, labelX, w.y, { font: fonts.strong, size: 10.5, align: "right" });
+  w.text(money(totals.total, currency), COLUMNS.amount, w.y, { font: fonts.display, size: 13, color: INK, align: "right" });
   w.y -= 16;
   if (totals.vatRegistered && totals.vatIncluded) {
     w.text(`Includes VAT at ${totals.vatRatePercent}%`, labelX, w.y, { size: 9, color: MUTED, align: "right" });
@@ -384,7 +372,12 @@ export async function renderInvoicePdf(order: InvoiceSource): Promise<Uint8Array
     w.y -= 12.5;
   }
 
-  const footer = `${COMPANY.name} · ${COMPANY.registeredOffice}, ${COMPANY.country} · Company number ${COMPANY.companyNumber} · ${COMPANY.email}`;
+  const footer = [
+    `${COMPANY.name} · ${COMPANY.registeredOffice}, ${COMPANY.country}`,
+    `Company number ${COMPANY.companyNumber}`,
+    ...(COMPANY.vatRegistered ? [`VAT number ${COMPANY.vatNumber}`] : []),
+    COMPANY.email,
+  ].join(" · ");
   w.pages.forEach((page, index) => {
     w.page = page;
     w.rule(PAGE.margin + 18, 0.5, LINE);

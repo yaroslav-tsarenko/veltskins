@@ -3,8 +3,8 @@ import { BRAND } from "@/lib/brand";
 import { COMPANY } from "@/lib/company";
 import { cn } from "@/lib/utils/cn";
 
-export function CredentialsSheet({ stacked = false, className }: { stacked?: boolean; className?: string }) {
-  const rows: { label: string; value: ReactNode; mono?: boolean }[] = [
+export function credentialRows(): { label: string; value: ReactNode; mono?: boolean }[] {
+  return [
     { label: "Company", value: COMPANY.name },
     { label: "Company number", value: COMPANY.companyNumber, mono: true },
     ...(COMPANY.vatRegistered ? [{ label: "VAT number", value: COMPANY.vatNumber, mono: true }] : []),
@@ -32,20 +32,43 @@ export function CredentialsSheet({ stacked = false, className }: { stacked?: boo
       : []),
     { label: "Support hours", value: COMPANY.supportHours },
   ];
+}
+
+export function CredentialsSheet({ stacked = false, className }: { stacked?: boolean; className?: string }) {
+  const rows = credentialRows();
 
   return (
     <section aria-label="Company details" data-credentials="" className={className}>
       <p className="m-0 text-ui-md text-ink">
         {BRAND.name} is a trading name of {COMPANY.name}.
       </p>
-      <dl className={cn("m-0 mt-4 grid grid-cols-1 border-t border-line sm:grid-cols-2", !stacked && "lg:grid-cols-[repeat(auto-fit,minmax(200px,1fr))]")}>
+      <dl className={cn("m-0 mt-5 grid grid-cols-1 gap-x-12 gap-y-2.5", !stacked && "sm:grid-cols-2")}>
         {rows.map((row) => (
-          <div key={row.label} className="min-w-0 border-b border-line py-3 sm:pr-6">
-            <dt className="eyebrow">{row.label}</dt>
-            <dd className={cn("m-0 mt-1.5 text-ink", row.mono ? "font-mono text-data" : "text-ui-md")}>{row.value}</dd>
+          <div key={row.label} className="flex min-w-0 flex-wrap items-baseline gap-x-2.5">
+            <dt className="label-caps shrink-0 text-ink-muted">{row.label}</dt>
+            <dd className={cn("m-0 min-w-0 text-ink", row.mono ? "font-mono text-data" : "text-ui-md")}>{row.value}</dd>
           </div>
         ))}
       </dl>
     </section>
   );
 }
+
+export function CredentialsLine({ className }: { className?: string }) {
+  return (
+    <p className={cn("m-0 text-ui-sm text-ink-muted", className)}>
+      {BRAND.name} is a trading name of {COMPANY.name}
+      {" · "}
+      Company number {COMPANY.companyNumber}
+      {COMPANY.vatRegistered ? ` · VAT ${COMPANY.vatNumber}` : ""}
+      {" · "}
+      {COMPANY.registeredOffice}
+      {" · "}
+      <a href={`mailto:${COMPANY.email}`} className="decoration-1 underline-offset-4 hover-device:hover:underline">
+        {COMPANY.email}
+      </a>
+    </p>
+  );
+}
+
+export const VALVE_DISCLAIMER = `${BRAND.name} is an independent store and is not affiliated with, sponsored by or endorsed by Valve Corporation. Counter-Strike, CS2, Steam and the Steam logo are trademarks of Valve Corporation and are used here only to describe the items we sell.`;

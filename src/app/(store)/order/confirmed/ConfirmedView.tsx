@@ -9,7 +9,7 @@ import { Check, Copy } from "lucide-react";
 import { StatusPlate } from "@/components/ui/Plate";
 import { Alert } from "@/components/ui/Alert";
 import { ReadoutLoader } from "@/components/ui/ReadoutLoader";
-import { SkinRow } from "@/components/skin/SkinTray";
+import { LotRow } from "@/components/skin/Lot";
 import { PurchaseTimeline } from "@/components/skin/PurchaseTimeline";
 import { orderTimelineStatus } from "@/components/account/OrderHistory/OrderHistory";
 import { TotalsList } from "@/components/checkout/TotalsList";
@@ -38,7 +38,7 @@ function OrderId({ number }: { number: string }) {
         onClick={() => {
           navigator.clipboard?.writeText(number).then(() => setCopied(true), () => {});
         }}
-        className="flex size-9 cursor-pointer items-center justify-center rounded-control text-ink-muted hover-device:hover:bg-raised hover-device:hover:text-ink"
+        className="flex size-9 cursor-pointer items-center justify-center rounded-control text-ink-muted hover-device:hover:bg-mount hover-device:hover:text-ink"
       >
         {copied ? <Check size={16} aria-hidden="true" /> : <Copy size={16} aria-hidden="true" />}
       </button>
@@ -57,7 +57,7 @@ function OrderSummary({ order, live = false }: { order: OrderView; live?: boolea
         <ul className="m-0 flex list-none flex-col border-t border-rule p-0">
           {order.lines.map((line) => (
             <li key={line.id} className="flex flex-col gap-5 border-b border-line py-5">
-              <SkinRow name={line.name} href={line.slug ? `/product/${line.slug}` : null} imageUrl={line.imageUrl} skin={line.skin} aside={<span className="font-mono text-data text-ink">{formatPrice(line.total, order.currency)}</span>} />
+              <LotRow name={line.name} href={line.slug ? `/product/${line.slug}` : null} imageUrl={line.imageUrl} skin={line.skin} aside={<span className="font-mono text-data text-ink">{formatPrice(line.total, order.currency)}</span>} />
               {live ? (
                 <PurchaseTimeline
                   status={orderTimelineStatus(order, line)}
@@ -143,7 +143,7 @@ export function ConfirmedView() {
       cleared.current = true;
       clearCart();
       try {
-        sessionStorage.removeItem("patina-checkout-draft");
+        sessionStorage.removeItem("veltskins-checkout-draft");
       } catch {}
     }
     if (state !== "checking") headingRef.current?.focus();
@@ -175,14 +175,14 @@ export function ConfirmedView() {
     return frame(
       <div className="flex min-h-[40vh] flex-col items-center justify-center gap-5 text-center" aria-live="polite">
         <ReadoutLoader label={t("checking.title")} />
-        <h1 className="m-0 text-step-4 font-[650] leading-[1.04] text-ink">{t("checking.title")}</h1>
+        <h1 className="m-0 text-step-4 font-medium leading-[1.04] text-ink">{t("checking.title")}</h1>
         <p className="measure m-0 text-ink-muted">{t("checking.body")}</p>
       </div>,
     );
   }
 
   const heading = (text: string) => (
-    <h1 ref={headingRef} tabIndex={-1} className="m-0 text-step-5 font-[650] leading-none tracking-[-0.01em] text-ink outline-none">
+    <h1 ref={headingRef} tabIndex={-1} className="m-0 text-step-5 font-medium leading-none tracking-[-0.01em] text-ink outline-none">
       {text}
     </h1>
   );
@@ -223,7 +223,7 @@ export function ConfirmedView() {
             {t("failed.retry")}
           </Button>
           <Button as={Link} href="/cart" variant="outline">
-            {t("failed.bag")}
+            {t("failed.cart")}
           </Button>
         </div>
         <p className="m-0 text-ui-sm text-ink-muted">{t("failed.help", { email: COMPANY.email })}</p>
@@ -272,7 +272,7 @@ export function ConfirmedView() {
             {user ? t("missing.orders") : t("continueShopping")}
           </Button>
           <Button as={Link} href="/cart" variant="outline">
-            {t("failed.bag")}
+            {t("failed.cart")}
           </Button>
         </div>
       </>,

@@ -52,7 +52,7 @@ export function TotalsList({ totals, currency, showCurrencyCode = false, totalSi
       {totals.vatRegistered && totals.vatIncluded ? (
         <div className={row}>
           <dt className="text-ui-sm text-ink-muted">{t("vatIncluded", { rate: totals.vatRatePercent })}</dt>
-          <dd className="m-0 font-mono text-[0.75rem] text-ink-muted">{money(totals.vat)}</dd>
+          <dd className="m-0 font-mono text-data-sm text-ink-muted">{money(totals.vat)}</dd>
         </div>
       ) : null}
     </dl>

@@ -22,9 +22,9 @@ export function CurrencySelect({ size = "xs", className, showLabel = false }: { 
           value={currency}
           onChange={(e) => setCurrency(e.target.value as Currency)}
           className={cn(
-            "cursor-pointer appearance-none rounded-control border border-transparent bg-transparent font-mono text-ink transition-colors duration-[140ms]",
+            "cursor-pointer appearance-none rounded-control border border-transparent bg-transparent font-mono text-ink transition-colors duration-[120ms]",
             "hover-device:hover:border-control",
-            size === "xs" ? "h-9 pl-2.5 pr-7 text-[0.8125rem] text-ink-muted hover-device:hover:text-ink" : "h-11 border-control bg-raised pl-3.5 pr-10 text-data",
+            size === "xs" ? "h-9 pl-2.5 pr-7 text-[0.8125rem] text-ink-muted hover-device:hover:text-ink" : "h-11 border-control bg-mount pl-3.5 pr-10 text-data",
           )}
         >
           {CURRENCIES.map((code) => (

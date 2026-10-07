@@ -37,9 +37,9 @@ export function AccountSidebar() {
                 href={item.href}
                 aria-current={active ? "page" : undefined}
                 className={cn(
-                  "relative flex min-h-11 items-center pl-4 text-step-0 transition-colors duration-[140ms]",
-                  "before:absolute before:inset-y-2.5 before:left-0 before:w-0.5 before:bg-brand before:opacity-0 aria-[current=page]:before:opacity-100",
-                  active ? "font-semibold text-ink" : "text-ink-muted hover-device:hover:text-ink",
+                  "relative flex min-h-11 items-center text-step-0 transition-colors duration-[120ms]",
+                  "after:absolute after:inset-x-0 after:bottom-0 after:h-0.5 after:bg-brand after:opacity-0 aria-[current=page]:after:opacity-100",
+                  active ? "font-medium text-ink" : "text-ink-muted hover-device:hover:text-ink",
                 )}
               >
                 {t(item.key)}
@@ -52,7 +52,7 @@ export function AccountSidebar() {
       <button
         type="button"
         onClick={signOut}
-        className="inline-flex min-h-11 cursor-pointer items-center gap-2 pl-4 text-ui-md text-ink-muted decoration-1 underline-offset-4 hover-device:hover:text-ink hover-device:hover:underline"
+        className="inline-flex min-h-11 cursor-pointer items-center gap-2 text-ui-md text-ink-muted decoration-1 underline-offset-[5px] hover-device:hover:text-ink hover-device:hover:underline"
       >
         <LogOut size={16} aria-hidden="true" />
         {t("signOut")}
@@ -72,10 +72,10 @@ export function AccountTabs() {
           const active = isActive(pathname, item.href);
           return (
             <li key={item.href} className="relative">
-              <Link href={item.href} aria-current={active ? "page" : undefined} className={cn("flex min-h-12 items-center whitespace-nowrap text-ui-md", active ? "font-semibold text-ink" : "text-ink-muted")}>
+              <Link href={item.href} aria-current={active ? "page" : undefined} className={cn("flex min-h-12 items-center whitespace-nowrap text-ui-md", active ? "font-medium text-ink" : "text-ink-muted")}>
                 {t(item.key)}
               </Link>
-              {active ? <span aria-hidden="true" className="absolute bottom-0 left-0 h-0.5 w-6 bg-brand" /> : null}
+              {active ? <span aria-hidden="true" className="absolute inset-x-0 bottom-0 h-0.5 bg-brand" /> : null}
             </li>
           );
         })}
@@ -89,13 +89,14 @@ export function AccountTabs() {
   );
 }
 
-export function AccountPageHeader({ title, aside, children }: { title: ReactNode; aside?: ReactNode; children?: ReactNode }) {
+export function AccountPageHeader({ title, lead, aside, children }: { title: ReactNode; lead?: ReactNode; aside?: ReactNode; children?: ReactNode }) {
   return (
     <div className="mb-8 flex flex-col gap-5">
       <div className="flex flex-wrap items-center gap-x-4 gap-y-2">
-        <h1 className="m-0 text-step-5 font-[650] leading-none tracking-[-0.01em] text-ink">{title}</h1>
+        <h1 className="m-0 font-display text-step-5 font-medium leading-[1.06] tracking-[-0.01em] text-ink">{title}</h1>
         {aside}
       </div>
+      {lead ? <p className="measure m-0 text-step-0 leading-[1.6] text-ink-muted">{lead}</p> : null}
       {children}
       <AccountTabs />
     </div>

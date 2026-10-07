@@ -8,7 +8,7 @@ import { useAuth } from "@/providers/AuthProvider";
 import { Alert } from "@/components/ui/Alert";
 import { SkeletonBar } from "@/components/ui/ReadoutLoader";
 import { EmptyState } from "@/components/shared/EmptyState/EmptyState";
-import { SkinRow } from "@/components/skin/SkinTray";
+import { LotRow } from "@/components/skin/Lot";
 import { SteamAccountBlock } from "@/components/skin/SteamAccountBlock";
 import { useSteamAccount } from "@/components/account/SteamDelivery/SteamDelivery";
 import { formatPrice } from "@/lib/utils/format-price";
@@ -19,7 +19,7 @@ import { useAccountData } from "./useAccountData";
 import { LoadError } from "./LoadError";
 import { formatOrderDate } from "./format";
 
-const linkCls = "inline-flex min-h-10 items-center gap-1.5 text-ui-md font-semibold text-ink decoration-1 underline-offset-4 hover-device:hover:underline";
+const linkCls = "inline-flex min-h-10 items-center gap-1.5 text-ui-md font-medium text-ink decoration-1 underline-offset-[5px] hover-device:hover:underline";
 
 export function AccountOverview() {
   const t = useTranslations("account.overview");
@@ -65,7 +65,7 @@ export function AccountOverview() {
           <LoadError onRetry={reload} />
         ) : latest ? (
           <div className="border-y border-line py-4">
-            <SkinRow
+            <LotRow
               name={latest.lines[0]?.name ?? latest.number}
               href={latest.lines[0]?.slug ? `/product/${latest.lines[0].slug}` : null}
               imageUrl={latest.lines[0]?.imageUrl}
@@ -74,7 +74,7 @@ export function AccountOverview() {
             >
               <div className="mt-1 flex flex-wrap items-center gap-x-4 gap-y-2">
                 <OrderStatus state={latest.state} />
-                <span className="font-mono text-[0.75rem] text-ink-muted">
+                <span className="font-mono text-data-sm text-ink-muted">
                   {latest.number} · {formatOrderDate(latest.createdAt)}
                 </span>
                 <Link href={`/account/orders/${latest.id}`} className={`${linkCls} ml-auto`}>
@@ -83,7 +83,7 @@ export function AccountOverview() {
                   <ArrowRight size={16} aria-hidden="true" />
                 </Link>
               </div>
-            </SkinRow>
+            </LotRow>
             {data && data.orders.length > 1 ? (
               <Link href="/account/orders" className={`${linkCls} mt-3`}>
                 {t("allOrders", { count: data.orders.length })}

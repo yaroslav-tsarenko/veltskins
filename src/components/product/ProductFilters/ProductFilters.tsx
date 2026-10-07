@@ -5,15 +5,14 @@ import { useTranslations } from "next-intl";
 import { ChevronDown, X } from "lucide-react";
 import { cn } from "@/lib/utils/cn";
 import { useCurrency } from "@/providers/CurrencyProvider";
-import { Checkbox, Segmented } from "@/components/ui/Choice";
-import { Jaw } from "@/components/skin/FloatRuler";
-import { WEAPON_TYPES, raritySlug, weaponSlug } from "@/lib/skins/cs2";
-import { ExteriorFilter } from "./ExteriorFilter";
+import { Checkbox } from "@/components/ui/Choice";
+import { ConditionCells } from "@/components/skin/ConditionGrid";
+import { EXTERIORS, WEAPON_TYPES, raritySlug, weaponSlug } from "@/lib/skins/cs2";
 import { Input } from "@/components/ui/Field";
 import { Button } from "@/components/ui/Button";
 import { Sheet } from "@/components/ui/Dialog";
 import { FilterChip, FilterChipRow } from "@/components/ui/Chip";
-import { toggleValue, type CatalogFacets, type FacetOption, type ListFilter } from "@/components/catalog/catalog-url";
+import { NOT_PAINTED, toggleValue, type CatalogFacets, type FacetOption, type ListFilter } from "@/components/catalog/catalog-url";
 
 export interface FilterSelection {
   brand: string | null;
@@ -55,15 +54,15 @@ export function FilterGroup({
           aria-controls={`${id}-panel`}
           id={`${id}-trigger`}
           onClick={() => setOpen((v) => !v)}
-          className="flex h-12 w-full cursor-pointer items-center gap-3 text-left text-ink"
+          className="flex h-[46px] w-full cursor-pointer items-center gap-3 text-left text-ink"
         >
           <span className="eyebrow flex-1">{title}</span>
           {selectedCount > 0 ? (
-            <span className="font-mono text-data-sm font-semibold text-ink" aria-label={t("selectedCount", { count: selectedCount })}>
+            <span className="font-mono text-data-sm font-medium text-ink" aria-label={t("selectedCount", { count: selectedCount })}>
               {selectedCount}
             </span>
           ) : null}
-          <ChevronDown size={16} aria-hidden="true" className={cn("text-ink-muted transition-transform duration-[200ms] ease-[var(--ease-instrument)]", open && "rotate-180")} />
+          <ChevronDown size={16} aria-hidden="true" className={cn("text-ink-muted transition-transform duration-[220ms] ease-[var(--ease-std)]", open && "rotate-180")} />
         </button>
       </h3>
       <div
@@ -71,7 +70,7 @@ export function FilterGroup({
         role="region"
         aria-labelledby={`${id}-trigger`}
         inert={!open}
-        className={cn("grid transition-[grid-template-rows] duration-[200ms] ease-[var(--ease-instrument)]", open ? "grid-rows-[1fr]" : "grid-rows-[0fr]")}
+        className={cn("grid transition-[grid-template-rows] duration-[220ms] ease-[var(--ease-std)]", open ? "grid-rows-[1fr]" : "grid-rows-[0fr]")}
       >
         <div className="relative min-h-0 overflow-hidden">
           <div className="pb-4">{children}</div>
@@ -158,19 +157,19 @@ export function PriceRange({ bounds, value, onCommit, format, step = 1 }: PriceR
       style={{ left: `${pct(local[which])}%` }}
       className="absolute bottom-0 z-[1] flex h-8 w-6 -translate-x-1/2 cursor-grab touch-none items-end justify-center active:cursor-grabbing"
     >
-      <Jaw />
+      <span aria-hidden="true" className="block h-3.5 w-2 rounded-control bg-ink" />
     </span>
   );
 
   return (
     <div className="px-1.5 pb-1 pt-3">
       <div ref={trackRef} className="relative h-8">
-        <span aria-hidden="true" className="absolute inset-x-0 bottom-0 h-px bg-rule" />
-        <span aria-hidden="true" className="absolute bottom-0 h-1.5 bg-ink/85 [[data-theme=light]_&]:bg-ink" style={{ left: `${pct(local.min)}%`, right: `${100 - pct(local.max)}%` }} />
+        <span aria-hidden="true" className="absolute inset-x-0 bottom-[6px] h-px bg-rule" />
+        <span aria-hidden="true" className="absolute bottom-[6px] h-px bg-ink" style={{ left: `${pct(local.min)}%`, right: `${100 - pct(local.max)}%` }} />
         {thumb("min")}
         {thumb("max")}
       </div>
-      <div className="mt-2 flex justify-between font-mono text-[0.75rem] text-ink-muted" aria-hidden="true">
+      <div className="mt-2 flex justify-between font-mono text-data-sm text-ink-muted" aria-hidden="true">
         <span>{format(local.min)}</span>
         <span>{format(local.max)}</span>
       </div>
@@ -281,6 +280,107 @@ function PriceGroup({
   );
 }
 
+function ConditionGroup({
+  options,
+  selected,
+  floatMin,
+  floatMax,
+  onChange,
+}: {
+  options: FacetOption[];
+  selected: string[];
+  floatMin: number | null;
+  floatMax: number | null;
+  onChange: (next: Partial<FilterSelection>) => void;
+}) {
+  const t = useTranslations("catalog");
+  const [showFloat, setShowFloat] = useState(floatMin !== null || floatMax !== null);
+  const signature = `${floatMin}|${floatMax}`;
+  const [draft, setDraft] = useState({ signature, from: floatMin !== null ? String(floatMin) : "", to: floatMax !== null ? String(floatMax) : "" });
+  if (draft.signature !== signature) setDraft({ signature, from: floatMin !== null ? String(floatMin) : "", to: floatMax !== null ? String(floatMax) : "" });
+
+  const counts: Record<string, number> = {};
+  for (const e of EXTERIORS) counts[e.code] = options.find((o) => o.key === e.code.toLowerCase())?.count ?? 0;
+  const notPainted = options.find((o) => o.key === NOT_PAINTED);
+
+  const parse = (s: string) => {
+    const n = Number(s);
+    return s.trim() === "" || !Number.isFinite(n) || n < 0 || n > 1 ? null : Math.round(n * 10000) / 10000;
+  };
+  const commitFloat = (from: string, to: string) => {
+    const nextMin = parse(from);
+    const nextMax = parse(to);
+    if (nextMin === floatMin && nextMax === floatMax) return;
+    onChange({ floatMin: nextMin, floatMax: nextMax });
+  };
+
+  return (
+    <div className="pt-1">
+      <ConditionCells
+        selected={selected.map((c) => c.toUpperCase())}
+        counts={counts}
+        onToggle={(code) => onChange({ exteriors: toggleValue(selected, code.toLowerCase()) })}
+      />
+      {notPainted && (notPainted.count > 0 || notPainted.selected) ? (
+        <div className="mt-2">
+          <Checkbox
+            dense
+            label="Not painted"
+            count={notPainted.count}
+            checked={selected.includes(NOT_PAINTED)}
+            onChange={() => onChange({ exteriors: toggleValue(selected, NOT_PAINTED) })}
+          />
+        </div>
+      ) : null}
+      <div className="mt-3 border-t border-line pt-2">
+        <button
+          type="button"
+          aria-expanded={showFloat}
+          onClick={() => setShowFloat((v) => !v)}
+          className="flex min-h-9 w-full cursor-pointer items-center gap-2 text-left text-ui-sm text-ink-muted hover-device:hover:text-ink"
+        >
+          <span className="flex-1">{t("groupFloat")}</span>
+          <ChevronDown size={14} aria-hidden="true" className={cn("transition-transform duration-[220ms]", showFloat && "rotate-180")} />
+        </button>
+        {showFloat ? (
+          <form
+            className="grid grid-cols-2 gap-3 pt-2"
+            onSubmit={(e) => {
+              e.preventDefault();
+              commitFloat(draft.from, draft.to);
+            }}
+          >
+            <Input
+              label={t("floatMin")}
+              size="sm"
+              mono
+              inputMode="decimal"
+              placeholder="0.00"
+              value={draft.from}
+              onChange={(e) => setDraft((d) => ({ ...d, from: e.target.value.replace(/[^0-9.]/g, "") }))}
+              onBlur={() => commitFloat(draft.from, draft.to)}
+            />
+            <Input
+              label={t("floatMax")}
+              size="sm"
+              mono
+              inputMode="decimal"
+              placeholder="1.00"
+              value={draft.to}
+              onChange={(e) => setDraft((d) => ({ ...d, to: e.target.value.replace(/[^0-9.]/g, "") }))}
+              onBlur={() => commitFloat(draft.from, draft.to)}
+            />
+            <button type="submit" className="sr-only">
+              {t("applyFloat")}
+            </button>
+            <p className="col-span-2 m-0 text-ui-sm text-ink-muted">{t("floatHint")}</p>
+          </form>
+        ) : null}
+      </div>
+    </div>
+  );
+}
+
 function OptionRows({
   options,
   selected,
@@ -297,10 +397,10 @@ function OptionRows({
       {options.map((option) => {
         const slug = rarity ? raritySlug(option.key) : undefined;
         return (
-          <div key={option.key} data-rarity={slug} className={cn(rarity && "spine-row pl-2.5")}>
+          <div key={option.key} data-rarity={slug} className={cn(rarity && "relative mt-2 border-t-2 border-rarity pt-0.5 first:mt-0")}>
             <Checkbox
               dense
-              label={rarity ? <span className="font-mono text-[0.75rem] font-medium uppercase tracking-[0.06em] text-rarity [font-stretch:87.5%]">{option.label}</span> : option.label}
+              label={rarity ? <span className="label-caps text-rarity">{option.label}</span> : option.label}
               count={option.count}
               checked={selected.includes(option.key)}
               disabled={option.count === 0 && !selected.includes(option.key)}
@@ -330,7 +430,7 @@ function WeaponRows({ options, selected, onToggle }: { options: FacetOption[]; s
       <div className="max-h-[360px] overflow-y-auto pr-1">
         {groups.map((g) => (
           <div key={g.type.key} className={cn(showGroups && "mb-2")}>
-            {showGroups ? <p className="eyebrow m-0 pb-1 pt-2 text-ink-subtle">{g.type.label}</p> : null}
+            {showGroups ? <p className="eyebrow m-0 pb-1 pt-2 text-ink-faint">{g.type.label}</p> : null}
             <OptionRows options={g.options} selected={selected} onToggle={onToggle} />
           </div>
         ))}
@@ -340,31 +440,7 @@ function WeaponRows({ options, selected, onToggle }: { options: FacetOption[]; s
   );
 }
 
-type Tri = "any" | "only" | "none";
-const QUALITY_ALL = ["normal", "stattrak", "souvenir"];
-
-function markState(qualities: string[], mark: "stattrak" | "souvenir"): Tri {
-  if (qualities.length === 0) return "any";
-  if (qualities.length === 1 && qualities[0] === mark) return "only";
-  if (!qualities.includes(mark)) return "none";
-  return "any";
-}
-
-function qualitiesFor(st: Tri, sv: Tri): string[] {
-  let set = new Set(QUALITY_ALL);
-  if (st === "only") set = new Set(["stattrak"]);
-  if (st === "none") set.delete("stattrak");
-  if (sv === "only") set = new Set([...set].filter((k) => k === "souvenir"));
-  if (sv === "none") set.delete("souvenir");
-  if (st === "only" && sv === "only") set = new Set();
-  return set.size === QUALITY_ALL.length ? [] : [...set].sort();
-}
-
-const TRI_OPTIONS: { value: Tri; label: string }[] = [
-  { value: "any", label: "Any" },
-  { value: "only", label: "Only" },
-  { value: "none", label: "None" },
-];
+const QUALITY_LABEL: Record<string, string> = { normal: "Standard", stattrak: "StatTrak™", souvenir: "Souvenir" };
 
 export interface ProductFiltersProps {
   facets: CatalogFacets;
@@ -381,35 +457,39 @@ export function ProductFilters({ facets, selection, onChange, className }: Produ
   const weapons = list("weapons");
   const rarities = list("rarities");
   const exteriors = list("exteriors");
+  const qualities = list("qualities");
   const phases = list("phases");
   const collections = list("collections");
-  const qualityKeys = new Set(list("qualities").map((o) => o.key));
-  const st = markState(selection.qualities, "stattrak");
-  const sv = markState(selection.qualities, "souvenir");
   const toggle = (filter: ListFilter) => (key: string) => onChange({ [filter]: toggleValue(selection[filter], key) } as Partial<FilterSelection>);
 
   return (
     <div className={cn("border-t border-line", className)}>
       {types.length > 1 || selection.types.length > 0 ? (
-        <FilterGroup title="Weapon type" selectedCount={selection.types.length} defaultOpen>
+        <FilterGroup title={t("groupType")} selectedCount={selection.types.length} defaultOpen>
           <OptionRows options={types} selected={selection.types} onToggle={toggle("types")} />
         </FilterGroup>
       ) : null}
 
       {weapons.length > 1 || selection.weapons.length > 0 ? (
-        <FilterGroup title="Weapon" selectedCount={selection.weapons.length} defaultOpen={selection.weapons.length > 0}>
+        <FilterGroup title={t("groupWeapon")} selectedCount={selection.weapons.length} defaultOpen={selection.weapons.length > 0}>
           <WeaponRows options={weapons} selected={selection.weapons} onToggle={toggle("weapons")} />
         </FilterGroup>
       ) : null}
 
       {exteriors.length > 0 ? (
-        <FilterGroup title="Exterior" selectedCount={selection.exteriors.length} defaultOpen>
-          <ExteriorFilter options={facets.exteriors} selected={selection.exteriors} onChange={(next) => onChange({ exteriors: next })} />
+        <FilterGroup title={t("groupExterior")} selectedCount={selection.exteriors.length + (selection.floatMin !== null || selection.floatMax !== null ? 1 : 0)} defaultOpen>
+          <ConditionGroup
+            options={facets.exteriors}
+            selected={selection.exteriors}
+            floatMin={selection.floatMin}
+            floatMax={selection.floatMax}
+            onChange={onChange}
+          />
         </FilterGroup>
       ) : null}
 
       {rarities.length > 0 ? (
-        <FilterGroup title="Rarity" selectedCount={selection.rarities.length} defaultOpen>
+        <FilterGroup title={t("groupRarity")} selectedCount={selection.rarities.length} defaultOpen>
           <OptionRows options={[...rarities].reverse()} selected={selection.rarities} onToggle={toggle("rarities")} rarity />
         </FilterGroup>
       ) : null}
@@ -420,15 +500,13 @@ export function ProductFilters({ facets, selection, onChange, className }: Produ
         </FilterGroup>
       ) : null}
 
-      {qualityKeys.has("stattrak") || st !== "any" ? (
-        <FilterGroup title="StatTrak™" selectedCount={st === "any" ? 0 : 1} defaultOpen={st !== "any"}>
-          <Segmented label="StatTrak™" fullWidth value={st} options={TRI_OPTIONS} onChange={(v) => onChange({ qualities: qualitiesFor(v, sv) })} />
-        </FilterGroup>
-      ) : null}
-
-      {qualityKeys.has("souvenir") || sv !== "any" ? (
-        <FilterGroup title="Souvenir" selectedCount={sv === "any" ? 0 : 1} defaultOpen={sv !== "any"}>
-          <Segmented label="Souvenir" fullWidth value={sv} options={TRI_OPTIONS} onChange={(v) => onChange({ qualities: qualitiesFor(st, v) })} />
+      {qualities.length > 1 || selection.qualities.length > 0 ? (
+        <FilterGroup title={t("groupQuality")} selectedCount={selection.qualities.length} defaultOpen={selection.qualities.length > 0}>
+          <OptionRows
+            options={qualities.map((o) => ({ ...o, label: QUALITY_LABEL[o.key] ?? o.label }))}
+            selected={selection.qualities}
+            onToggle={toggle("qualities")}
+          />
         </FilterGroup>
       ) : null}
 
@@ -439,15 +517,21 @@ export function ProductFilters({ facets, selection, onChange, className }: Produ
       ) : null}
 
       {collections.length > 0 ? (
-        <FilterGroup title="Collection" selectedCount={selection.collections.length} defaultOpen={selection.collections.length > 0}>
-          <WeaponlessSearch options={collections} selected={selection.collections} onToggle={toggle("collections")} />
+        <FilterGroup title={t("groupCollection")} selectedCount={selection.collections.length} defaultOpen={selection.collections.length > 0}>
+          <CollectionRows options={collections} selected={selection.collections} onToggle={toggle("collections")} />
+        </FilterGroup>
+      ) : null}
+
+      {facets.narrowingInStock ? (
+        <FilterGroup title={t("groupAvailability")} selectedCount={selection.inStock ? 1 : 0} defaultOpen={selection.inStock}>
+          <Checkbox dense label={t("inStockOnly")} count={facets.inStockCount} checked={selection.inStock} onChange={() => onChange({ inStock: !selection.inStock })} />
         </FilterGroup>
       ) : null}
     </div>
   );
 }
 
-function WeaponlessSearch({ options, selected, onToggle }: { options: FacetOption[]; selected: string[]; onToggle: (key: string) => void }) {
+function CollectionRows({ options, selected, onToggle }: { options: FacetOption[]; selected: string[]; onToggle: (key: string) => void }) {
   const [query, setQuery] = useState("");
   const q = query.trim().toLowerCase();
   const visible = q ? options.filter((o) => o.label.toLowerCase().includes(q)) : options;
@@ -479,7 +563,7 @@ export function FilterSummary({
   return (
     <div className={cn("flex min-w-0 flex-col gap-3", className)}>
       <p className="m-0 font-mono text-data text-ink" aria-live="polite">
-        {[`${total.toLocaleString("en-GB")} ${total === 1 ? "skin" : "skins"}`, ...parts].join(" · ")}
+        {[`${total.toLocaleString("en-GB")} ${total === 1 ? "lot" : "lots"}`, ...parts].join(" · ")}
       </p>
       {chips.length > 0 ? (
         <FilterChipRow onClearAll={onClearAll}>
@@ -508,23 +592,24 @@ export function ProductFiltersSheet({
   const t = useTranslations("catalog");
   const titleId = useId();
   return (
-    <Sheet open={open} onClose={onClose} side="bottom" labelledBy={titleId}>
+    <Sheet open={open} onClose={onClose} side="bottom" labelledBy={titleId} className="!bg-mount">
       <div className="flex h-full flex-col">
-        <div className="flex h-14 shrink-0 items-center justify-between border-b border-line pl-4 pr-2">
-          <h2 id={titleId} className="text-step-2 font-semibold leading-none">
+        <div className="relative flex h-14 shrink-0 items-center justify-between pl-4 pr-2">
+          <h2 id={titleId} className="font-display text-step-2 font-medium leading-none">
             {t("filtersTitle")}
           </h2>
           <button type="button" onClick={onClose} aria-label={t("closeFilters")} className="flex size-11 cursor-pointer items-center justify-center rounded-control text-ink">
             <X size={20} aria-hidden="true" />
           </button>
+          <span aria-hidden="true" className="hang-rail absolute inset-x-0 bottom-0" />
         </div>
         <div className="min-h-0 flex-1 overflow-y-auto px-4">{children}</div>
-        <div className="flex shrink-0 items-center justify-between gap-4 border-t border-line bg-raised px-4 py-3">
+        <div className="flex shrink-0 items-center justify-between gap-4 border-t border-line bg-mount px-4 py-3">
           <Button variant="ghost" onPress={onClearAll}>
             Clear all
           </Button>
           <Button onPress={onClose} className="flex-1">
-            Show {total.toLocaleString("en-GB")} {total === 1 ? "skin" : "skins"}
+            Show {total.toLocaleString("en-GB")} {total === 1 ? "lot" : "lots"}
           </Button>
         </div>
       </div>

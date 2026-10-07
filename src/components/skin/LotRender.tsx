@@ -5,58 +5,62 @@ import Image from "next/image";
 import { ImageOff } from "lucide-react";
 import { cn } from "@/lib/utils/cn";
 
-export type StageAspect = "4/3" | "16/10" | "3/4" | "1/1";
+export type RenderAspect = "5/4" | "16/11" | "3/4" | "1/1" | "free";
 
-const ASPECT: Record<StageAspect, string> = {
-  "4/3": "aspect-[4/3]",
-  "16/10": "aspect-[16/10]",
+const ASPECT: Record<RenderAspect, string> = {
+  "5/4": "aspect-[5/4]",
+  "16/11": "aspect-[16/11]",
   "3/4": "aspect-[3/4]",
   "1/1": "aspect-square",
+  free: "",
 };
 
-export interface SkinStageProps {
+export interface LotRenderProps {
   src?: string | null;
   alt: string;
-  aspect?: StageAspect;
+  aspect?: RenderAspect;
   sizes?: string;
   priority?: boolean;
   compact?: boolean;
-  lamp?: boolean;
-  follow?: boolean;
+  spot?: boolean;
   className?: string;
   renderClassName?: string;
   viewTransition?: string;
   children?: ReactNode;
 }
 
-export function SkinStage({
+export function LotRender({
   src,
   alt,
-  aspect = "4/3",
+  aspect = "5/4",
   sizes,
   priority,
   compact = false,
-  lamp = true,
-  follow = true,
+  spot = false,
   className,
   renderClassName,
   viewTransition,
   children,
-}: SkinStageProps) {
+}: LotRenderProps) {
   const [failed, setFailed] = useState(false);
   const show = Boolean(src) && !failed;
   return (
-    <div data-stage="" data-lamp={lamp ? "on" : "off"} data-lamp-follow={follow || undefined} className={cn("stage", ASPECT[aspect], className)}>
+    <div
+      data-render-box=""
+      data-spot-surface={spot || undefined}
+      className={cn("relative isolate", ASPECT[aspect], !show && "border border-line", className)}
+    >
+      {spot ? <span aria-hidden="true" className="spot-rake" /> : null}
       {show ? (
         <>
-          <span aria-hidden="true" className={cn("contact-shadow", compact && "h-1.5")} />
-          <div data-render="" data-depth="3" className={cn("stage-render", renderClassName)} style={viewTransition ? { viewTransitionName: viewTransition } : undefined}>
+          <span aria-hidden="true" className={cn("cast-shadow", compact && "h-1.5")} />
+          <div data-render="" data-depth="3" className={cn("lot-render", renderClassName)} style={viewTransition ? { viewTransitionName: viewTransition } : undefined}>
             <Image
               src={src as string}
               alt={alt}
               fill
               priority={priority}
-              sizes={sizes ?? (compact ? "120px" : "(min-width: 1280px) 340px, (min-width: 1024px) 30vw, 50vw")}
+              sizes={sizes ?? (compact ? "120px" : "(min-width: 1280px) 360px, (min-width: 1024px) 30vw, 50vw")}
               className="object-contain"
               onError={() => setFailed(true)}
             />
@@ -71,8 +75,4 @@ export function SkinStage({
       {children}
     </div>
   );
-}
-
-export function EmptyStage({ className, aspect = "4/3" }: { className?: string; aspect?: StageAspect }) {
-  return <div aria-hidden="true" data-stage="" data-lamp="on" className={cn("stage rounded-tray", ASPECT[aspect], className)} />;
 }

@@ -19,7 +19,7 @@ const sections: PolicySection[] = [
           from a person you are trading with.
         </p>
         <p>
-          We request each trade offer straight after your payment is confirmed by our payment provider. Offers are sent {F.deliveryUsual}.
+          We request each trade offer straight once your payment has been confirmed by our payment provider. Offers are sent {F.deliveryUsual}.
           Orders with several items are delivered item by item, so you may receive more than one offer.
         </p>
       </>

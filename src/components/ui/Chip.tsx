@@ -9,12 +9,12 @@ export function FilterChip({ label, onRemove, rarity, className }: { label: stri
     <span
       data-rarity={rarity}
       className={cn(
-        "inline-flex h-8 items-center gap-0.5 rounded-control border border-control bg-raised pl-3 text-ui-sm font-semibold text-ink transition-colors duration-[140ms]",
+        "relative inline-flex h-8 items-center gap-0.5 rounded-control border border-control bg-mount pl-3 text-ui-sm font-medium text-ink transition-colors duration-[120ms]",
         "has-[button:hover]:border-ink",
-        rarity && "shadow-[inset_2px_0_0_var(--rarity)]",
         className,
       )}
     >
+      {rarity ? <span aria-hidden="true" className="absolute inset-x-0 top-0 h-0.5 bg-rarity" /> : null}
       <span className="whitespace-nowrap">{label}</span>
       <button
         type="button"
@@ -33,7 +33,7 @@ export function FilterChipRow({ children, onClearAll, className }: { children: R
     <div className={cn("flex flex-wrap items-center gap-2", className)}>
       {children}
       {onClearAll ? (
-        <button type="button" onClick={onClearAll} className="ml-1 min-h-8 cursor-pointer text-ui-sm font-semibold text-ink decoration-1 underline-offset-4 hover-device:hover:underline">
+        <button type="button" onClick={onClearAll} className="ml-1 min-h-8 cursor-pointer text-ui-sm font-medium text-ink decoration-1 underline-offset-[5px] hover-device:hover:underline">
           Clear all
         </button>
       ) : null}

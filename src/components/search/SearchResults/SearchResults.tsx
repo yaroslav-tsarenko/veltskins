@@ -20,7 +20,7 @@ export function SearchForm({ query, label, placeholder, submit }: { query: strin
           placeholder={placeholder}
           autoComplete="off"
           enterKeyHint="search"
-          className="h-14 w-full rounded-control border border-control bg-raised pl-12 pr-4 text-step-1 text-ink shadow-lamp-catch placeholder:text-ink-subtle hover-device:hover:border-ink-muted focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-focus"
+          className="h-14 w-full rounded-control border border-control bg-mount pl-12 pr-4 text-step-1 text-ink  placeholder:text-ink-faint hover-device:hover:border-ink-muted focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-focus"
         />
       </div>
       <Button type="submit" size="lg" className="h-14">
@@ -58,7 +58,7 @@ export async function SearchNoResults({ query, categories }: { query: string; ca
               <li key={c.href} className="border-b border-line">
                 <Link href={c.href} className="label-caps flex min-h-12 items-center justify-between gap-3 text-[0.9375rem] text-ink hover-device:hover:underline hover-device:hover:underline-offset-4">
                   {c.name}
-                  <span className="font-mono text-[0.75rem] font-normal normal-case tracking-normal text-ink-subtle">{c.count}</span>
+                  <span className="font-mono text-data-sm font-normal normal-case tracking-normal text-ink-faint">{c.count}</span>
                 </Link>
               </li>
             ))}

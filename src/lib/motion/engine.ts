@@ -1,8 +1,5 @@
 import { readMotionEnv, type MotionEnv } from "./env";
-import { mountHero } from "./scenes/hero";
-import { mountInspect } from "./scenes/inspect";
 import { mountReveal } from "./scenes/reveal";
-import { mountTrays } from "./scenes/trays";
 
 interface Scene {
   selector: string;
@@ -10,9 +7,7 @@ interface Scene {
 }
 
 const SCENES: Scene[] = [
-  { selector: "[data-scene=bay-hero]", mount: mountHero },
-  { selector: "[data-scene=inspect]", mount: mountInspect },
-  { selector: "[data-scene=bays], [data-scene=rarity-ladder], [data-scene=marks]", mount: mountReveal },
+  { selector: "[data-scene=hang], [data-scene=strip], [data-scene=rooms], [data-scene=register], [data-scene=condition], [data-scene=marks]", mount: mountReveal },
 ];
 
 const yieldToMain = () => new Promise<void>((resolve) => window.setTimeout(resolve, 0));
@@ -22,8 +17,6 @@ export function mountMotion(root: Document): () => void {
   const cleanups: (() => void)[] = [];
   let cancelled = false;
   if (env.reduced) return () => {};
-
-  cleanups.push(mountTrays(root, env));
 
   (async () => {
     for (const scene of SCENES) {

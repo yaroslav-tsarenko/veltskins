@@ -4,12 +4,12 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { CheckoutFooter } from "@/components/checkout/CheckoutFrame";
 import { BRAND } from "@/lib/brand";
-import { HELP_LINKS, NAV_CATEGORIES, ORDER_LINKS, POLICY_LINKS } from "@/config/navigation";
+import { CATALOGUE_LINKS, HELP_LINKS, ORDER_LINKS, POLICY_LINKS } from "@/config/navigation";
 import { openCookieSettings } from "@/lib/consent";
 import { Accordion, AccordionItem } from "@/components/ui/Accordion";
 import { PaymentLogos } from "@/components/shared/PaymentLogos/PaymentLogos";
-import { CalibratedRuler } from "@/components/skin/FloatRuler";
-import { CredentialsSheet } from "@/components/layout/Credentials/CredentialsSheet";
+import { HangLine } from "@/components/skin/HangLine";
+import { CredentialsSheet, VALVE_DISCLAIMER } from "@/components/layout/Credentials/CredentialsSheet";
 
 const linkCls = "text-ui-md text-ink decoration-1 underline-offset-4 hover-device:hover:underline";
 
@@ -35,7 +35,7 @@ function LinkList({ links, children }: { links: { href: string; label: string }[
 }
 
 const COLUMNS = [
-  { title: "Skins", links: [...NAV_CATEGORIES.map((c) => ({ href: `/catalog/${c.slug}`, label: c.name })), { href: "/catalog", label: "All skins" }] },
+  { title: "Catalogue", links: CATALOGUE_LINKS },
   { title: "Orders", links: ORDER_LINKS },
   { title: "Help", links: HELP_LINKS },
   { title: "Legal", links: POLICY_LINKS },
@@ -55,13 +55,11 @@ function StoreFooter() {
   const year = new Date().getFullYear();
 
   return (
-    <footer data-print-hide="" data-floor="" className="mt-auto bg-floor text-ink">
+    <footer data-print-hide="" data-skirting="" className="mt-auto bg-skirting text-ink">
+      <HangLine hooks={4} className="hidden lg:block" />
+      <HangLine hooks={2} className="lg:hidden" />
       <div className="mx-auto max-w-wide px-gutter">
-        <div aria-hidden="true" className="pt-4">
-          <CalibratedRuler decorative labels={false} />
-        </div>
-
-        <nav aria-label="Footer" className="mt-14 hidden grid-cols-4 lg:grid">
+        <nav aria-label="Footer" className="hidden grid-cols-4 pt-12 lg:grid">
           {COLUMNS.map((col, i) => (
             <div key={col.title} className={i === 0 ? "pr-10" : "border-l border-line px-10"}>
               <h2 className="eyebrow m-0 mb-5">{col.title}</h2>
@@ -70,7 +68,7 @@ function StoreFooter() {
           ))}
         </nav>
 
-        <nav aria-label="Footer" className="mt-8 lg:hidden">
+        <nav aria-label="Footer" className="pt-8 lg:hidden">
           <Accordion>
             {COLUMNS.map((col) => (
               <AccordionItem key={col.title} title={col.title} headingLevel={2} flush titleClassName="text-step-0">
@@ -80,13 +78,11 @@ function StoreFooter() {
           </Accordion>
         </nav>
 
-        <CredentialsSheet className="mt-12 lg:mt-16" />
+        <CredentialsSheet className="mt-14 lg:mt-20" />
 
-        <p className="m-0 mt-6 max-w-[80ch] text-ui-sm text-ink-muted">
-          {BRAND.name} is not affiliated with or endorsed by Valve Corporation. Counter-Strike, Steam and the Steam logo are trademarks of Valve Corporation.
-        </p>
+        <p className="m-0 mt-10 max-w-[80ch] text-ui-sm text-ink-muted">{VALVE_DISCLAIMER}</p>
 
-        <div className="mt-8 flex flex-col items-center gap-5 border-t border-line py-6 lg:flex-row lg:justify-between">
+        <div className="mt-10 flex flex-col items-center gap-5 border-t border-line py-6 lg:flex-row lg:justify-between">
           <p className="order-last m-0 text-ui-sm text-ink-muted lg:order-first">
             © {year} {BRAND.name}
           </p>

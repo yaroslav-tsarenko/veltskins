@@ -1,15 +1,15 @@
 {
   "id": "/",
-  "name": "Patinaskins",
-  "short_name": "Patinaskins",
-  "description": "CS2 skins with exterior, rarity and price in plain view. Pay by card; we send the skin to your Steam account as a trade offer.",
+  "name": "Veltskins",
+  "short_name": "Veltskins",
+  "description": "A catalogue of Counter-Strike 2 skins with the condition, classification and price printed on every lot. Pay by card; we send the skin to your Steam account as a trade offer.",
   "lang": "en-GB",
   "dir": "ltr",
   "start_url": "/",
   "scope": "/",
   "display": "standalone",
-  "background_color": "#121315",
-  "theme_color": "#0D0E10",
+  "background_color": "#EDE7DC",
+  "theme_color": "#86203A",
   "categories": [
     "shopping"
   ],

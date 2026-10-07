@@ -44,14 +44,14 @@ export function QuantitySelector({
 
   const compact = size === "compact";
   const segment = cn(
-    "flex shrink-0 cursor-pointer items-center justify-center text-ink transition-colors duration-[140ms]",
-    "hover-device:enabled:hover:bg-surface-1 disabled:cursor-not-allowed disabled:text-ink-subtle disabled:opacity-60",
+    "flex shrink-0 cursor-pointer items-center justify-center text-ink transition-colors duration-[120ms]",
+    "hover-device:enabled:hover:bg-surface-1 disabled:cursor-not-allowed disabled:text-ink-faint disabled:opacity-60",
     compact ? "size-9" : "size-10",
   );
 
   return (
     <div className={cn("inline-flex flex-col gap-1.5", className)}>
-      <div role="group" aria-labelledby={`${id}-label`} className="inline-flex w-fit overflow-hidden rounded-control border border-control bg-raised">
+      <div role="group" aria-labelledby={`${id}-label`} className="inline-flex w-fit overflow-hidden rounded-control border border-control bg-mount">
         <span id={`${id}-label`} className="sr-only">
           {label}
         </span>

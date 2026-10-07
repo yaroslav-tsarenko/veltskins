@@ -1,13 +1,14 @@
-import { SkinTray, type SkinProduct } from "@/components/skin/SkinTray";
-import { SectionHead } from "./SectionHead";
+import { Lot, type SkinProduct } from "@/components/skin/Lot";
+import { HangLine } from "@/components/skin/HangLine";
+import { SectionHead } from "@/components/home/SectionHead";
 
-export function ProductRail({
+export function LotRail({
   id,
   title,
   lead,
   products,
   link,
-  showCompare = false,
+  rail = true,
   className,
 }: {
   id: string;
@@ -15,17 +16,18 @@ export function ProductRail({
   lead?: string;
   products: SkinProduct[];
   link?: { href: string; label: string };
-  showCompare?: boolean;
+  rail?: boolean;
   className?: string;
 }) {
   if (products.length === 0) return null;
   return (
     <section aria-labelledby={`${id}-title`} data-section={id} className={className}>
       <SectionHead id={`${id}-title`} title={title} lead={lead} link={link} />
-      <div className="no-scrollbar -mx-gutter mt-8 flex snap-x gap-3 overflow-x-auto px-gutter pb-2 lg:mx-0 lg:grid lg:grid-cols-4 lg:gap-4 lg:overflow-visible lg:px-0">
+      {rail ? <HangLine hooks={4} className="mt-10" /> : null}
+      <div className="no-scrollbar -mx-gutter mt-10 flex snap-x gap-4 overflow-x-auto px-gutter pb-2 lg:mx-0 lg:grid lg:grid-cols-4 lg:gap-6 lg:overflow-visible lg:px-0">
         {products.map((p) => (
           <div key={p.id} className="w-[min(72vw,280px)] shrink-0 snap-start lg:w-auto">
-            <SkinTray product={p} showCompare={showCompare} />
+            <Lot product={p} sizes="(min-width: 1024px) 300px, 72vw" />
           </div>
         ))}
       </div>

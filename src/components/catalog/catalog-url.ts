@@ -3,7 +3,9 @@ import { EXTERIORS, RARITIES, WEAPON_TYPES } from "@/lib/skins/cs2";
 export const SORT_KEYS = ["newest", "price-asc", "price-desc", "popular", "name-asc", "relevance", "rarity-desc", "float-asc"] as const;
 export type SortKey = (typeof SORT_KEYS)[number];
 
-export const CATALOG_PAGE_SIZE = 24;
+export const CATALOG_PAGE_SIZE = 36;
+
+export const CATALOG_DEFAULT_SORT: SortKey = "rarity-desc";
 
 export const QUALITY_KEYS = ["normal", "stattrak", "souvenir"] as const;
 export type QualityKey = (typeof QUALITY_KEYS)[number];
@@ -118,7 +120,7 @@ function list(raw: RawSearchParams, filter: ListFilter): string[] {
   return [...new Set(clean)].sort().slice(0, 30);
 }
 
-export function parseCatalogParams(raw: RawSearchParams, defaultSort: SortKey = "newest"): CatalogParams {
+export function parseCatalogParams(raw: RawSearchParams, defaultSort: SortKey = CATALOG_DEFAULT_SORT): CatalogParams {
   const sortRaw = first(raw.sort) as SortKey;
   const page = parseInt(first(raw.page), 10);
   let minPrice = price(first(raw.minPrice));
@@ -189,7 +191,7 @@ export function buildCatalogHref(
   if (next.floatMax !== null) qs.set("floatMax", String(next.floatMax));
   if (next.inStock) qs.set("inStock", "true");
   if (next.onSale) qs.set("onSale", "true");
-  if (next.sort !== (options.defaultSort ?? "newest")) qs.set("sort", next.sort);
+  if (next.sort !== (options.defaultSort ?? CATALOG_DEFAULT_SORT)) qs.set("sort", next.sort);
   if (next.page > 1) qs.set("page", String(next.page));
   const query = qs.toString().replace(/%2C/g, ",");
   return query ? `${basePath}?${query}` : basePath;

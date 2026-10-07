@@ -6,7 +6,7 @@ import { X } from "lucide-react";
 import { Sheet } from "@/components/ui/Dialog";
 import { Button } from "@/components/ui/Button";
 import { CartItem } from "@/components/cart/CartItem/CartItem";
-import { EmptyBay } from "@/components/shared/EmptyState/EmptyState";
+import { EmptyMount } from "@/components/shared/EmptyState/EmptyState";
 import { PaymentLogos } from "@/components/shared/PaymentLogos/PaymentLogos";
 import { useCart } from "@/providers/CartProvider";
 import { useCurrency } from "@/providers/CurrencyProvider";
@@ -16,7 +16,7 @@ import { COMPANY } from "@/lib/company";
 const EMPTY_LINKS = [
   { href: "/catalog/knives", label: "Knives" },
   { href: "/catalog/rifles", label: "Rifles" },
-  { href: "/catalog/gloves", label: "Gloves" },
+  { href: "/catalog/pistols", label: "Pistols" },
 ];
 
 export function CartSheet() {
@@ -26,11 +26,11 @@ export function CartSheet() {
   const count = cart.itemCount;
 
   return (
-    <Sheet open={isSheetOpen} onClose={closeSheet} side="right" labelledBy={titleId}>
+    <Sheet open={isSheetOpen} onClose={closeSheet} side="right" labelledBy={titleId} className="!bg-mount">
       <div data-cart-panel="" className="flex h-full flex-col">
-        <div className="flex h-16 shrink-0 items-center justify-between gap-4 border-b border-line pl-6 pr-3">
+        <div className="relative flex h-16 shrink-0 items-center justify-between gap-4 pl-6 pr-3">
           <div className="flex items-baseline gap-3">
-            <h2 id={titleId} className="text-step-2 font-semibold leading-none text-ink">
+            <h2 id={titleId} className="font-display text-step-2 font-medium leading-none text-ink">
               Cart
             </h2>
             {count > 0 ? <span className="font-mono text-data text-ink-muted">{count}</span> : null}
@@ -38,23 +38,24 @@ export function CartSheet() {
           <button type="button" onClick={closeSheet} aria-label="Close cart" className="flex size-11 cursor-pointer items-center justify-center rounded-control text-ink hover-device:hover:bg-surface-1">
             <X size={20} aria-hidden="true" />
           </button>
+          <span aria-hidden="true" className="hang-rail absolute inset-x-0 bottom-0" />
         </div>
 
         {cart.items.length === 0 ? (
           <div className="flex flex-1 flex-col items-start gap-3 px-6 py-12">
-            <EmptyBay />
-            <p className="m-0 mt-3 font-display text-step-2 font-semibold leading-[1.12] text-ink">Your cart is empty</p>
+            <EmptyMount />
+            <p className="m-0 mt-5 font-display text-step-2 font-medium leading-[1.2] text-ink">Your cart is empty</p>
             <ul className="m-0 flex list-none gap-5 p-0">
               {EMPTY_LINKS.map((link) => (
                 <li key={link.href}>
-                  <Link href={link.href} onClick={closeSheet} className="text-ui-md font-semibold text-ink decoration-1 underline-offset-4 hover-device:hover:underline">
+                  <Link href={link.href} onClick={closeSheet} className="text-ui-md font-medium text-ink decoration-1 underline-offset-[5px] hover-device:hover:underline">
                     {link.label}
                   </Link>
                 </li>
               ))}
             </ul>
             <Button as={Link} href="/catalog" variant="outline" onClick={closeSheet} className="mt-4">
-              Browse all skins
+              Browse the catalogue
             </Button>
           </div>
         ) : (
@@ -71,7 +72,7 @@ export function CartSheet() {
                   <dd className="m-0 font-mono text-data text-ink">{formatPrice(displayTotals.subtotal, currency)}</dd>
                 </div>
                 <div className="mt-1 flex items-baseline justify-between gap-4 border-t border-line pt-3">
-                  <dt className="text-step-0 font-semibold text-ink">{COMPANY.vatRegistered ? "Total incl. VAT" : "Total"}</dt>
+                  <dt className="text-step-0 font-medium text-ink">{COMPANY.vatRegistered ? "Total incl. VAT" : "Total"}</dt>
                   <dd className="price m-0 text-step-2 leading-none text-ink">{formatPrice(displayTotals.total, currency)}</dd>
                 </div>
               </dl>

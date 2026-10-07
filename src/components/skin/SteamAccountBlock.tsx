@@ -29,7 +29,7 @@ export function SteamAccountBlock({
   if (!steam) {
     return (
       <div className={cn("flex flex-col items-start gap-3", className)}>
-        <p className="m-0 text-step-0 text-ink">Link your Steam account so we can send skins to it.</p>
+        <p className="m-0 text-step-0 text-ink">Link your Steam account so we can send lots to it.</p>
         <Button as="a" href={`/api/auth/steam?link=1&next=${encodeURIComponent(nextPath)}`} variant="steam">
           Sign in through Steam
         </Button>
@@ -41,15 +41,15 @@ export function SteamAccountBlock({
   return (
     <div data-steam-account="" className={cn("flex flex-wrap items-center gap-x-4 gap-y-3", className)}>
       {steam.avatar ? (
-        <Image src={steam.avatar} alt="" width={40} height={40} unoptimized className="size-10 shrink-0 rounded-control bg-surface-1" />
+        <Image src={steam.avatar} alt="" width={40} height={40} unoptimized className="size-10 shrink-0 rounded-none bg-surface-1" />
       ) : (
-        <span aria-hidden="true" className="flex size-10 shrink-0 items-center justify-center rounded-control bg-surface-1 font-mono text-data text-ink">
+        <span aria-hidden="true" className="flex size-10 shrink-0 items-center justify-center rounded-none bg-surface-1 font-mono text-data text-ink">
           {initials}
         </span>
       )}
       <div className="min-w-0 flex-1">
-        <p className="m-0 truncate text-ui-md font-semibold text-ink">{steam.personaName ?? "Steam user"}</p>
-        <p className="m-0 font-mono text-[0.75rem] text-ink-muted">SteamID {steamTail(steam.steamId64)}</p>
+        <p className="m-0 truncate text-ui-md font-medium text-ink">{steam.personaName ?? "Steam user"}</p>
+        <p className="label-caps m-0 text-ink-muted">SteamID {steamTail(steam.steamId64)}</p>
       </div>
       {showTradeStatus ? (
         <div className="flex items-center gap-3">
@@ -59,7 +59,7 @@ export function SteamAccountBlock({
             <>
               <Plate variant="warning">Trade URL missing</Plate>
               {tradeHref ? (
-                <Link href={tradeHref} className="text-ui-sm font-semibold text-ink underline decoration-1 underline-offset-4">
+                <Link href={tradeHref} className="text-ui-sm font-medium text-ink underline decoration-1 underline-offset-4">
                   Add trade URL
                 </Link>
               ) : null}

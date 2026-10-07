@@ -38,7 +38,7 @@ export function Checkbox({ label, description, count, indeterminate, error, dens
         className={cn(
           "group flex cursor-pointer items-start gap-2.5 text-step-0 leading-[1.45] text-ink",
           dense ? "min-h-11 items-center py-2" : "py-1",
-          rest.disabled && "cursor-not-allowed text-ink-subtle",
+          rest.disabled && "cursor-not-allowed text-ink-faint",
         )}
       >
         <span className="relative mt-[3px] grid size-[18px] shrink-0 place-items-center">
@@ -52,8 +52,8 @@ export function Checkbox({ label, description, count, indeterminate, error, dens
             aria-invalid={error ? true : undefined}
             aria-describedby={error ? `${fieldId}-error` : undefined}
             className={cn(
-              "peer absolute inset-0 m-0 cursor-pointer appearance-none rounded-control border-[1.5px] border-control bg-raised",
-              "transition-colors duration-[140ms] hover-device:hover:border-ink-muted",
+              "peer absolute inset-0 m-0 cursor-pointer appearance-none rounded-none border-[1.5px] border-control bg-mount",
+              "transition-colors duration-[120ms] hover-device:hover:border-ink-muted",
               "checked:border-brand checked:bg-brand indeterminate:border-brand indeterminate:bg-brand",
               "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-focus",
               "disabled:cursor-not-allowed disabled:bg-surface-1 disabled:border-line",
@@ -93,8 +93,8 @@ function RadioDot({ inputProps }: { inputProps: InputHTMLAttributes<HTMLInputEle
         type="radio"
         {...inputProps}
         className={cn(
-          "peer absolute inset-0 m-0 cursor-pointer appearance-none rounded-full border-[1.5px] border-control bg-raised",
-          "transition-colors duration-[140ms] hover-device:hover:border-ink-muted checked:border-brand",
+          "peer absolute inset-0 m-0 cursor-pointer appearance-none rounded-full border-[1.5px] border-control bg-mount",
+          "transition-colors duration-[120ms] hover-device:hover:border-ink-muted checked:border-brand",
           "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-focus",
           "disabled:cursor-not-allowed disabled:bg-surface-1 disabled:border-line",
           inputProps.className,
@@ -134,9 +134,9 @@ export function RadioRow({ label, description, meta, aside, wrapperClassName, id
     <label
       htmlFor={fieldId}
       className={cn(
-        "flex cursor-pointer items-start gap-3 border border-control px-4 py-4 transition-colors duration-[140ms]",
-        "rounded-control hover-device:hover:border-ink-muted has-checked:bg-brand-soft has-checked:shadow-[inset_0_-2px_0_var(--color-accent)]",
-        "has-disabled:cursor-not-allowed has-disabled:text-ink-subtle",
+        "flex cursor-pointer items-start gap-3 border border-control px-4 py-4 transition-colors duration-[120ms]",
+        "rounded-control hover-device:hover:border-ink-muted has-checked:bg-brand-wash has-checked:shadow-[inset_0_-2px_0_var(--color-accent)]",
+        "has-disabled:cursor-not-allowed has-disabled:text-ink-faint",
         wrapperClassName,
       )}
     >
@@ -192,14 +192,14 @@ export function Switch({ checked, onChange, label, description, disabled, locked
           onClick={() => onChange?.(!checked)}
           className={cn(
             "relative h-[22px] w-10 shrink-0 rounded-control border border-control transition-colors duration-[200ms] ease-[var(--ease-std)]",
-            checked ? "border-accent-edge bg-brand" : "bg-raised hover-device:hover:border-ink-muted",
+            checked ? "border-brand bg-brand" : "bg-mount hover-device:hover:border-ink-muted",
             disabled ? "cursor-not-allowed opacity-80" : "cursor-pointer",
           )}
         >
           <span
             aria-hidden="true"
             className={cn(
-              "absolute left-[2px] top-[2px] size-4 rounded-[1px] transition-transform duration-[200ms] ease-[var(--ease-instrument)]",
+              "absolute left-[2px] top-[2px] size-4 rounded-[1px] transition-transform duration-[220ms] ease-[var(--ease-std)]",
               checked ? "translate-x-[18px] bg-on-brand" : "translate-x-0 bg-control",
             )}
           />
@@ -239,7 +239,7 @@ export function Segmented<T extends string>({ options, value, onChange, label, s
     <div
       role="radiogroup"
       aria-label={label}
-      className={cn("inline-flex rounded-control border border-control bg-raised p-0", fullWidth && "flex w-full", className)}
+      className={cn("inline-flex rounded-control border border-control bg-mount p-0", fullWidth && "flex w-full", className)}
     >
       {options.map((option, index) => {
         const selected = option.value === value;
@@ -265,12 +265,12 @@ export function Segmented<T extends string>({ options, value, onChange, label, s
               }
             }}
             className={cn(
-              "relative flex cursor-pointer items-center justify-center gap-1.5 whitespace-nowrap px-3 text-ui-sm font-semibold transition-colors duration-[140ms] first:rounded-l-[1px] last:rounded-r-[1px]",
+              "relative flex cursor-pointer items-center justify-center gap-1.5 whitespace-nowrap px-3 text-ui-sm font-medium transition-colors duration-[120ms]",
               size === "sm" ? "h-8" : "h-9 touch-device:h-11",
               fullWidth && "flex-1",
               index > 0 && "border-l border-line",
-              selected ? "bg-brand-soft text-ink shadow-[inset_0_-2px_0_var(--color-accent)]" : "text-ink-muted hover-device:hover:text-ink",
-              option.disabled && "cursor-not-allowed text-ink-subtle",
+              selected ? "bg-brand-wash text-ink shadow-[inset_0_-2px_0_var(--color-accent)]" : "text-ink-muted hover-device:hover:text-ink",
+              option.disabled && "cursor-not-allowed text-ink-faint",
             )}
           >
             {option.label}

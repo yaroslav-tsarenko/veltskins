@@ -63,7 +63,7 @@ const sections: PolicySection[] = [
       <>
         <p>
           <strong>
-            We do not store or process full payment card data. All card payments are processed by our PCI DSS compliant payment provider
+            Full card numbers never reach us: we neither store nor process them. All card payments are processed by our PCI DSS compliant payment provider
             {F.paymentProviderNamed ? `, ${F.paymentProviderNamed}` : ""}.
           </strong>
         </p>

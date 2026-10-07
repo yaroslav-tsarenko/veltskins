@@ -17,9 +17,9 @@ const sample: InvoiceSource = {
   shippingAddress: { firstName: "Zofia", lastName: "Łukasiewicz", address1: "ul. Długa 14/3", city: "Kraków", postalCode: "31-147", country: "PL" },
   billingAddress: { firstName: "Zofia", lastName: "Łukasiewicz", address1: "ul. Długa 14/3", city: "Kraków", postalCode: "31-147", country: "PL" },
   items: [
-    { productName: "StatTrak™ AK-47 | Redline (Field-Tested)", variantName: "Field-Tested · Float 0.15–0.38 · StatTrak™", quantity: 1, price: 64.95 },
-    { productName: "★ Karambit | Doppler (Factory New)", variantName: "Factory New · Float 0.00–0.07", quantity: 1, price: 812.4 },
-    { productName: "Glock-18 | Water Elemental (Minimal Wear)", variantName: "Minimal Wear · Float 0.07–0.15", quantity: 1, price: 7.84 },
+    { productName: "StatTrak™ AK-47 | Redline (Field-Tested)", productSku: "VS-26674E9B21", variantName: "Field-Tested · float 0.15–0.38 · Covert", quantity: 1, price: 64.95 },
+    { productName: "★ Karambit | Doppler (Factory New)", productSku: "VS-1A04C7F330", variantName: "Factory New · float 0.00–0.07 · Extraordinary", quantity: 1, price: 812.4 },
+    { productName: "Glock-18 | Water Elemental (Minimal Wear)", productSku: "VS-9C1975F489", variantName: "Minimal Wear · float 0.07–0.15 · Restricted", quantity: 1, price: 7.84 },
   ],
 };
 

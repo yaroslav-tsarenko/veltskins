@@ -18,7 +18,7 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
 
   useEffect(() => {
     setMounted(true);
-    const stored = localStorage.getItem("theme") as Theme | null;
+    const stored = localStorage.getItem("veltskins-theme") as Theme | null;
     if (stored === "light" || stored === "dark") setThemeState(stored);
   }, []);
 
@@ -26,7 +26,7 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
     if (mounted) {
       document.documentElement.setAttribute("data-theme", theme);
       document.documentElement.classList.toggle("dark", theme === "dark");
-      localStorage.setItem("theme", theme);
+      localStorage.setItem("veltskins-theme", theme);
     }
   }, [theme, mounted]);
 

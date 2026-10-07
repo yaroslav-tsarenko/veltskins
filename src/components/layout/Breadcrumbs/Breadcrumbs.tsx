@@ -36,7 +36,7 @@ export function Breadcrumbs({ items, className, withJsonLd = true }: Breadcrumbs
           const last = index === items.length - 1;
           return (
             <li key={`${item.label}-${index}`} className="flex min-w-0 items-center gap-1.5">
-              {index > 0 ? <ChevronRight size={12} aria-hidden="true" className="text-ink-subtle" /> : null}
+              {index > 0 ? <ChevronRight size={12} aria-hidden="true" className="text-ink-faint" /> : null}
               {item.href && !last ? (
                 <Link href={item.href} className="text-ink-muted underline-offset-4 hover-device:hover:text-ink hover-device:hover:underline">
                   {item.label}

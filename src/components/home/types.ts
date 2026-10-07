@@ -1,4 +1,4 @@
-import type { SkinProduct } from "@/components/skin/SkinTray";
+import type { SkinProduct } from "@/components/skin/Lot";
 import type { RaritySlug } from "@/lib/skins/cs2";
 
 export interface HomeWeaponType {
@@ -11,10 +11,11 @@ export interface HomeWeaponType {
 
 export interface HomeRarityTier {
   slug: RaritySlug;
+  key: string;
   label: string;
-  keys: string[];
   count: number;
-  product: SkinProduct | null;
+  minPrice: number | null;
+  strip: SkinProduct[];
 }
 
 export interface HomePriceBand {
@@ -27,16 +28,13 @@ export interface HomePriceBand {
 
 export interface HomeData {
   totalProducts: number;
-  hero: SkinProduct | null;
+  anchor: SkinProduct | null;
+  hang: SkinProduct[];
+  today: SkinProduct[];
   types: HomeWeaponType[];
-  knives: SkinProduct[];
-  gloves: SkinProduct[];
   bands: HomePriceBand[];
   rarities: HomeRarityTier[];
-  wear: { code: string; product: SkinProduct | null }[];
-  wearSkin: string | null;
+  condition: { code: string; count: number; product: SkinProduct | null }[];
   stattrak: { count: number; products: SkinProduct[] };
   souvenir: { count: number; products: SkinProduct[] };
-  newest: SkinProduct[];
-  drops: SkinProduct[];
 }

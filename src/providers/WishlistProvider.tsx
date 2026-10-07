@@ -5,6 +5,8 @@ import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 import { useAuth } from "./AuthProvider";
 
+const MARKED_STORAGE_KEY = "veltskins-marked";
+
 interface WishlistContextType {
   isSaved: (productId: string) => boolean;
   toggle: (productId: string) => Promise<void>;
@@ -12,6 +14,23 @@ interface WishlistContextType {
 }
 
 const WishlistContext = createContext<WishlistContextType | undefined>(undefined);
+
+function readCache(): string[] {
+  try {
+    const raw = localStorage.getItem(MARKED_STORAGE_KEY);
+    const parsed = raw ? (JSON.parse(raw) as unknown) : null;
+    return Array.isArray(parsed) ? parsed.filter((v): v is string => typeof v === "string") : [];
+  } catch {
+    return [];
+  }
+}
+
+function writeCache(ids: Set<string>) {
+  try {
+    if (ids.size === 0) localStorage.removeItem(MARKED_STORAGE_KEY);
+    else localStorage.setItem(MARKED_STORAGE_KEY, JSON.stringify([...ids]));
+  } catch {}
+}
 
 export function WishlistProvider({ children }: { children: ReactNode }) {
   const { user } = useAuth();
@@ -22,13 +41,18 @@ export function WishlistProvider({ children }: { children: ReactNode }) {
   useEffect(() => {
     if (!user) {
       setIds(new Set());
+      writeCache(new Set());
       return;
     }
+    setIds(new Set(readCache()));
     let cancelled = false;
     fetch("/api/wishlist")
       .then((r) => (r.ok ? r.json() : []))
       .then((items: { productId: string }[]) => {
-        if (!cancelled && Array.isArray(items)) setIds(new Set(items.map((i) => i.productId)));
+        if (cancelled || !Array.isArray(items)) return;
+        const next = new Set(items.map((i) => i.productId));
+        setIds(next);
+        writeCache(next);
       })
       .catch(() => {});
     return () => {
@@ -39,7 +63,7 @@ export function WishlistProvider({ children }: { children: ReactNode }) {
   const toggle = useCallback(
     async (productId: string) => {
       if (!user) {
-        toast("Sign in to save items", {
+        toast("Sign in to mark lots", {
           action: { label: "Sign in", onClick: () => router.push("/auth/login") },
         });
         return;
@@ -57,10 +81,11 @@ export function WishlistProvider({ children }: { children: ReactNode }) {
           const next = new Set(prev);
           if (data.action === "added") next.add(productId);
           else next.delete(productId);
+          writeCache(next);
           return next;
         });
       } catch {
-        toast.error("We couldn't update your saved items. Try again.");
+        toast.error("We couldn't update your marked lots. Try again.");
       } finally {
         setBusy((b) => {
           const next = new Set(b);

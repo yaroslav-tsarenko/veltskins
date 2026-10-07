@@ -113,7 +113,7 @@ export function TradeUrlField({
         <label htmlFor={`${id}-input`} className="text-ui-md font-semibold text-ink">
           Steam trade URL
         </label>
-        <a href={STEAM_TRADE_URL_PAGE} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1 text-ui-sm font-semibold text-ink decoration-1 underline-offset-4 hover-device:hover:underline">
+        <a href={STEAM_TRADE_URL_PAGE} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1 text-ui-sm font-medium text-ink decoration-1 underline-offset-[5px] hover-device:hover:underline">
           Find it in Steam
           <ArrowUpRight size={14} aria-hidden="true" />
         </a>

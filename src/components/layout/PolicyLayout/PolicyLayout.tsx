@@ -32,19 +32,19 @@ export const policyProse = cn(
   "text-step-0 leading-[1.7] text-ink",
   "[&_p]:mt-4 [&_p:first-child]:mt-0",
   "[&_ul]:mt-4 [&_ul]:flex [&_ul]:list-disc [&_ul]:flex-col [&_ul]:gap-2 [&_ul]:pl-5 [&_ol]:mt-4 [&_ol]:flex [&_ol]:list-decimal [&_ol]:flex-col [&_ol]:gap-2 [&_ol]:pl-5",
-  "[&_li]:pl-1 [&_li::marker]:text-ink-subtle",
+  "[&_li]:pl-1 [&_li::marker]:text-ink-faint",
   "[&_a]:underline [&_a]:decoration-1 [&_a]:underline-offset-4 hover-device:[&_a:hover]:decoration-2",
-  "[&_strong]:font-semibold",
-  "[&_h3]:mt-8 [&_h3]:font-display [&_h3]:text-step-1 [&_h3]:leading-[1.25] [&_h3]:text-ink",
+  "[&_strong]:font-medium",
+  "[&_h3]:mt-8 [&_h3]:font-display [&_h3]:font-medium [&_h3]:text-step-1 [&_h3]:leading-[1.25] [&_h3]:text-ink",
 );
 
 export const policyTable = cn(
   "mt-5 w-full border-collapse text-left text-ui-sm",
-  "[&_th]:border-b [&_th]:border-line [&_th]:px-0 [&_th]:pb-3 [&_th]:pr-4 [&_th]:align-bottom [&_th]:text-ink-muted [&_th]:eyebrow",
+  "[&_th]:border-b [&_th]:border-rule [&_th]:px-0 [&_th]:pb-3 [&_th]:pr-4 [&_th]:align-bottom [&_th]:text-ink-muted [&_th]:eyebrow",
   "[&_td]:border-b [&_td]:border-line [&_td]:py-3.5 [&_td]:pr-4 [&_td]:align-top",
 );
 
-const sideLinkCls = "relative block py-2 text-ui-md text-ink-muted transition-colors duration-[140ms] hover-device:hover:text-ink";
+const sideLinkCls = "relative block py-2 text-ui-md text-ink-muted transition-colors duration-[120ms] hover-device:hover:text-ink";
 
 export function policyMetadata(slug: PolicySlug, description: string) {
   return async function generateMetadata(): Promise<Metadata> {
@@ -82,7 +82,7 @@ export async function PolicyLayout({ slug, title: titleProp, lastUpdated = POLIC
                       <Link
                         href={entry.href}
                         aria-current={active ? "page" : undefined}
-                        className={cn(sideLinkCls, "pl-4 before:absolute before:inset-y-2.5 before:left-0 before:w-0.5 before:bg-brand before:opacity-0 aria-[current=page]:before:opacity-100", active && "font-semibold text-ink")}
+                        className={cn(sideLinkCls, "after:absolute after:inset-x-0 after:bottom-0 after:h-0.5 after:bg-brand after:opacity-0 aria-[current=page]:after:opacity-100", active && "font-medium text-ink")}
                       >
                         {entry.title}
                       </Link>
@@ -99,7 +99,7 @@ export async function PolicyLayout({ slug, title: titleProp, lastUpdated = POLIC
                   {sections!.map((section, index) => (
                     <li key={section.id}>
                       <a href={`#${section.id}`} className="flex gap-2 py-1.5 text-ui-sm leading-[1.45] text-ink-muted hover-device:hover:text-ink">
-                        <span className="w-6 shrink-0 font-mono text-[0.75rem] leading-[1.9] text-ink-subtle">{index + 1}.</span>
+                        <span className="w-6 shrink-0 font-mono text-data-sm leading-[1.9] text-ink-faint">{index + 1}.</span>
                         <span>{section.title}</span>
                       </a>
                     </li>
@@ -122,7 +122,7 @@ export async function PolicyLayout({ slug, title: titleProp, lastUpdated = POLIC
           ) : null}
 
           <header className="measure">
-            <h1 className="m-0 text-step-5 font-[650] leading-none tracking-[-0.01em] text-ink">{title}</h1>
+            <h1 className="m-0 font-display text-step-5 font-medium leading-[1.06] tracking-[-0.01em] text-ink" style={{ fontVariationSettings: '"opsz" 44' }}>{title}</h1>
             {lastUpdated ? (
               <div className="mt-5">
                 <Plate variant="neutral">
@@ -130,7 +130,7 @@ export async function PolicyLayout({ slug, title: titleProp, lastUpdated = POLIC
                 </Plate>
               </div>
             ) : null}
-            {intro ? <div className={cn(policyProse, "mt-8 text-step-1 leading-[1.55] text-ink-muted")}>{intro}</div> : null}
+            {intro ? <div className={cn(policyProse, "mt-8 font-display text-step-1 leading-[1.56] text-ink-muted")}>{intro}</div> : null}
           </header>
 
           {hasToc ? (
@@ -141,7 +141,7 @@ export async function PolicyLayout({ slug, title: titleProp, lastUpdated = POLIC
                     {sections!.map((section, index) => (
                       <li key={section.id}>
                         <a href={`#${section.id}`} className="flex min-h-11 items-center gap-2 text-ui-sm text-ink">
-                          <span className="tabular w-6 shrink-0 text-ink-subtle">{index + 1}.</span>
+                          <span className="tabular w-6 shrink-0 text-ink-faint">{index + 1}.</span>
                           <span>{section.title}</span>
                         </a>
                       </li>
@@ -156,8 +156,8 @@ export async function PolicyLayout({ slug, title: titleProp, lastUpdated = POLIC
             <div className="measure">
               {sections.map((section, index) => (
                 <section key={section.id} id={section.id} aria-labelledby={`${section.id}-title`} className="scroll-mt-28 border-t border-line pt-8 mt-12 first:mt-12">
-                  <h2 id={`${section.id}-title`} className="m-0 flex gap-3 text-step-3 font-semibold leading-[1.1] text-ink">
-                    <span className="tabular shrink-0 text-ink-subtle">{index + 1}.</span>
+                  <h2 id={`${section.id}-title`} className="m-0 flex gap-3 font-display text-step-3 font-medium leading-[1.14] text-ink">
+                    <span className="tabular shrink-0 text-ink-faint">{index + 1}.</span>
                     <span>{section.title}</span>
                   </h2>
                   <div className={cn(policyProse, "mt-5")}>{section.body}</div>

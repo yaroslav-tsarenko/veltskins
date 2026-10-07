@@ -101,7 +101,7 @@ const sections: PolicySection[] = [
           <li>Once the payment provider confirms the payment to us, we email you an order confirmation. The contract between you and {F.company} is formed when we send that email.</li>
         </ol>
         <p>
-          Each listing is a single item, so you can buy each item once per order, and up to {F.maxItemsPerOrder} items in one order. We may
+          Each listing is a single item, so you can buy each item once per order, and up to {F.maxItemsPerOrder} items in one order. We can
           decline an order before the contract is formed, or cancel it afterwards with a full refund, if an item is no longer available,
           if the price or description shown was clearly wrong, if your Steam account cannot receive trade offers, if the order is linked
           to a restricted country or territory, or if the payment appears fraudulent. We tell you by email if this happens.
@@ -181,12 +181,12 @@ const sections: PolicySection[] = [
           once delivery of the digital content has begun with your express consent and your acknowledgement that you lose the right.
         </p>
         <p>
-          At checkout there is a separate box, which is not ticked in advance: “{F.waiverText}” You cannot place an order without
+          At checkout there is a separate box, which is not ticked in advance: “{F.waiverText}” You maynot place an order without
           ticking it. We record the time you ticked it and the wording you agreed to, and we repeat it in your order confirmation email.
-          Delivery begins when we send the trade offer for your item, which happens straight after your payment is confirmed.
+          Delivery begins when we send the trade offer for your item, which happens straight once your payment has been confirmed.
         </p>
         <p>
-          You can cancel an order without charge before {F.cancelBefore}. Email {F.email} or use the <Link href="/contact">contact form</Link>{" "}
+          You can cancel an order without charge before {F.cancelBefore}. Write to {F.email}, or use the <Link href="/contact">contact form</Link>{" "}
           with your order number. If the offer has not been sent yet, we cancel the order and refund you in full.
         </p>
       </>
@@ -200,7 +200,7 @@ const sections: PolicySection[] = [
         <p>
           We refund the price you paid for an item if we cannot deliver it within {F.deliveryDeadlineHours} hours of payment confirmation,
           if the trade offer fails or expires for a reason on our side, if Steam reverses the trade while the item is under trade protection,
-          or if you cancel before {F.cancelBefore}. We refund within {F.refundDays} days to {F.refundMethod}, in the currency you paid in.
+          or if you cancel before {F.cancelBefore}. The refund is made within {F.refundDays} days to {F.refundMethod}, in the currency you paid in.
         </p>
         <p>
           If a trade offer cannot be completed because of your Steam account, for example an invalid trade URL, a private inventory, a trade

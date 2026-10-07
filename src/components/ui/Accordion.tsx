@@ -1,7 +1,7 @@
 "use client";
 
 import { useId, useState, type ReactNode } from "react";
-import { Minus, Plus } from "lucide-react";
+import { ChevronDown } from "lucide-react";
 import { cn } from "@/lib/utils/cn";
 
 export interface AccordionItemProps {
@@ -55,16 +55,20 @@ export function AccordionItem({
           aria-controls={`${baseId}-panel`}
           onClick={toggle}
           className={cn(
-            "relative flex min-h-14 w-full cursor-pointer items-center justify-between gap-4 py-3 text-left font-sans text-step-1 font-semibold leading-[1.3] text-ink",
-            "before:absolute before:-left-px before:top-3 before:bottom-3 before:w-0.5 before:bg-brand before:opacity-0 before:transition-opacity before:duration-[140ms]",
-            open && "before:opacity-100",
+            "relative flex min-h-14 w-full cursor-pointer items-center justify-between gap-4 py-3 text-left font-sans text-step-1 font-medium leading-[1.3] text-ink",
+            "after:absolute after:inset-x-0 after:bottom-0 after:h-0.5 after:bg-brand after:opacity-0 after:transition-opacity after:duration-[120ms]",
+            open && "after:opacity-100",
             flush ? "pl-0" : "pl-4",
             titleClassName,
           )}
         >
           <span className="min-w-0 flex-1">{title}</span>
           {aside ? <span className="shrink-0">{aside}</span> : null}
-          {open ? <Minus size={18} aria-hidden="true" className="shrink-0 text-ink-muted" /> : <Plus size={18} aria-hidden="true" className="shrink-0 text-ink-muted" />}
+          <ChevronDown
+            size={18}
+            aria-hidden="true"
+            className={cn("shrink-0 text-ink-muted transition-transform duration-[220ms] ease-[var(--ease-std)]", open && "rotate-180")}
+          />
         </button>
       </Heading>
       <div
@@ -72,7 +76,7 @@ export function AccordionItem({
         role="region"
         aria-labelledby={`${baseId}-trigger`}
         inert={!open}
-        className={cn("grid transition-[grid-template-rows] duration-[200ms] ease-[var(--ease-instrument)]", open ? "grid-rows-[1fr]" : "grid-rows-[0fr]")}
+        className={cn("grid transition-[grid-template-rows] duration-[220ms] ease-[var(--ease-std)]", open ? "grid-rows-[1fr]" : "grid-rows-[0fr]")}
       >
         <div className="relative min-h-0 overflow-hidden">
           <div className={cn(flush ? "pb-5" : "px-4 pb-5 pt-1", panelClassName)}>{children}</div>

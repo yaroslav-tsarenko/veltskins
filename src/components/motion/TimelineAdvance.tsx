@@ -40,7 +40,7 @@ export function TimelineAdvance({ status }: { status: string }) {
     previous.current = { status, reached, jaw };
     if (!before || before.status === status || window.matchMedia(REDUCED_MOTION_QUERY).matches) return;
 
-    const timing = { duration: MOTION_DURATION.cartFlight, easing: cssEase("instrument"), fill: "backwards" as const };
+    const timing = { duration: MOTION_DURATION.cartFlight, easing: cssEase("hang"), fill: "backwards" as const };
     let step = 0;
     for (let i = Math.max(1, before.reached + 1); i <= reached; i++) {
       const seg = nodes[i]?.querySelector<HTMLElement>("[data-seg]");
@@ -62,7 +62,7 @@ export function TimelineAdvance({ status }: { status: string }) {
       const dx = before.jaw.x - jaw.x;
       const dy = before.jaw.y - jaw.y;
       if (Math.abs(dx) + Math.abs(dy) > 1) {
-        moved.animate([{ transform: `translate(${dx}px, ${dy}px)` }, { transform: "none" }], { duration: MOTION_DURATION.cartFlight + step * MOTION_DURATION.ui, easing: cssEase("instrument") });
+        moved.animate([{ transform: `translate(${dx}px, ${dy}px)` }, { transform: "none" }], { duration: MOTION_DURATION.cartFlight + step * MOTION_DURATION.ui, easing: cssEase("hang") });
       }
     }
   }, [status]);

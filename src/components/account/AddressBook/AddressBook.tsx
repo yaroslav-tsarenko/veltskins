@@ -92,7 +92,7 @@ function AddressForm({ editing, onDone, onCancel }: { editing: Exclude<Editing, 
 
   return (
     <div className="border-t border-line">
-      <form noValidate onSubmit={onSubmit} className="flex flex-col gap-5 bg-raised p-5 sm:p-6" aria-labelledby="address-form-title">
+      <form noValidate onSubmit={onSubmit} className="flex flex-col gap-5 bg-mount p-5 sm:p-6" aria-labelledby="address-form-title">
         <h2 id="address-form-title" ref={headingRef} tabIndex={-1} className="m-0 text-step-2 leading-none text-ink outline-none">
           {existing ? t("editTitle") : t("addTitle")}
         </h2>
@@ -209,7 +209,7 @@ export function AddressBook() {
                 <AddressForm editing={editing} onDone={done} onCancel={() => setEditing(null)} />
               </li>
             ) : (
-              <li key={address.id} className={cn("flex flex-col gap-4 border bg-raised p-5", address.isDefault ? "border-control" : "border-line")}>
+              <li key={address.id} className={cn("flex flex-col gap-4 border bg-mount p-5", address.isDefault ? "border-control" : "border-line")}>
                 <div className="flex items-start justify-between gap-3">
                   <p className="m-0 text-step-0 font-medium text-ink">{`${address.firstName} ${address.lastName}`}</p>
                   {address.isDefault ? <Plate variant="neutral">{t("default")}</Plate> : null}

@@ -27,14 +27,10 @@ interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
 
 export function ButtonLoader({ className }: { className?: string }) {
   return (
-    <span aria-hidden="true" className={cn("pointer-events-none absolute inset-0 flex items-center justify-center gap-1", className)}>
-      {[0, 1, 2].map((i) => (
-        <span
-          key={i}
-          className="size-1 bg-current opacity-40 [animation:readout-led_420ms_steps(1,end)_infinite] motion-reduce:animate-none"
-          style={{ animationDelay: `${i * 140}ms` }}
-        />
-      ))}
+    <span aria-hidden="true" className={cn("pointer-events-none absolute inset-0 flex items-center justify-center", className)}>
+      <span className="relative block h-px w-[72px] overflow-hidden bg-current opacity-30">
+        <span className="absolute inset-0 origin-left bg-current opacity-100 [animation:line-draw_900ms_var(--ease-in-out)_infinite] motion-reduce:animate-none" />
+      </span>
     </span>
   );
 }

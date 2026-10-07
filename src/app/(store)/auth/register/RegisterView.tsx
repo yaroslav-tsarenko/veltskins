@@ -236,7 +236,7 @@ export function RegisterView() {
     <div className="mx-auto grid max-w-[1040px] grid-cols-1 gap-12 px-gutter pb-24 pt-10 lg:grid-cols-12 lg:gap-0 lg:pt-16">
       <div className="flex min-w-0 flex-col gap-6 lg:col-span-7 lg:max-w-[560px] lg:pr-6">
         <div className="flex flex-col gap-3">
-          <h1 className="m-0 text-step-5 font-[650] leading-none tracking-[-0.01em] text-ink">{t("title")}</h1>
+          <h1 className="m-0 text-step-5 font-medium leading-none tracking-[-0.01em] text-ink">{t("title")}</h1>
           <p className="m-0 text-ink-muted">{t("lead")}</p>
           <p className="meta m-0 text-ink-muted">
             {t.rich("steamAlternative", {

@@ -10,7 +10,7 @@ export const generateMetadata = policyMetadata(
 const sections: PolicySection[] = [
   {
     id: "guarantee",
-    title: "What the guarantee covers",
+    title: "When the guarantee applies",
     body: (
       <>
         <p>{F.guarantee}</p>
@@ -29,7 +29,7 @@ const sections: PolicySection[] = [
   },
   {
     id: "what-it-is-not",
-    title: "What the guarantee does not cover",
+    title: "Where the guarantee stops",
     body: (
       <>
         <ul>
@@ -39,7 +39,7 @@ const sections: PolicySection[] = [
           <li>Items you trade, sell or lose access to after delivery, for example through a compromised Steam account.</li>
         </ul>
         <p>
-          Your statutory rights as a consumer in the UK and EU are not affected. Digital content must be as described and of satisfactory
+          None of this cuts into your statutory rights as a consumer in the UK or the EU. Digital content must be as described and of satisfactory
           quality, and this guarantee adds to those rights.
         </p>
       </>
@@ -50,16 +50,16 @@ const sections: PolicySection[] = [
     title: "How to make a claim",
     body: (
       <ol>
-        <li>Email {F.email} or use the <Link href="/contact">contact form</Link>, with your order number and the item concerned.</li>
+        <li>Write to {F.email}, or use the <Link href="/contact">contact form</Link>, with your order number and the item concerned.</li>
         <li>For a reversed trade, tell us the date the item left your inventory. A screenshot of your Steam inventory history helps.</li>
-        <li>We check the trade record and reply {F.replyTime}.</li>
-        <li>If the claim is covered, we refund the item within {F.refundDays} days, or re-send it if you prefer.</li>
+        <li>We look at the trade record and answer {F.replyTime}.</li>
+        <li>If the claim is covered, we put the price of that item back on your card within {F.refundDays} days, or re-send it if you prefer.</li>
       </ol>
     ),
   },
   {
     id: "automatic",
-    title: "Claims we handle without being asked",
+    title: "Claims we settle before you write to us",
     body: (
       <p>
         Most failed deliveries and reversed trades are reported to us by our delivery partner. When that happens, the item shows

@@ -10,7 +10,7 @@
   "empty": {
     "title": "Your cart is empty",
     "subtitle": "Add a skin to your cart to check out.",
-    "action": "Browse skins"
+    "action": "Browse the catalogue"
   },
   "errors": {
     "checkFields": "Check {count, plural, one {# field} other {# fields}}"
@@ -113,7 +113,7 @@
   "confirmed": {
     "meta": {
       "title": "Order confirmation",
-      "description": "The status of your Patinaskins order and payment."
+      "description": "The status of your Veltskins order and payment."
     },
     "itemsTitle": "Your order",
     "lineQty": "{count} × {unit}",

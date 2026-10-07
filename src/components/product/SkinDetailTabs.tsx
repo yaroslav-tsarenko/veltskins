@@ -21,24 +21,24 @@ export function SkinDetailTabs({ skin, className }: { skin: SkinSummary | null; 
   const d = STORE_POLICY.delivery;
   const ext = skin ? exteriorDef(skin.exterior) : null;
   const range = skin ? floatRangeLabel(skin.floatMin, skin.floatMax) : null;
-  const reading = "measure text-step-0 leading-[1.7] text-ink-muted [&_a]:font-semibold [&_a]:text-ink [&_a]:underline [&_a]:underline-offset-4";
+  const reading = "measure text-step-0 leading-[1.7] text-ink-muted [&_a]:font-medium [&_a]:text-ink [&_a]:underline [&_a]:underline-offset-4";
 
   const details = (
     <div className="grid gap-10 lg:grid-cols-2">
       {skin ? (
         <table className="w-full border-collapse border-t border-rule">
-          <caption className="sr-only">Item details</caption>
+          <caption className="sr-only">Lot details</caption>
           <tbody>
             <Row label="Weapon">{skin.weapon}</Row>
-            <Row label="Type">{weaponTypeDef(skin.weaponType)?.singular ?? skin.weaponType}</Row>
+            <Row label="Type">{weaponTypeDef(skin.weaponType)?.label ?? skin.weaponType}</Row>
             <Row label="Finish">{skin.skinName ?? "None (vanilla)"}</Row>
-            <Row label="Exterior">{ext ? ext.label : "Not painted"}</Row>
+            <Row label="Condition">{ext ? ext.label : "Not painted"}</Row>
             {range ? (
               <Row label="Float range">
                 <span className="font-mono text-data">{range}</span>
               </Row>
             ) : null}
-            <Row label="Rarity">{rarityDef(skin.rarity)?.label ?? skin.rarity}</Row>
+            <Row label="Classification">{rarityDef(skin.rarity)?.label ?? skin.rarity}</Row>
             {skin.phase ? <Row label="Phase">{skin.phase}</Row> : null}
             {skin.collection ? <Row label="Collection">{skin.collection}</Row> : null}
             <Row label="Quality">{skin.isStatTrak ? "StatTrak™" : skin.isSouvenir ? "Souvenir" : "Standard"}</Row>
@@ -46,7 +46,7 @@ export function SkinDetailTabs({ skin, className }: { skin: SkinSummary | null; 
         </table>
       ) : null}
       <div className={reading}>
-        <p className="m-0">The image is Steam’s standard render for this skin. Wear and pattern on your copy may differ.</p>
+        <p className="m-0">The image is Steam’s standard render for this skin. The wear and pattern on your copy may differ.</p>
         {range ? <p className="m-0 mt-4">The float of the copy you receive falls inside {range}, the range for its exterior. Steam shows the exact value after delivery.</p> : null}
       </div>
     </div>
@@ -74,5 +74,5 @@ export function SkinDetailTabs({ skin, className }: { skin: SkinSummary | null; 
     </div>
   );
 
-  return <Tabs className={cn(className)} label="About this skin" items={[{ id: "details", label: "Details", content: details }, { id: "delivery", label: "Delivery", content: delivery }, { id: "price", label: "Price notes", content: priceNotes }]} />;
+  return <Tabs className={cn(className)} label="About this lot" items={[{ id: "details", label: "Details", content: details }, { id: "delivery", label: "Delivery", content: delivery }, { id: "price", label: "Price notes", content: priceNotes }]} />;
 }

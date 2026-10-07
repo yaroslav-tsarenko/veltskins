@@ -79,14 +79,14 @@ export function Stepper({
           const last = index === steps.length - 1;
           return (
             <li key={step.id} data-step-state={state} aria-current={open ? "step" : undefined} className="relative">
-              {!last ? <span aria-hidden="true" className="absolute bottom-0 left-4 top-8 w-px bg-line" /> : null}
+              {!last ? <span aria-hidden="true" className="absolute bottom-0 left-4 top-8 w-px bg-rule" /> : null}
               <div className="relative flex min-h-14 flex-wrap items-center gap-x-4 gap-y-1 py-3 sm:min-h-16">
                 <span
                   aria-hidden="true"
                   className={cn(
-                    "relative z-[1] flex size-8 shrink-0 items-center justify-center rounded-control font-mono text-[1rem] font-semibold",
+                    "relative z-[1] flex size-8 shrink-0 items-center justify-center rounded-none font-mono text-step-1 font-semibold",
                     state === "current" ? "bg-brand text-on-brand" : "bg-surface-1 text-ink",
-                    state === "upcoming" && "text-ink-subtle",
+                    state === "upcoming" && "text-ink-faint",
                   )}
                 >
                   {state === "complete" ? <Check size={16} strokeWidth={2} /> : index + 1}
@@ -98,8 +98,8 @@ export function Stepper({
                   tabIndex={open ? -1 : undefined}
                   id={`${baseId}-${step.id}-title`}
                   className={cn(
-                    "m-0 min-w-0 flex-1 font-display text-step-2 font-semibold leading-[1.1] outline-none",
-                    state === "upcoming" ? "text-ink-subtle" : "text-ink",
+                    "m-0 min-w-0 flex-1 font-display text-step-2 font-medium leading-[1.2] outline-none",
+                    state === "upcoming" ? "text-ink-faint" : "text-ink",
                   )}
                 >
                   <span className="sr-only">Step {index + 1}: </span>
@@ -109,7 +109,7 @@ export function Stepper({
                   <button
                     type="button"
                     onClick={() => onEdit(index)}
-                    className="min-h-11 cursor-pointer text-ui-md font-semibold text-ink decoration-1 underline-offset-4 hover-device:hover:underline"
+                    className="min-h-11 cursor-pointer text-ui-md font-medium text-ink decoration-1 underline-offset-[5px] hover-device:hover:underline"
                   >
                     Change<span className="sr-only"> {step.title}</span>
                   </button>
@@ -120,7 +120,7 @@ export function Stepper({
                 inert={!open}
                 aria-labelledby={`${baseId}-${step.id}-title`}
                 role="group"
-                className={cn("grid transition-[grid-template-rows] duration-[200ms] ease-[var(--ease-instrument)]", open ? "grid-rows-[1fr]" : "grid-rows-[0fr]")}
+                className={cn("grid transition-[grid-template-rows] duration-[220ms] ease-[var(--ease-std)]", open ? "grid-rows-[1fr]" : "grid-rows-[0fr]")}
               >
                 <div className="relative min-h-0 overflow-hidden">
                   <div className="pb-8 pl-12 pt-2">

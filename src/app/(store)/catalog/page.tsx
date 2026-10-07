@@ -51,11 +51,11 @@ export default async function CatalogPage({ searchParams }: CatalogPageProps) {
 
   return (
     <div className="mx-auto max-w-container px-gutter pb-24">
-      <Breadcrumbs items={[{ label: t("home"), href: "/" }, { label: "All skins" }]} />
+      <Breadcrumbs items={[{ label: t("home"), href: "/" }, { label: "The catalogue" }]} />
       <CategoryOpener
-        name="All CS2 skins"
+        name="The catalogue"
         count={total}
-        lead={`Knives, gloves and weapon skins across ${typeIndex.length} weapon types. Every listing is one item in one exterior, with its price shown up front.`}
+        lead={t("catalogLead", { categories: typeIndex.length })}
         typeIndex={typeIndex}
       />
 

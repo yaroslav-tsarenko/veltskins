@@ -3,7 +3,7 @@ import type { Prisma } from "@prisma/client";
 import { prisma } from "@/lib/prisma";
 import { mentionsSupplier, publicBrand } from "@/lib/utils/supplier";
 import { isNewArrival, newArrivalCutoff } from "@/lib/new-arrivals";
-import type { SkinProduct } from "@/components/skin/SkinTray";
+import type { SkinProduct } from "@/components/skin/Lot";
 import { slugify } from "@/lib/utils/slugify";
 import { EXTERIORS, RARITIES, WEAPON_TYPES, rarityRank, weaponSlug, type SkinSummary } from "@/lib/skins/cs2";
 import {

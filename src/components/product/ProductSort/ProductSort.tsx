@@ -15,7 +15,7 @@ const LABEL_KEY: Record<SortKey, "sortNewest" | "sortPriceAsc" | "sortPriceDesc"
   "float-asc": "sortFloat",
 };
 
-export const CATALOG_SORTS: SortKey[] = ["newest", "price-asc", "price-desc", "rarity-desc", "name-asc"];
+export const CATALOG_SORTS: SortKey[] = ["rarity-desc", "price-asc", "price-desc", "name-asc", "newest", "float-asc"];
 
 interface ProductSortProps {
   value: string;

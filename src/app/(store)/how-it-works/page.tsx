@@ -2,7 +2,8 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { Breadcrumbs } from "@/components/layout/Breadcrumbs/Breadcrumbs";
 import { buttonClasses } from "@/components/ui/button-classes";
-import { CalibratedRuler } from "@/components/skin/FloatRuler";
+import { EmptyMount } from "@/components/shared/EmptyState/EmptyState";
+import { HangLine } from "@/components/skin/HangLine";
 import { SplitWords } from "@/components/motion/SplitWords";
 import { TimelineSteps } from "@/components/skin/PurchaseTimeline";
 import { STORE_POLICY } from "@/config/store-policy";
@@ -39,15 +40,23 @@ export default function HowItWorksPage() {
     <div className="mx-auto max-w-container px-gutter pb-24">
       <Breadcrumbs items={[{ label: "Home", href: "/" }, { label: "How delivery works" }]} />
 
-      <section aria-labelledby="hiw-title" data-scene="calibration" className="grid items-end gap-10 pb-20 pt-6 lg:grid-cols-12">
-        <div className="lg:col-span-6">
-          <h1 id="hiw-title" data-anim="words" className="m-0 text-step-6 font-[680] leading-[0.96] tracking-[-0.01em] text-ink">
+      <HangLine hooks={2} className="mt-6" />
+      <section aria-labelledby="hiw-title" className="grid items-start gap-10 pb-20 pt-14 lg:grid-cols-12">
+        <div className="lg:col-span-7">
+          <h1
+            id="hiw-title"
+            data-anim="words"
+            className="m-0 font-display text-step-6 font-medium leading-[1.0] tracking-[-0.015em] text-ink"
+            style={{ fontVariationSettings: '"opsz" 56' }}
+          >
             <SplitWords text="How delivery works" />
           </h1>
-          <p className="m-0 mt-6 max-w-[52ch] text-step-1 leading-[1.5] text-ink-muted">You pay by card, we send the skin to your Steam account as a trade offer, you accept it in Steam.</p>
+          <p className="m-0 mt-6 max-w-[52ch] font-display text-step-1 leading-[1.56] text-ink-muted">
+            You pay by card, we send the skin to your Steam account as a trade offer, and you accept it in Steam.
+          </p>
         </div>
-        <div className="lg:col-span-5 lg:col-start-8">
-          <CalibratedRuler lit={["FT"]} draw decorative />
+        <div className="hidden lg:col-span-4 lg:col-start-9 lg:flex lg:justify-end">
+          <EmptyMount />
         </div>
       </section>
 
@@ -57,7 +66,7 @@ export default function HowItWorksPage() {
 
       <div className="mt-24 grid gap-x-10 gap-y-16 lg:grid-cols-12">
         <section aria-labelledby="needs-title" className="lg:col-span-5">
-          <h2 id="needs-title" className="m-0 text-step-3 font-semibold leading-[1.1] text-ink">
+          <h2 id="needs-title" className="m-0 font-display text-step-3 font-medium leading-[1.14] text-ink">
             What your Steam account needs
           </h2>
           <ul className="m-0 mt-6 list-none border-t border-line p-0">
@@ -70,7 +79,7 @@ export default function HowItWorksPage() {
         </section>
 
         <section aria-labelledby="wrong-title" className="lg:col-span-6 lg:col-start-7">
-          <h2 id="wrong-title" className="m-0 text-step-3 font-semibold leading-[1.1] text-ink">
+          <h2 id="wrong-title" className="m-0 font-display text-step-3 font-medium leading-[1.14] text-ink">
             If something goes wrong
           </h2>
           <dl className="m-0 mt-6 border-t border-line">
@@ -85,18 +94,18 @@ export default function HowItWorksPage() {
       </div>
 
       <section aria-labelledby="steam-rules" className="mt-24 border-t border-line pt-12">
-        <h2 id="steam-rules" className="m-0 text-step-3 font-semibold leading-[1.1] text-ink">
+        <h2 id="steam-rules" className="m-0 font-display text-step-3 font-medium leading-[1.14] text-ink">
           Steam’s own rules
         </h2>
         <p className="measure m-0 mt-4 text-step-0 leading-[1.7] text-ink-muted">
           Steam may keep items you receive in a trade under trade protection for up to {d.tradeProtectionDays} days, during which they can’t be traded or sold. Accounts without the Steam Guard Mobile Authenticator can see trade holds of up to {d.tradeHoldMaxDays} days. These are Valve’s rules and apply to every trade, whoever it’s with. Read more in our{" "}
-          <Link href="/policies/shipping" className="font-semibold text-ink underline underline-offset-4">
+          <Link href="/policies/shipping" className="font-medium text-ink underline underline-offset-4">
             delivery policy
           </Link>
           .
         </p>
         <Link href="/catalog" className={buttonClasses({ size: "lg", className: "mt-10" })}>
-          Browse all skins
+          Browse the catalogue
         </Link>
       </section>
     </div>

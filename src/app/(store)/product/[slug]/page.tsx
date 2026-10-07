@@ -8,12 +8,12 @@ import { publicBrand } from "@/lib/utils/supplier";
 import { clampText, htmlToText } from "@/lib/utils/sanitize-html";
 import { Breadcrumbs } from "@/components/layout/Breadcrumbs/Breadcrumbs";
 import { JsonLd } from "@/components/shared/SEO/JsonLd";
-import { InspectionStage } from "@/components/product/InspectionStage";
-import { SkinReadout, type ExteriorOption, type MarkSwitch } from "@/components/product/SkinReadout";
+import { HungRender } from "@/components/product/HungRender";
+import { LotSheet, type ExteriorOption, type MarkSwitch } from "@/components/product/LotSheet";
 import { SkinDetailTabs } from "@/components/product/SkinDetailTabs";
-import { VariantLadder, type VariantRow } from "@/components/product/VariantLadder";
+import { ConditionVariants, type VariantRow } from "@/components/product/ConditionVariants";
 import { productJsonLd } from "@/components/product/product-structured-data";
-import { ProductRail } from "@/components/home/ProductRail";
+import { LotRail } from "@/components/skin/LotRail";
 import { RecentlyViewed, RecordView } from "@/components/skin/RecentlyViewed";
 import { SKIN_SELECT, getCategoryTree, loadSkinProducts, skinSummary } from "@/components/catalog/catalog-query";
 import { EXTERIORS, raritySlug, skinTitle, weaponTypeDef } from "@/lib/skins/cs2";
@@ -145,40 +145,6 @@ export default async function ProductPage({ params }: ProductPageProps) {
     .sort((a, b) => Number(a.skin?.isStatTrak) - Number(b.skin?.isStatTrak) || zoneIndex(a.skin?.exterior) - zoneIndex(b.skin?.exterior))
     .map((v) => ({ product: v }));
 
-  const sameFinishIds = skin?.skinName
-    ? await ids(Prisma.sql`
-        SELECT id FROM (
-          SELECT DISTINCT ON (s."weapon") p."id", p."price"
-          FROM "Product" p JOIN "Skin" s ON s."productId" = p."id"
-          WHERE ${LIVE} AND s."skinName" = ${skin.skinName} AND s."weapon" <> ${skin.weapon} ${notIn()}
-          ORDER BY s."weapon", p."price" ASC
-        ) x ORDER BY x."price" DESC LIMIT ${MERCH.related}`)
-    : [];
-  sameFinishIds.forEach((id) => exclude.add(id));
-
-  const loadoutIds = skin?.collection
-    ? await ids(Prisma.sql`
-        SELECT id FROM (
-          SELECT DISTINCT ON (s."weapon") p."id", p."price"
-          FROM "Product" p JOIN "Skin" s ON s."productId" = p."id"
-          WHERE ${LIVE} AND s."collection" = ${skin.collection} AND s."weapon" <> ${skin.weapon} ${notIn()}
-          ORDER BY s."weapon", p."price" ASC
-        ) x ORDER BY x."price" DESC LIMIT ${MERCH.related}`)
-    : [];
-  loadoutIds.forEach((id) => exclude.add(id));
-
-  const pairType = skin?.weaponType === "knives" ? "gloves" : skin?.weaponType === "gloves" ? "knives" : null;
-  const pairIds = pairType
-    ? await ids(Prisma.sql`
-        SELECT id FROM (
-          SELECT DISTINCT ON (s."weapon") p."id", p."price"
-          FROM "Product" p JOIN "Skin" s ON s."productId" = p."id"
-          WHERE ${LIVE} AND s."weaponType" = ${pairType} AND p."price" BETWEEN ${price * (1 - MERCH.pairsTolerance)} AND ${price * (1 + MERCH.pairsTolerance)} ${notIn()}
-          ORDER BY s."weapon", abs(p."price" - ${price}) ASC
-        ) x ORDER BY abs(x."price" - ${price}) ASC LIMIT ${MERCH.related}`)
-    : [];
-  pairIds.forEach((id) => exclude.add(id));
-
   const moreIds = skin
     ? await ids(Prisma.sql`
         SELECT id FROM (
@@ -189,9 +155,9 @@ export default async function ProductPage({ params }: ProductPageProps) {
         ) x ORDER BY x."price" DESC LIMIT ${MERCH.related}`)
     : [];
 
-  const [sameFinish, loadout, pairs, more] = await Promise.all([loadSkinProducts(sameFinishIds), loadSkinProducts(loadoutIds), loadSkinProducts(pairIds), loadSkinProducts(moreIds)]);
+  const more = await loadSkinProducts(moreIds);
 
-  const crumbs = [{ label: "Home", href: "/" }, { label: "All skins", href: "/catalog" }, ...chain.map((c) => ({ label: c.name, href: `/catalog/${c.slug}` })), { label: product.name }];
+  const crumbs = [{ label: "Home", href: "/" }, { label: "Catalogue", href: "/catalog" }, ...chain.map((c) => ({ label: c.name, href: `/catalog/${c.slug}` })), { label: product.name }];
   const weaponCategory = chain.length > 1 ? chain[chain.length - 1] : null;
   const typeDef = skin ? weaponTypeDef(skin.weaponType) : null;
 
@@ -232,12 +198,12 @@ export default async function ProductPage({ params }: ProductPageProps) {
       <div data-product="" className="grid gap-x-12 gap-y-8 lg:grid-cols-12 lg:pt-8">
         <div className="min-w-0 lg:col-span-7">
           <div className="lg:sticky lg:top-[calc(var(--header-height-compact)+24px)]">
-          <InspectionStage src={product.images[0]?.url ?? null} alt={product.images[0]?.alt || product.name} rarity={raritySlug(skin?.rarity)} exterior={skin?.exterior ?? null} productId={product.id} />
+          <HungRender src={product.images[0]?.url ?? null} alt={product.images[0]?.alt || product.name} rarity={raritySlug(skin?.rarity)} exterior={skin?.exterior ?? null} productId={product.id} />
           </div>
         </div>
         <div className="min-w-0 lg:col-span-5">
           <div>
-            <SkinReadout
+            <LotSheet
               product={listing}
               exteriors={exteriors}
               markSwitch={markSwitch}
@@ -248,15 +214,17 @@ export default async function ProductPage({ params }: ProductPageProps) {
         </div>
       </div>
 
-      {variantRows.length > 0 ? <VariantLadder rows={variantRows} title={skin?.skinName ? `${skin.weapon} | ${skin.skinName}: other exteriors and versions` : "Other versions"} /> : null}
+      {variantRows.length > 0 ? <ConditionVariants rows={variantRows} title={skin?.skinName ? `${skin.weapon} | ${skin.skinName} in other conditions` : "Other versions of this lot"} /> : null}
 
       <SkinDetailTabs skin={skinSummary(product.skin)} className="mt-16 lg:mt-24" />
 
       <div className="mt-20 flex flex-col gap-20">
-        <ProductRail id="pairs-well" title={pairType === "gloves" ? "Gloves at a similar price" : "Knives at a similar price"} lead="Within 40% of this skin's price, one per model." products={pairs} link={pairType ? { href: `/catalog/${pairType}`, label: pairType === "gloves" ? "All gloves" : "All knives" } : undefined} />
-        <ProductRail id="same-finish" title={`${skin?.skinName ?? "This finish"} on other weapons`} lead="The same finish, applied to a different weapon." products={sameFinish} />
-        <ProductRail id="loadout" title="Complete the loadout" lead={skin?.collection ? `Other weapons from ${skin.collection}.` : undefined} products={loadout} />
-        <ProductRail id="more-weapon" title={`More ${skin?.weapon ?? typeDef?.label ?? ""} skins`} products={more} link={weaponCategory ? { href: `/catalog/${weaponCategory.slug}`, label: `All ${weaponCategory.name} skins` } : undefined} />
+        <LotRail
+          id="more-weapon"
+          title={`More ${skin?.weapon ?? typeDef?.label ?? ""} lots`}
+          products={more}
+          link={weaponCategory ? { href: `/catalog/${weaponCategory.slug}`, label: `All ${weaponCategory.name} lots` } : undefined}
+        />
         <RecentlyViewed excludeId={product.id} />
       </div>
     </div>

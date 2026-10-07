@@ -16,7 +16,7 @@ import { AccordionItem } from "@/components/ui/Accordion";
 import { ReadoutLoader } from "@/components/ui/ReadoutLoader";
 import { EmptyState } from "@/components/shared/EmptyState/EmptyState";
 import { PaymentLogos } from "@/components/shared/PaymentLogos/PaymentLogos";
-import { SkinRow } from "@/components/skin/SkinTray";
+import { LotRow } from "@/components/skin/Lot";
 import { SteamAccountBlock, steamTail } from "@/components/skin/SteamAccountBlock";
 import { TradeUrlField, maskToken, savedTradeParts } from "@/components/skin/TradeUrlField";
 import { PhoneField } from "@/components/account/fields/PhoneField";
@@ -35,7 +35,7 @@ import { CheckoutCounter } from "./CheckoutCounter";
 import { TotalsList } from "./TotalsList";
 import { quotePayloadItems, useCheckoutQuote, type QuoteProblem } from "./useCheckoutQuote";
 
-const DRAFT_KEY = "patina-checkout-draft";
+const DRAFT_KEY = "veltskins-checkout-draft";
 const CHECKOUT_PATH = "/checkout";
 
 type FieldName = FieldPath<CheckoutFormData>;
@@ -311,7 +311,7 @@ export function CheckoutView() {
   if (cart.items.length === 0 && !submitting) {
     return (
       <div className="mx-auto max-w-narrow px-gutter py-12">
-        <h1 className="m-0 text-step-5 font-[650] leading-none text-ink">{t("title")}</h1>
+        <h1 className="m-0 font-display text-step-5 font-medium leading-[1.06] text-ink">{t("title")}</h1>
         <EmptyState title={t("empty.title")} subtitle={t("empty.subtitle")} actionLabel="Browse all skins" actionHref="/catalog" align="start" className="px-0" />
       </div>
     );
@@ -325,7 +325,7 @@ export function CheckoutView() {
       <Button as="a" href={`/api/auth/steam?next=${encodeURIComponent(CHECKOUT_PATH)}`} variant="steam" size="lg">
         Sign in through Steam
       </Button>
-      <Link href={`/auth/login?next=${encodeURIComponent(CHECKOUT_PATH)}`} className="min-h-11 py-2 text-ui-md font-semibold text-ink decoration-1 underline-offset-4 hover-device:hover:underline">
+      <Link href={`/auth/login?next=${encodeURIComponent(CHECKOUT_PATH)}`} className="min-h-11 py-2 text-ui-md font-medium text-ink decoration-1 underline-offset-[5px] hover-device:hover:underline">
         Sign in with email instead
       </Link>
       <p className="m-0 text-ui-sm text-ink-muted">Your cart stays as it is while you sign in.</p>
@@ -338,7 +338,7 @@ export function CheckoutView() {
       nextPath={CHECKOUT_PATH}
       showTradeStatus={false}
       action={
-        <a href={`/api/auth/steam?link=1&next=${encodeURIComponent(CHECKOUT_PATH)}`} className="text-ui-md font-semibold text-ink decoration-1 underline-offset-4 hover-device:hover:underline">
+        <a href={`/api/auth/steam?link=1&next=${encodeURIComponent(CHECKOUT_PATH)}`} className="text-ui-md font-medium text-ink decoration-1 underline-offset-[5px] hover-device:hover:underline">
           Not you? Switch account
         </a>
       }
@@ -475,7 +475,7 @@ export function CheckoutView() {
             const item = cart.items.find((i) => i.productId === line.productId);
             return (
               <li key={`${line.productId}-${index}`} className="py-3">
-                <SkinRow name={line.name} imageUrl={imageFor.get(line.productId) ?? null} skin={item?.skin} aside={<span className="font-mono text-data text-ink">{formatPrice(line.total, currency)}</span>} />
+                <LotRow name={line.name} imageUrl={imageFor.get(line.productId) ?? null} skin={item?.skin} aside={<span className="font-mono text-data text-ink">{formatPrice(line.total, currency)}</span>} />
               </li>
             );
           })}
@@ -554,7 +554,7 @@ export function CheckoutView() {
 
   return (
     <div className="mx-auto max-w-narrow px-gutter pb-20 pt-8 lg:pt-12">
-      <h1 className="m-0 mb-6 text-step-5 font-[650] leading-none tracking-[-0.01em] text-ink lg:mb-10">{t("title")}</h1>
+      <h1 className="m-0 mb-6 font-display text-step-5 font-medium leading-[1.06] tracking-[-0.01em] text-ink lg:mb-10">{t("title")}</h1>
 
       <div className="mb-6 border-y border-line lg:hidden">
         <AccordionItem title={`Show summary · ${formatPrice(totals.total, currency)}`} open={summaryOpen} onOpenChange={setSummaryOpen} headingLevel={2} flush className="border-b-0">
@@ -605,7 +605,7 @@ export function CheckoutView() {
           />
         </form>
         <aside aria-label={t("counter.title")} className="hidden lg:col-span-5 lg:block">
-          <div className="sticky top-6 rounded-control bg-raised p-6 shadow-[var(--shadow-card),0_0_0_1px_var(--color-border)]">
+          <div className="sticky top-6 rounded-none border-t-2 border-brand bg-mount p-6">
             <CheckoutCounter {...counterProps} />
           </div>
         </aside>

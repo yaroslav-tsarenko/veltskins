@@ -28,7 +28,7 @@ export function productIdFor(marketHashName: string): string {
 }
 
 export function skuFor(marketHashName: string): string {
-  return `PS-${stableHash(marketHashName).slice(0, 10).toUpperCase()}`;
+  return `VS-${stableHash(marketHashName).slice(0, 10).toUpperCase()}`;
 }
 
 function describe(c: Candidate): string {

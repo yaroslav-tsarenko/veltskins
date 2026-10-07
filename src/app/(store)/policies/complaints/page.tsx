@@ -4,17 +4,17 @@ import { POLICY_FACTS as F } from "@/lib/policy-facts";
 
 export const generateMetadata = policyMetadata(
   "complaints",
-  `How to complain to ${F.brand}: we acknowledge ${F.complaintsAck} and reply in full within ${F.complaintsDays} days.`,
+  `Putting a complaint to us to ${F.brand}: we acknowledge ${F.complaintsAck} and reply in full within ${F.complaintsDays} days.`,
 );
 
 const sections: PolicySection[] = [
   {
     id: "how",
-    title: "How to complain",
+    title: "Putting a complaint to us",
     body: (
       <>
         <p>
-          Email {F.email} or use the <Link href="/contact">contact form</Link>. Please include:
+          Write to {F.email}, or use the <Link href="/contact">contact form</Link>. Please include:
         </p>
         <ul>
           <li>your name and the email address used for the order;</li>

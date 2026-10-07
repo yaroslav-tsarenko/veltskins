@@ -96,7 +96,7 @@ const sections: PolicySection[] = [
   },
   {
     id: "choice",
-    title: "Changing or withdrawing your consent",
+    title: "Changing the choice you made",
     body: (
       <>
         <p>

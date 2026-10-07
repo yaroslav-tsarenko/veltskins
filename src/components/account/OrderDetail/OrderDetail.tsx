@@ -6,7 +6,7 @@ import { useTranslations } from "next-intl";
 import { FileDown } from "lucide-react";
 import { ReadoutLoader } from "@/components/ui/ReadoutLoader";
 import { Button } from "@/components/ui/Button";
-import { SkinRow } from "@/components/skin/SkinTray";
+import { LotRow } from "@/components/skin/Lot";
 import { PurchaseTimeline } from "@/components/skin/PurchaseTimeline";
 import { orderTimelineStatus } from "../OrderHistory/OrderHistory";
 import { EmptyState } from "@/components/shared/EmptyState/EmptyState";
@@ -57,7 +57,7 @@ export function OrderDetail({ id }: { id: string }) {
         <ul className="m-0 flex list-none flex-col border-t border-rule p-0">
           {order.lines.map((line) => (
             <li key={line.id} className="flex flex-col gap-6 border-b border-line py-6">
-              <SkinRow
+              <LotRow
                 name={line.name}
                 href={line.slug ? `/product/${line.slug}` : null}
                 imageUrl={line.imageUrl}
@@ -111,7 +111,7 @@ export function OrderDetail({ id }: { id: string }) {
             <p className="m-0 mt-3 text-ui-sm text-ink-muted">{t("paymentMethod")}</p>
           </section>
         </div>
-        <section aria-labelledby="order-totals" className="rounded-control bg-raised p-6 shadow-[var(--shadow-card),0_0_0_1px_var(--color-border)]">
+        <section aria-labelledby="order-totals" className="rounded-control bg-mount p-6 border border-line">
           <h2 id="order-totals" className="m-0 mb-5 text-step-2 font-semibold leading-none text-ink">
             {t("totalsTitle")}
           </h2>

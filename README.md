@@ -1,6 +1,6 @@
-# Patinaskins
+# Veltskins
 
-Storefront and admin for Patinaskins (patinaskins.com), a Counter-Strike 2 skins store built with Next.js 16. The store sells weapon skins, knives and gloves it sources from an item supplier and delivers each item to the buyer's Steam account as a trade offer. It is a store, not a marketplace: customers cannot sell or list items.
+Storefront and admin for Veltskins (veltskins.com), a Counter-Strike 2 skins store built with Next.js 16. The store sells weapon skins, knives and gloves it sources from an item supplier and delivers each item to the buyer's Steam account as a trade offer. It is a store, not a marketplace: customers cannot sell or list items.
 
 ## Tech stack
 
@@ -71,7 +71,7 @@ To connect a real provider:
 ```bash
 npm install
 cp .env.example .env        # fill in values, at least JWT_SECRET
-npm run local:setup         # creates the patinaskins database, pushes the schema, seeds, syncs the catalogue
+npm run local:setup         # creates the veltskins database, pushes the schema, seeds, syncs the catalogue
 npm run dev
 ```
 

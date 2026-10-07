@@ -2,9 +2,9 @@
 
 import { useEffect, useState } from "react";
 import { MERCH } from "@/config/merchandising";
-import { SkinTray, type SkinProduct } from "./SkinTray";
+import { Lot, type SkinProduct } from "./Lot";
 
-const KEY = "patinaskins-viewed";
+const KEY = "veltskins-viewed";
 
 function readIds(): string[] {
   try {
@@ -63,7 +63,7 @@ export function RecentlyViewed({ excludeId, title = "Recently viewed", className
       <div className="no-scrollbar -mx-gutter mt-6 flex snap-x gap-3 overflow-x-auto px-gutter pb-2 lg:gap-4">
         {products.map((product) => (
           <div key={product.id} className="w-[min(72vw,280px)] shrink-0 snap-start lg:w-[calc((100%-3*16px)/4)]">
-            <SkinTray product={product} />
+            <Lot product={product} />
           </div>
         ))}
       </div>

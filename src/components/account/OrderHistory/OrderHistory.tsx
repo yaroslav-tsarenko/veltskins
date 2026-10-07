@@ -6,7 +6,7 @@ import { useTranslations } from "next-intl";
 import { ArrowRight } from "lucide-react";
 import { SkeletonBar } from "@/components/ui/ReadoutLoader";
 import { EmptyState } from "@/components/shared/EmptyState/EmptyState";
-import { SkinRow } from "@/components/skin/SkinTray";
+import { LotRow } from "@/components/skin/Lot";
 import { PurchaseTimeline } from "@/components/skin/PurchaseTimeline";
 import { formatPrice } from "@/lib/utils/format-price";
 import type { OrderView } from "@/lib/orders";
@@ -57,11 +57,11 @@ export function OrderHistory() {
             <li key={order.id} data-purchase="" className="border-b border-line py-6">
               <div className="mb-4 flex flex-wrap items-center gap-x-4 gap-y-2">
                 <span className="font-mono text-data text-ink">{order.number}</span>
-                <span className="font-mono text-[0.75rem] text-ink-muted">{formatOrderDate(order.createdAt)}</span>
+                <span className="font-mono text-data-sm text-ink-muted">{formatOrderDate(order.createdAt)}</span>
                 <OrderStatus state={order.state} />
                 <Link
                   href={`/account/orders/${order.id}`}
-                  className="ml-auto inline-flex min-h-10 items-center gap-1.5 text-ui-md font-semibold text-ink decoration-1 underline-offset-4 hover-device:hover:underline"
+                  className="ml-auto inline-flex min-h-10 items-center gap-1.5 text-ui-md font-medium text-ink decoration-1 underline-offset-[5px] hover-device:hover:underline"
                 >
                   {t("view")}
                   <span className="sr-only"> {order.number}</span>
@@ -71,7 +71,7 @@ export function OrderHistory() {
               <ul className="m-0 flex list-none flex-col gap-6 p-0">
                 {order.lines.map((line) => (
                   <li key={line.id} className="flex flex-col gap-4">
-                    <SkinRow
+                    <LotRow
                       name={line.name}
                       href={line.slug ? `/product/${line.slug}` : null}
                       imageUrl={line.imageUrl}

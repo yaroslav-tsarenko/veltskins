@@ -1,4 +1,4 @@
-import { SkinGridSkeleton } from "@/components/skin/SkinTray";
+import { SalonGridSkeleton } from "@/components/skin/Lot";
 
 export default function CatalogLoading() {
   return (
@@ -10,7 +10,7 @@ export default function CatalogLoading() {
             <span key={i} className="block h-12 border-b border-line" />
           ))}
         </div>
-        <SkinGridSkeleton count={12} />
+        <SalonGridSkeleton count={12} />
       </div>
       <span role="status" className="sr-only">
         Loading skins

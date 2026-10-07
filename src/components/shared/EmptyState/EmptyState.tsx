@@ -20,8 +20,20 @@ interface EmptyStateProps {
   className?: string;
 }
 
+export function EmptyMount({ className, cut = false }: { className?: string; cut?: boolean }) {
+  return (
+    <div aria-hidden="true" className={cn("flex w-[168px] flex-col items-center", className)}>
+      <span className="relative block h-px w-full bg-rail">
+        <span className="absolute bottom-0 left-1/2 h-[7px] w-0.5 -translate-x-1/2 bg-rail" />
+      </span>
+      <span className={cn("block w-px bg-wire", cut ? "h-6" : "h-5")} />
+      {cut ? null : <span className="block h-[134px] w-full border border-line" />}
+    </div>
+  );
+}
+
 export function EmptyBay({ className }: { className?: string }) {
-  return <div aria-hidden="true" data-stage="" data-lamp="on" className={cn("stage h-[120px] w-[160px] rounded-tray", className)} />;
+  return <EmptyMount className={className} />;
 }
 
 export function EmptyState({
@@ -41,12 +53,12 @@ export function EmptyState({
   const centered = align === "center";
   return (
     <div className={cn("flex flex-col gap-3 px-4 py-16", centered ? "items-center text-center" : "items-start", className)}>
-      <EmptyBay />
-      <Heading className="mt-3 text-step-2 font-semibold leading-[1.12] text-ink">{title}</Heading>
+      <EmptyMount />
+      <Heading className="mt-6 font-display text-step-2 font-medium leading-[1.2] text-ink">{title}</Heading>
       {subtitle ? <p className={cn("max-w-[48ch] text-ink-muted", centered && "mx-auto")}>{subtitle}</p> : null}
       {children}
       {(actionLabel && (actionHref || onAction)) || (secondaryLabel && secondaryHref) ? (
-        <div className={cn("mt-2 flex flex-wrap items-center gap-x-6 gap-y-3", centered && "justify-center")}>
+        <div className={cn("mt-3 flex flex-wrap items-center gap-x-6 gap-y-3", centered && "justify-center")}>
           {actionLabel && actionHref ? (
             <Button as={Link} href={actionHref} variant="primary">
               {actionLabel}

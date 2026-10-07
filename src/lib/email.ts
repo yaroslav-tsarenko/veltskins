@@ -40,25 +40,25 @@ function getReplyTo(): string | undefined {
 }
 
 const C = {
-  canvas: "#f1f3f2",
-  panel: "#fafbfa",
-  stage: "#ffffff",
-  ink: "#2a1a15",
-  muted: "#5b4c47",
-  subtle: "#72625d",
-  paint: "#3b2620",
-  onPaint: "#f1f3f2",
-  onPaintMuted: "#c8bbb3",
-  brass: "#c9a04e",
-  brassTint: "#f2ead8",
-  line: "#d2d3cf",
-  success: "#2f6b45",
-  danger: "#a3262b",
+  canvas: "#ede7dc",
+  panel: "#f8f5ef",
+  wall: "#ede7dc",
+  ink: "#221e1a",
+  muted: "#58504a",
+  subtle: "#5f5750",
+  claret: "#86203a",
+  onClaret: "#fbf6f0",
+  wash: "#f2e1e3",
+  rail: "#7c7265",
+  line: "#d3c9b9",
+  rule: "#b8ac99",
+  success: "#1e6b43",
+  danger: "#a8231c",
 } as const;
 
-const SERIF = "Gloock, Georgia, 'Times New Roman', serif";
-const SANS = "Commissioner, 'Segoe UI', Helvetica, Arial, sans-serif";
-const MONO = "ui-monospace, Menlo, Consolas, 'Courier New', monospace";
+const SERIF = "Newsreader, Georgia, 'Times New Roman', serif";
+const SANS = "'Instrument Sans', 'Segoe UI', Helvetica, Arial, sans-serif";
+const MONO = "'Azeret Mono', 'SFMono-Regular', Menlo, Consolas, monospace";
 
 interface SendArgs {
   to: string;
@@ -107,12 +107,25 @@ ${preheader}
     <td align="center" style="padding:24px 12px 40px;">
       <table role="presentation" width="600" cellpadding="0" cellspacing="0" border="0" style="width:100%;max-width:600px;">
         <tr>
-          <td style="background:${C.paint};padding:20px 28px;">
-            <a href="${SITE_URL}" style="font-family:${SERIF};font-size:26px;line-height:1;color:${C.onPaint};text-decoration:none;letter-spacing:-0.01em;">${BRAND.name}</a>
-          </td>
+          <td style="height:1px;line-height:1px;font-size:0;background:${C.rail};">&nbsp;</td>
         </tr>
         <tr>
-          <td style="height:2px;line-height:2px;font-size:0;background:${C.paint};">&nbsp;</td>
+          <td style="background:${C.wall};padding:0 28px 22px;">
+            <table role="presentation" cellpadding="0" cellspacing="0" border="0">
+              <tr>
+                <td style="width:48px;height:7px;line-height:7px;font-size:0;">&nbsp;</td>
+                <td style="width:2px;height:7px;line-height:7px;font-size:0;background:${C.rail};">&nbsp;</td>
+              </tr>
+            </table>
+            <table role="presentation" cellpadding="0" cellspacing="0" border="0" style="margin-top:16px;">
+              <tr>
+                <td style="width:36px;height:36px;background:${C.claret};text-align:center;vertical-align:middle;font-family:${SERIF};font-size:20px;line-height:36px;color:${C.onClaret};">V</td>
+                <td style="padding-left:12px;">
+                  <a href="${SITE_URL}" style="font-family:${SERIF};font-weight:500;font-size:26px;line-height:1;color:${C.ink};text-decoration:none;letter-spacing:-0.005em;">${BRAND.name}</a>
+                </td>
+              </tr>
+            </table>
+          </td>
         </tr>
         <tr>
           <td style="background:${C.panel};padding:32px 28px;border-left:1px solid ${C.line};border-right:1px solid ${C.line};">
@@ -120,13 +133,7 @@ ${preheader}
           </td>
         </tr>
         <tr>
-          <td style="height:2px;line-height:2px;font-size:0;background:${C.paint};">&nbsp;</td>
-        </tr>
-        <tr>
-          <td style="height:3px;line-height:3px;font-size:0;">&nbsp;</td>
-        </tr>
-        <tr>
-          <td style="height:1px;line-height:1px;font-size:0;background:${C.line};">&nbsp;</td>
+          <td style="height:1px;line-height:1px;font-size:0;background:${C.rule};">&nbsp;</td>
         </tr>
         <tr>
           <td style="padding:20px 4px 0;font-size:12px;line-height:1.6;color:${C.muted};">
@@ -139,7 +146,8 @@ ${preheader}
               <a href="${SITE_URL}/policies/privacy" style="color:${C.muted};text-decoration:underline;margin-right:12px;">Privacy</a>
               <a href="${SITE_URL}/contact" style="color:${C.muted};text-decoration:underline;">Contact</a>
             </p>
-            <p style="margin:12px 0 0;color:${C.subtle};">&copy; ${year} ${BRAND.name}. All rights reserved.</p>
+            <p style="margin:12px 0 0;color:${C.subtle};">${BRAND.name} is an independent store and is not affiliated with, sponsored by or endorsed by Valve Corporation. Counter-Strike, CS2, Steam and the Steam logo are trademarks of Valve Corporation.</p>
+            <p style="margin:10px 0 0;color:${C.subtle};">&copy; ${year} ${BRAND.name}</p>
           </td>
         </tr>
       </table>
@@ -151,7 +159,7 @@ ${preheader}
 }
 
 function heading(text: string): string {
-  return `<h1 style="margin:0 0 16px;font-family:${SERIF};font-weight:400;font-size:28px;line-height:1.15;color:${C.ink};">${text}</h1>`;
+  return `<h1 style="margin:0 0 16px;font-family:${SERIF};font-weight:500;font-size:26px;line-height:1.2;color:${C.ink};">${text}</h1>`;
 }
 
 function paragraph(html: string, extra = ""): string {
@@ -159,18 +167,18 @@ function paragraph(html: string, extra = ""): string {
 }
 
 function label(text: string): string {
-  return `<p style="margin:0 0 6px;font-size:11px;line-height:1;letter-spacing:0.12em;text-transform:uppercase;font-weight:600;color:${C.subtle};">${text}</p>`;
+  return `<p style="margin:0 0 6px;font-family:${MONO};font-size:11px;line-height:1.2;letter-spacing:0.1em;text-transform:uppercase;font-weight:500;color:${C.subtle};">${text}</p>`;
 }
 
 function plate(text: string): string {
-  return `<span style="display:inline-block;background:${C.brass};color:${C.ink};font-size:12px;font-weight:600;letter-spacing:0.08em;padding:6px 10px;font-family:${MONO};">${escape(text)}</span>`;
+  return `<span style="display:inline-block;background:${C.claret};color:${C.onClaret};font-size:12px;font-weight:500;letter-spacing:0.08em;padding:6px 10px;font-family:${MONO};">${escape(text)}</span>`;
 }
 
 function button(href: string, text: string): string {
   return `<table role="presentation" cellpadding="0" cellspacing="0" border="0" style="margin:24px 0 8px;">
   <tr>
-    <td style="background:${C.paint};">
-      <a href="${href}" style="display:inline-block;padding:14px 28px;font-family:${SANS};font-size:15px;font-weight:600;color:${C.onPaint};text-decoration:none;">${text}</a>
+    <td style="background:${C.claret};">
+      <a href="${href}" style="display:inline-block;padding:14px 28px;font-family:${SANS};font-size:15px;font-weight:600;color:${C.onClaret};text-decoration:none;">${text}</a>
     </td>
   </tr>
 </table>`;
@@ -294,13 +302,13 @@ ${rows.map(([k, v]) => `<tr><td style="${cell}color:${C.muted};width:42%;">${k}<
 function itemsTable(data: OrderEmailData): string {
   const currency = currencyOf(data);
   const totals = chargeTotals(data);
-  const th = `padding:0 0 8px;font-size:11px;letter-spacing:0.12em;text-transform:uppercase;font-weight:600;color:${C.subtle};border-bottom:2px solid ${C.paint};`;
+  const th = `padding:0 0 8px;font-size:11px;letter-spacing:0.12em;text-transform:uppercase;font-weight:600;color:${C.subtle};border-bottom:1px solid ${C.rule};`;
   const td = `padding:12px 0;border-bottom:1px solid ${C.line};font-size:14px;line-height:1.5;vertical-align:top;`;
   const rows = data.items
     .map((item, index) => {
       const line = totals.lines[index];
       return `<tr>
-  <td style="${td}color:${C.ink};padding-right:12px;">${escape(item.productName)}${item.variantName ? `<br><span style="font-size:12px;color:${C.muted};">${escape(item.variantName)}</span>` : ""}<br><span style="font-size:12px;color:${C.subtle};">SKU ${escape(item.productSku)}</span></td>
+  <td style="${td}color:${C.ink};padding-right:12px;"><span style="font-family:${MONO};font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:${C.subtle};">Lot ${escape(item.productSku)}</span><br>${escape(item.productName)}${item.variantName ? `<br><span style="font-size:12px;color:${C.muted};">${escape(item.variantName)}</span>` : ""}</td>
   <td style="${td}color:${C.muted};text-align:center;white-space:nowrap;">${item.quantity}</td>
   <td style="${td}color:${C.muted};text-align:right;white-space:nowrap;padding-left:12px;">${money(line.unit, currency)}</td>
   <td style="${td}color:${C.ink};text-align:right;white-space:nowrap;padding-left:12px;">${money(line.total, currency)}</td>
@@ -308,7 +316,7 @@ function itemsTable(data: OrderEmailData): string {
     })
     .join("");
   const sumRow = (name: string, value: string, strong = false) =>
-    `<tr><td colspan="3" style="padding:6px 12px 6px 0;text-align:right;font-size:${strong ? 16 : 14}px;color:${strong ? C.ink : C.muted};${strong ? "font-weight:600;" : ""}">${name}</td><td style="padding:6px 0;text-align:right;white-space:nowrap;font-size:${strong ? 18 : 14}px;color:${C.ink};${strong ? `font-family:${SERIF};` : ""}">${value}</td></tr>`;
+    `<tr><td colspan="3" style="padding:6px 12px 6px 0;text-align:right;font-size:${strong ? 16 : 14}px;color:${strong ? C.ink : C.muted};${strong ? `font-weight:600;border-top:1px solid ${C.claret};` : ""}">${name}</td><td style="padding:6px 0;text-align:right;white-space:nowrap;font-size:${strong ? 18 : 14}px;color:${C.ink};${strong ? `font-family:${SERIF};border-top:1px solid ${C.claret};` : ""}">${value}</td></tr>`;
   const summary = [
     sumRow("Subtotal", money(totals.subtotal, currency)),
     totals.discount > 0 ? sumRow(`Discount (${totals.discountPercent}%)`, `&minus;${money(totals.discount, currency)}`) : "",
@@ -544,7 +552,7 @@ export async function sendContactFormEmail(submission: ContactSubmission): Promi
             : ""
         }
       </table>
-      <div style="background:${C.brassTint};padding:16px;color:${C.ink};font-size:14px;line-height:1.6;white-space:pre-wrap;">${escape(submission.message)}</div>
+      <div style="background:${C.wash};padding:16px;color:${C.ink};font-size:14px;line-height:1.6;white-space:pre-wrap;">${escape(submission.message)}</div>
       <p style="color:${C.muted};font-size:12px;margin:16px 0 0;">
         Reply directly to this email to respond to ${escape(submission.email)}.
       </p>
@@ -561,7 +569,7 @@ export async function sendContactAutoReplyEmail(submission: ContactSubmission): 
       `
       ${heading("We have your message")}
       ${paragraph(`Hi ${escape(submission.name)}, thank you for writing to ${BRAND.name}. We reply ${STORE_POLICY.support.replyTime}. Support hours: ${escape(COMPANY.supportHours)}.`)}
-      <div style="background:${C.brassTint};padding:16px;margin:0 0 16px;">
+      <div style="background:${C.wash};padding:16px;margin:0 0 16px;">
         ${label("Your message")}
         <p style="margin:0 0 8px;font-size:14px;color:${C.ink};font-weight:600;">${escape(submission.subject)}${order ? ` · order <span style="font-family:${MONO};">${escape(order)}</span>` : ""}</p>
         <p style="margin:0;font-size:14px;color:${C.muted};line-height:1.6;white-space:pre-wrap;">${escape(submission.message)}</p>

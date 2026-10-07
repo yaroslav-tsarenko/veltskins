@@ -9,7 +9,7 @@
   "cartUpdated": "Cart updated",
   "reviewSubmitted": "Review sent for moderation",
   "addedToWishlist": "Saved",
-  "removedFromWishlist": "Removed from saved items",
+  "removedFromWishlist": "Removed from marked lots",
   "feedGenerated": "Product feed generated",
   "importComplete": "Import completed: {success} added, {errors} errors",
   "settingsSaved": "Store settings saved"

@@ -6,7 +6,7 @@ import { STORE_POLICY } from "@/config/store-policy";
 import { defaultLocale } from "@/i18n/config";
 import { formatPrice } from "@/lib/utils/format-price";
 import { OG_PALETTE as P, OG_SIZE, ogImageSource } from "@/lib/og/assets";
-import { Stage, Wordmark, ogResponse, titleSize } from "@/lib/og/parts";
+import { HungLot, Lockup, ogResponse, titleSize } from "@/lib/og/parts";
 import { stripSupplierMentions } from "@/lib/utils/supplier";
 
 export const revalidate = 3600;
@@ -20,6 +20,7 @@ const loadProduct = cache(async (slug: string) =>
       name: true,
       status: true,
       price: true,
+      sku: true,
       images: { orderBy: { sortOrder: "asc" }, take: 1, select: { url: true } },
       categories: { select: { category: { select: { name: true, parentId: true, isActive: true } } } },
     },
@@ -47,19 +48,41 @@ export default async function Image({ params }: { params: SlugParams }) {
   const nameSize = titleSize(name, [[24, 64], [44, 54], [72, 46], [110, 40]]);
 
   return ogResponse(
-    <div style={{ display: "flex", width: "100%", height: "100%", background: P.room, color: P.ink, padding: "56px", gap: 56 }}>
-      <div style={{ display: "flex", alignItems: "center" }}>
-        <Stage src={src} width={560} height={518} />
+    <div style={{ display: "flex", width: "100%", height: "100%", background: P.wall, color: P.ink, padding: "48px 56px", gap: 56 }}>
+      <div style={{ display: "flex", alignItems: "flex-start" }}>
+        <HungLot src={src} width={480} height={360} />
       </div>
       <div style={{ display: "flex", flexDirection: "column", justifyContent: "space-between", flex: 1 }}>
-        <Wordmark size={48} />
+        <Lockup size={20} />
         <div style={{ display: "flex", flexDirection: "column" }}>
-          {category ? <div style={{ display: "flex", fontFamily: "Martian Mono", fontSize: 20, letterSpacing: 2, textTransform: "uppercase", color: P.inkMuted, marginBottom: 16 }}>{category}</div> : null}
-          <div style={{ display: "block", fontFamily: "Sofia Sans Condensed", fontWeight: 700, fontSize: nameSize, lineHeight: 1.02, color: P.ink, lineClamp: 4, overflow: "hidden", maxHeight: nameSize * 1.02 * 4 + 4 }}>{name}</div>
+          {category ? (
+            <div style={{ display: "flex", fontFamily: "Azeret Mono", fontWeight: 500, fontSize: 16, letterSpacing: 1.6, textTransform: "uppercase", color: P.inkMuted, marginBottom: 16 }}>
+              {category}
+            </div>
+          ) : null}
+          <div
+            style={{
+              display: "block",
+              fontFamily: "Newsreader",
+              fontWeight: 500,
+              fontSize: nameSize,
+              lineHeight: 1.1,
+              color: P.ink,
+              lineClamp: 4,
+              overflow: "hidden",
+              maxHeight: nameSize * 1.1 * 4 + 4,
+            }}
+          >
+            {name}
+          </div>
         </div>
         <div style={{ display: "flex", alignItems: "flex-end", justifyContent: "space-between" }}>
-          {price != null && price > 0 ? <div style={{ display: "flex", fontFamily: "Martian Mono", fontSize: 40, color: P.ink }}>{formatPrice(price, STORE_POLICY.currency)}</div> : <div style={{ display: "flex" }} />}
-          <div style={{ display: "flex", fontFamily: "Martian Mono", fontSize: 18, color: P.inkMuted }}>{BRAND.domain}</div>
+          {price != null && price > 0 ? (
+            <div style={{ display: "flex", fontFamily: "Azeret Mono", fontWeight: 500, fontSize: 38, color: P.ink }}>{formatPrice(price, STORE_POLICY.currency)}</div>
+          ) : (
+            <div style={{ display: "flex" }} />
+          )}
+          <div style={{ display: "flex", fontFamily: "Azeret Mono", fontWeight: 500, fontSize: 18, color: P.inkMuted }}>{BRAND.domain}</div>
         </div>
       </div>
     </div>,

@@ -1,10 +1,9 @@
 import type { ReactNode } from "react";
 import { ArrowUpRight, Clock } from "lucide-react";
 import { cn } from "@/lib/utils/cn";
-import { Jaw } from "./FloatRuler";
 import { TimelineAdvance } from "@/components/motion/TimelineAdvance";
 
-const HAPPY = ["Payment confirmed", "Processing", "Trade offer sent", "Delivered"] as const;
+const HAPPY = ["Payment confirmed", "Preparing", "Trade offer sent", "Delivered"] as const;
 
 const STEP_OF: Record<string, number> = {
   awaiting_payment: -1,
@@ -93,18 +92,13 @@ export function PurchaseTimeline({ status, paidAt, finishedAt, refundedAt, offer
             {i > 0 ? (
               <span aria-hidden="true" data-seg="" className={cn("absolute bg-rule max-sm:left-[4.5px] max-sm:-top-6 max-sm:h-[calc(100%)] max-sm:w-px sm:right-[calc(100%-5px)] sm:top-[4.5px] sm:h-px sm:w-full", large ? "max-sm:-top-6" : "max-sm:-top-4")} />
             ) : null}
-            {node.state === "current" ? (
-              <span aria-hidden="true" data-timeline-jaw="" className="absolute max-sm:-left-[1px] max-sm:-top-5 sm:-top-[20px] sm:left-[-1px]">
-                <Jaw />
-              </span>
-            ) : null}
             <span
               aria-hidden="true"
               data-dot=""
               className={cn(
-                "absolute left-0 top-0 z-[1] size-2.5 rounded-full border transition-colors duration-[200ms] max-sm:top-1.5",
+                "absolute left-0 top-0 z-[1] size-2.5 rounded-full border transition-colors duration-[220ms] max-sm:top-1.5",
                 node.state === "done" && "border-ink bg-ink",
-                node.state === "current" && "border-2 border-brand bg-surface",
+                node.state === "current" && "border-brand bg-brand",
                 node.state === "upcoming" && "border-line-hover bg-surface",
                 node.state === "danger" && "border-danger bg-danger",
                 node.state === "neutral" && "border-ink-muted bg-ink-muted",
@@ -114,14 +108,14 @@ export function PurchaseTimeline({ status, paidAt, finishedAt, refundedAt, offer
               className={cn(
                 "m-0 leading-[1.25]",
                 large ? "text-step-0" : "text-ui-md",
-                node.state === "upcoming" ? "text-ink-subtle" : "text-ink",
-                node.state === "current" && "font-semibold",
-                node.state === "danger" && "font-semibold text-danger",
+                node.state === "upcoming" ? "text-ink-faint" : "text-ink",
+                node.state === "current" && "relative font-medium after:absolute after:inset-x-0 after:-bottom-1 after:h-0.5 after:bg-brand",
+                node.state === "danger" && "font-medium text-danger",
               )}
             >
               {node.label}
             </p>
-            {node.time ? <p className="m-0 mt-1 font-mono text-[0.75rem] text-ink-muted">{node.time}</p> : null}
+            {node.time ? <p className="m-0 mt-1 font-mono text-data-sm text-ink-muted">{node.time}</p> : null}
           </li>
         ))}
       </ol>
@@ -135,7 +129,7 @@ export function PurchaseTimeline({ status, paidAt, finishedAt, refundedAt, offer
               href={offerUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="label-caps inline-flex h-9 items-center gap-2 rounded-control bg-brand px-3.5 text-[0.875rem] text-on-brand [[data-theme=light]_&]:border [[data-theme=light]_&]:border-accent-edge hover-device:hover:bg-brand-hover"
+              className="inline-flex h-9 items-center gap-2 rounded-control bg-brand px-3.5 font-sans text-ui-sm font-semibold uppercase tracking-[0.06em] text-on-brand hover-device:hover:bg-brand-hover"
             >
               Open trade offer
               <ArrowUpRight size={16} aria-hidden="true" />
@@ -166,7 +160,7 @@ export function TimelineSteps({ steps, headingLevel = 3, className }: { steps: T
         <li key={step.title} className="relative min-w-0 max-md:pl-8 md:pt-9">
           {i > 0 ? <span aria-hidden="true" className="absolute bg-rule max-md:-top-8 max-md:left-[4.5px] max-md:h-[calc(100%+2rem)] max-md:w-px md:right-[calc(100%-5px)] md:top-[4.5px] md:h-px md:w-[calc(100%+1.5rem)]" /> : null}
           <span aria-hidden="true" className="absolute left-0 top-0 z-[1] size-2.5 rounded-full border border-ink bg-surface max-md:top-2" />
-          <Heading className="m-0 font-display text-step-2 font-semibold leading-[1.12] text-ink">{step.title}</Heading>
+          <Heading className="m-0 font-display text-step-2 font-medium leading-[1.2] text-ink">{step.title}</Heading>
           <div className="mt-2 max-w-[34ch] text-ui-md leading-[1.55] text-ink-muted">{step.body}</div>
         </li>
       ))}

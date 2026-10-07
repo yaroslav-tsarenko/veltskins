@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useTranslations } from "next-intl";
-import { SkinRow } from "@/components/skin/SkinTray";
+import { LotRow } from "@/components/skin/Lot";
 import { formatPrice } from "@/lib/utils/format-price";
 import { cn } from "@/lib/utils/cn";
 import { COMPANY } from "@/lib/company";
@@ -35,8 +35,8 @@ export function CheckoutCounter({ items, totals, currency, quote, loading, headi
   return (
     <div className={cn("flex flex-col gap-6", className)} aria-busy={loading || undefined}>
       <div className="flex items-baseline justify-between gap-4">
-        <Heading className="m-0 text-step-2 font-semibold leading-none text-ink">{t("title")}</Heading>
-        <Link href="/cart" className="text-ui-md font-semibold text-ink decoration-1 underline-offset-4 hover-device:hover:underline">
+        <Heading className="m-0 font-display text-step-2 font-medium leading-none text-ink">{t("title")}</Heading>
+        <Link href="/cart" className="text-ui-md font-medium text-ink decoration-1 underline-offset-[5px] hover-device:hover:underline">
           {t("editBag")}
         </Link>
       </div>
@@ -47,7 +47,7 @@ export function CheckoutCounter({ items, totals, currency, quote, loading, headi
           const lineTotal = line?.total ?? totals.lines[index]?.total ?? 0;
           return (
             <li key={item.id} className="py-3 first:pt-0">
-              <SkinRow name={item.name} imageUrl={item.imageUrl} skin={item.skin} showRarity={false} aside={<span className="font-mono text-data text-ink">{formatPrice(lineTotal, currency)}</span>} />
+              <LotRow name={item.name} imageUrl={item.imageUrl} sku={item.sku} skin={item.skin} showRarity={false} aside={<span className="font-mono text-data text-ink">{formatPrice(lineTotal, currency)}</span>} />
             </li>
           );
         })}

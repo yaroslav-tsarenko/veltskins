@@ -5,7 +5,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { Search } from "lucide-react";
 import { Sheet } from "@/components/ui/Dialog";
-import { SkinRow, type SkinProduct } from "@/components/skin/SkinTray";
+import { LotRow, type SkinProduct } from "@/components/skin/Lot";
 import { PriceDisplay } from "@/components/shared/PriceDisplay/PriceDisplay";
 import { NAV_CATEGORIES } from "@/config/navigation";
 import { ReadoutLoader } from "@/components/ui/ReadoutLoader";
@@ -106,7 +106,7 @@ export function SearchDialog({ open, onClose, categories }: { open: boolean; onC
   const cats = options.filter((o): o is Extract<Option, { kind: "category" }> => o.kind === "category");
   const all = options.find((o): o is Extract<Option, { kind: "all" }> => o.kind === "all");
   const empty = results && results.products.length === 0 && matchedCategories.length === 0;
-  const optionCls = (id: string) => cn("block w-full cursor-pointer rounded-control", options[activeIndex]?.id === id && "bg-brand-soft shadow-[inset_2px_0_0_var(--color-accent)]");
+  const optionCls = (id: string) => cn("block w-full cursor-pointer rounded-control", options[activeIndex]?.id === id && "bg-brand-wash border-t-2 border-brand");
 
   return (
     <Sheet open={open} onClose={close} side="top" label="Search" initialFocus={inputRef}>
@@ -126,10 +126,10 @@ export function SearchDialog({ open, onClose, categories }: { open: boolean; onC
             value={query}
             onChange={(e) => setQuery(e.target.value)}
             onKeyDown={onKeyDown}
-            className="h-14 min-w-0 flex-1 bg-transparent text-step-2 text-ink placeholder:text-ink-subtle focus-visible:outline-none [&::-webkit-search-cancel-button]:hidden"
+            className="h-14 min-w-0 flex-1 bg-transparent text-step-2 text-ink placeholder:text-ink-faint focus-visible:outline-none [&::-webkit-search-cancel-button]:hidden"
           />
           {loading ? <ReadoutLoader label="Searching" /> : null}
-          <button type="button" onClick={close} className="inline-flex min-h-11 shrink-0 cursor-pointer items-center gap-2 text-ui-md font-semibold text-ink decoration-1 underline-offset-4 hover-device:hover:underline">
+          <button type="button" onClick={close} className="inline-flex min-h-11 shrink-0 cursor-pointer items-center gap-2 text-ui-md font-medium text-ink decoration-1 underline-offset-[5px] hover-device:hover:underline">
             Close
             <kbd className="rounded-[1px] border border-line px-1.5 font-mono text-[0.6875rem] font-normal leading-[1.3] text-ink-muted max-sm:hidden">Esc</kbd>
           </button>
@@ -151,7 +151,7 @@ export function SearchDialog({ open, onClose, categories }: { open: boolean; onC
                       onPointerEnter={() => setActiveIndex(options.indexOf(o))}
                       className={cn(optionCls(o.id), "border-b border-line px-2 py-2.5")}
                     >
-                      <SkinRow name={o.product.name} imageUrl={o.product.images?.[0]?.url} skin={o.product.skin} showRarity={false} headingLevel={3} aside={<PriceDisplay price={Number(o.product.price)} size="sm" />} />
+                      <LotRow name={o.product.name} imageUrl={o.product.images?.[0]?.url} skin={o.product.skin} showRarity={false} headingLevel={3} aside={<PriceDisplay price={Number(o.product.price)} size="sm" />} />
                     </div>
                   ))}
                 </div>
@@ -172,7 +172,7 @@ export function SearchDialog({ open, onClose, categories }: { open: boolean; onC
                       className={cn(optionCls(o.id), "inline-flex w-auto min-h-11 items-center gap-2 px-2 font-display text-[1rem] font-semibold text-ink")}
                     >
                       {o.category.name}
-                      <span className="font-mono text-[0.75rem] font-normal text-ink-subtle">· {subtreeCount(o.category)}</span>
+                      <span className="font-mono text-data-sm font-normal text-ink-faint">· {subtreeCount(o.category)}</span>
                     </div>
                   ))}
                 </div>
@@ -201,7 +201,7 @@ export function SearchDialog({ open, onClose, categories }: { open: boolean; onC
               <ul className="m-0 mt-3 flex list-none flex-wrap gap-x-6 gap-y-2 p-0">
                 {NAV_CATEGORIES.map((c) => (
                   <li key={c.slug}>
-                    <Link href={`/catalog/${c.slug}`} onClick={close} className="text-ui-md font-semibold text-ink decoration-1 underline-offset-4 hover-device:hover:underline">
+                    <Link href={`/catalog/${c.slug}`} onClick={close} className="text-ui-md font-medium text-ink decoration-1 underline-offset-[5px] hover-device:hover:underline">
                       {c.name}
                     </Link>
                   </li>

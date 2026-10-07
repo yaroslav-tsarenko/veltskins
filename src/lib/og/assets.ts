@@ -6,28 +6,30 @@ import { isBlockedImageHost } from "@/lib/utils/supplier";
 export const OG_SIZE = { width: 1200, height: 630 };
 
 export const OG_PALETTE = {
-  room: "#121315",
-  rig: "#0d0e10",
-  floor: "#0b0c0d",
-  stage: "#18191c",
-  raised: "#1c1e21",
-  ink: "#eceae5",
-  inkMuted: "#aaa7a0",
-  rule: "#3a3d42",
-  line: "#2a2c30",
-  accent: "#f39a2e",
-  lampLine: "rgba(255, 233, 199, 0.55)",
-  lampPool: "rgba(255, 233, 199, 0.09)",
-  contact: "rgba(0, 0, 0, 0.55)",
+  wall: "#ede7dc",
+  band: "#e4dcce",
+  mount: "#f8f5ef",
+  fascia: "#f4efe7",
+  ink: "#221e1a",
+  inkMuted: "#58504a",
+  inkFaint: "#5f5750",
+  rule: "#b8ac99",
+  rail: "#7c7265",
+  line: "#d3c9b9",
+  accent: "#86203a",
+  onAccent: "#fbf6f0",
+  spot: "rgba(255, 246, 228, 0.55)",
+  contact: "rgba(34, 30, 26, 0.24)",
 } as const;
 
 type FontSpec = { name: string; file: string; weight: 400 | 500 | 600 | 700; style: "normal" };
 
 const FONT_FILES: FontSpec[] = [
-  { name: "Sofia Sans Condensed", file: "sofia-sans-condensed-latin-700-normal.woff", weight: 700, style: "normal" },
-  { name: "Source Sans 3", file: "source-sans-3-latin-400-normal.woff", weight: 400, style: "normal" },
-  { name: "Source Sans 3", file: "source-sans-3-latin-600-normal.woff", weight: 600, style: "normal" },
-  { name: "Martian Mono", file: "martian-mono-latin-500-normal.woff", weight: 500, style: "normal" },
+  { name: "Newsreader", file: "newsreader-latin-500-normal.woff", weight: 500, style: "normal" },
+  { name: "Newsreader", file: "newsreader-latin-600-normal.woff", weight: 600, style: "normal" },
+  { name: "Instrument Sans", file: "instrument-sans-latin-400-normal.woff", weight: 400, style: "normal" },
+  { name: "Instrument Sans", file: "instrument-sans-latin-600-normal.woff", weight: 600, style: "normal" },
+  { name: "Azeret Mono", file: "azeret-mono-latin-500-normal.woff", weight: 500, style: "normal" },
 ];
 
 let fontCache: Promise<{ name: string; data: ArrayBuffer; weight: 400 | 500 | 600 | 700; style: "normal" }[]> | null = null;

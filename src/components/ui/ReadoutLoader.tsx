@@ -9,10 +9,8 @@ export interface ReadoutLoaderProps {
 export function ReadoutLoader({ label = "Loading", block = false, className }: ReadoutLoaderProps) {
   const loader = (
     <span role="status" className={cn("inline-flex items-center", className)}>
-      <span aria-hidden="true" className="inline-flex gap-1 motion-reduce:hidden">
-        {[0, 1, 2].map((i) => (
-          <span key={i} className="size-1 bg-line-hover [animation:readout-led_420ms_steps(1,end)_infinite]" style={{ animationDelay: `${i * 140}ms` }} />
-        ))}
+      <span aria-hidden="true" className="relative block h-px w-[72px] overflow-hidden bg-line motion-reduce:hidden">
+        <span className="absolute inset-0 origin-left bg-brand [animation:line-draw_900ms_var(--ease-in-out)_infinite]" />
       </span>
       <span className="meta hidden text-ink-muted motion-reduce:inline">{label}…</span>
       <span className="sr-only motion-reduce:hidden">{label}</span>
@@ -23,5 +21,5 @@ export function ReadoutLoader({ label = "Loading", block = false, className }: R
 }
 
 export function SkeletonBar({ className }: { className?: string }) {
-  return <span aria-hidden="true" className={cn("block h-3 rounded-[1px] bg-surface-1", className)} />;
+  return <span aria-hidden="true" className={cn("block h-3 bg-surface-1", className)} />;
 }

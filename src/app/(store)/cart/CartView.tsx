@@ -19,8 +19,8 @@ import { STORE_POLICY } from "@/config/store-policy";
 
 const EMPTY_LINKS = [
   { href: "/catalog/knives", key: "knives" },
-  { href: "/catalog/gloves", key: "gloves" },
   { href: "/catalog/rifles", key: "rifles" },
+  { href: "/catalog/pistols", key: "pistols" },
 ] as const;
 
 export function CartView() {
@@ -40,7 +40,7 @@ export function CartView() {
   return (
     <div className="mx-auto max-w-container px-gutter pb-28 lg:pb-24">
       <Breadcrumbs items={[{ label: nav("home"), href: "/" }, { label: t("title") }]} withJsonLd={false} />
-      <h1 className="m-0 flex flex-wrap items-baseline gap-x-4 pb-8 pt-1 text-step-5 font-[650] leading-none tracking-[-0.01em] text-ink">
+      <h1 className="m-0 flex flex-wrap items-baseline gap-x-4 pb-8 pt-1 font-display text-step-5 font-medium leading-[1.06] tracking-[-0.01em] text-ink">
         Cart
         {isHydrated && count > 0 ? (
           <span className="font-mono text-data font-normal tracking-normal text-ink-muted" aria-label={t("itemCount", { count })}>
@@ -54,7 +54,7 @@ export function CartView() {
           <div className="flex flex-col gap-6 lg:col-span-8">
             {[0, 1].map((i) => (
               <div key={i} className="flex gap-6 border-b border-line pb-6">
-                <span className="block h-[120px] w-[160px] shrink-0 rounded-tray bg-surface-2" />
+                <span className="block h-[128px] w-[160px] shrink-0 bg-surface-2" />
                 <span className="flex flex-1 flex-col gap-3">
                   <SkeletonBar className="w-2/3" />
                   <SkeletonBar className="w-1/3" />
@@ -75,7 +75,7 @@ export function CartView() {
           <ul className="m-0 flex list-none gap-5 p-0">
             {EMPTY_LINKS.map((link) => (
               <li key={link.href}>
-                <Link href={link.href} className="text-ui-md font-semibold text-ink decoration-1 underline-offset-4 hover-device:hover:underline">
+                <Link href={link.href} className="text-ui-md font-medium text-ink decoration-1 underline-offset-[5px] hover-device:hover:underline">
                   {t(`empty.links.${link.key}`)}
                 </Link>
               </li>
@@ -97,7 +97,7 @@ export function CartView() {
                         type="button"
                         onClick={() => saveForLater(item.productId, item.variantId)}
                         disabled={wishlist.pending(item.productId)}
-                        className="relative z-[3] inline-flex min-h-9 cursor-pointer items-center text-ui-sm font-semibold text-ink-muted decoration-1 underline-offset-4 hover-device:hover:text-ink hover-device:hover:underline"
+                        className="relative z-[3] inline-flex min-h-9 cursor-pointer items-center text-ui-sm font-medium text-ink-muted decoration-1 underline-offset-[5px] hover-device:hover:text-ink hover-device:hover:underline"
                       >
                         {t("saveForLater")}
                         <span className="sr-only"> {item.name}</span>
@@ -112,8 +112,8 @@ export function CartView() {
           </section>
 
           <aside aria-labelledby="cart-counter-title" className="lg:sticky lg:top-[calc(var(--header-height-compact)+24px)] lg:col-span-4">
-            <div className="rounded-control bg-raised p-6 shadow-[var(--shadow-card),0_0_0_1px_var(--color-border)]">
-              <h2 id="cart-counter-title" className="m-0 mb-5 text-step-2 font-semibold leading-none text-ink">
+            <div className="relative rounded-none bg-mount p-6"><span aria-hidden="true" className="absolute inset-x-0 top-0 h-0.5 bg-brand" />
+              <h2 id="cart-counter-title" className="m-0 mb-5 font-display text-step-2 font-medium leading-none text-ink">
                 {t("summary")}
               </h2>
               <TotalsList totals={displayTotals} currency={currency} />
@@ -133,7 +133,7 @@ export function CartView() {
             </div>
           </aside>
 
-          <div className="fixed inset-x-0 bottom-0 z-40 border-t border-line bg-raised px-gutter py-3 lg:hidden">
+          <div className="fixed inset-x-0 bottom-0 z-40 border-t border-line bg-mount px-gutter py-3 lg:hidden">
             <Button as={Link} href="/checkout" size="lg" fullWidth>
               {t("checkoutWithTotal", { total: formatPrice(displayTotals.total, currency) })}
             </Button>

@@ -19,18 +19,19 @@ function visibleRect(el: Element | null | undefined): DOMRect | null {
   return rect;
 }
 
-function dimLamp(stage: HTMLElement | null) {
-  if (!stage) return;
-  stage.style.setProperty("--lamp-level", String(MOTION_LIMITS.lampDim));
-  window.setTimeout(() => stage.style.removeProperty("--lamp-level"), MOTION_DURATION.cartFlight);
+function lift(box: HTMLElement | null) {
+  const shadow = box?.querySelector<HTMLElement>(".cast-shadow") ?? null;
+  if (!shadow) return;
+  shadow.style.setProperty("--cast-reach", String(MOTION_LIMITS.castShorten));
+  window.setTimeout(() => shadow.style.removeProperty("--cast-reach"), MOTION_DURATION.cartFlight);
 }
 
 export function flyToCart(detail: CartAddDetail | undefined) {
   if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
   const source = detail?.source ?? null;
-  const stage = source?.querySelector<HTMLElement>("[data-stage]") ?? null;
+  const box = source?.querySelector<HTMLElement>("[data-render-box]") ?? null;
   const img = source?.querySelector<HTMLImageElement>("[data-render] img") ?? null;
-  const from = visibleRect(stage ?? img);
+  const from = visibleRect(box ?? img);
   const targets = Array.from(document.querySelectorAll<HTMLElement>("[data-cart-target]"));
   const target = targets.map((el) => ({ el, rect: visibleRect(el) })).find((t) => t.rect);
   if (!from || !img || !target?.rect) return;
@@ -59,7 +60,7 @@ export function flyToCart(detail: CartAddDetail | undefined) {
   ghost.appendChild(picture);
   document.body.appendChild(ghost);
 
-  dimLamp(stage);
+  lift(box);
   landsAt = performance.now() + MOTION_DURATION.cartFlight;
   target.el.dataset.arriving = "";
 
@@ -71,12 +72,12 @@ export function flyToCart(detail: CartAddDetail | undefined) {
       { transform: "translate(0px, 0px) scale(1)", opacity: MOTION_LIMITS.cartGhostOpacity },
       { transform: `translate(${endX - startX}px, ${endY - startY}px) scale(${scale})`, opacity: 0.35 },
     ],
-    { duration: MOTION_DURATION.cartFlight, easing: cssEase("instrument"), fill: "forwards" },
+    { duration: MOTION_DURATION.cartFlight, easing: cssEase("hang"), fill: "forwards" },
   );
 
   const land = () => {
     ghost.remove();
-    target.el.animate([{ transform: "translateY(1px)" }, { transform: "translateY(0)" }], { duration: MOTION_DURATION.micro, easing: cssEase("instrument") });
+    target.el.animate([{ transform: "translateY(1px)" }, { transform: "translateY(0)" }], { duration: MOTION_DURATION.micro, easing: cssEase("hang") });
     window.setTimeout(() => delete target.el.dataset.arriving, MOTION_DURATION.ui + 40);
   };
   flight.finished.then(land, () => {

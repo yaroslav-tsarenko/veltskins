@@ -23,11 +23,11 @@ const sections: PolicySection[] = [
   },
   {
     id: "security",
-    title: "Card security",
+    title: "How your card details are handled",
     body: (
       <>
         <p>
-          <strong>We do not store or process full payment card data.</strong>{" "}
+          <strong>Full card numbers never reach us: we neither store nor process them.</strong>{" "}
           Your card number, expiry date and security code are entered on
           the payment provider’s page and never pass through our website. We receive only the result of the payment and a transaction
           reference.
@@ -66,7 +66,7 @@ const sections: PolicySection[] = [
   },
   {
     id: "when-charged",
-    title: "When your card is charged",
+    title: "The moment your card is charged",
     body: (
       <>
         <p>

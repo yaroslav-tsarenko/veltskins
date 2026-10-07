@@ -5,17 +5,17 @@ import { Eye, EyeOff, TriangleAlert } from "lucide-react";
 import { cn } from "@/lib/utils/cn";
 
 export const controlClass = cn(
-  "block w-full min-w-0 rounded-control bg-raised border border-control text-step-0 text-ink placeholder:text-ink-subtle shadow-lamp-catch",
-  "transition-[border-color,box-shadow] duration-[140ms] ease-[var(--ease-std)]",
+  "block w-full min-w-0 rounded-control bg-mount border border-control text-step-0 text-ink placeholder:text-ink-faint",
+  "transition-[border-color,box-shadow] duration-[120ms] ease-[var(--ease-std)]",
   "hover-device:hover:border-ink-muted focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-focus",
-  "disabled:bg-surface-1 disabled:text-ink-subtle disabled:cursor-not-allowed disabled:hover:border-control",
+  "disabled:bg-surface-1 disabled:text-ink-faint disabled:cursor-not-allowed disabled:hover:border-control",
 );
 
-export const readOnlyClass = "read-only:border-transparent read-only:bg-surface-1 read-only:shadow-none";
+export const readOnlyClass = "read-only:border-transparent read-only:bg-surface-1";
 
-export const controlErrorClass = "border-danger shadow-[inset_0_0_0_1px_var(--color-danger)] hover-device:hover:border-danger";
+export const controlErrorClass = "border-2 border-danger hover-device:hover:border-danger";
 
-export const dataInputClass = "font-mono text-data [font-stretch:100%]";
+export const dataInputClass = "font-mono text-data";
 
 export interface FieldShellProps {
   id: string;
@@ -37,7 +37,7 @@ export function FieldShell({ id, label, hint, error, required, className, labelH
   return (
     <div className={cn("flex min-w-0 flex-col gap-1.5", className)}>
       {label ? (
-        <label htmlFor={id} className={cn("text-ui-md font-semibold leading-[1.3] text-ink", labelHidden && "sr-only")}>
+        <label htmlFor={id} className={cn("text-ui-md font-medium leading-[1.3] text-ink", labelHidden && "sr-only")}>
           {label}
           {required ? (
             <span className="text-ink-muted" aria-hidden="true">
