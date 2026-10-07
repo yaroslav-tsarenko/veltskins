@@ -4,17 +4,17 @@ import { POLICY_FACTS as F } from "@/lib/policy-facts";
 
 export const generateMetadata = policyMetadata(
   "acceptable-use",
-  `Rules for using ${F.domain} and a ${F.brand} account, and what happens if they are broken.`,
+  `The conduct expected of anyone using ${F.domain} or holding a ${F.brand} account, and the consequences of falling short of it.`,
 );
 
 const sections: PolicySection[] = [
   {
     id: "scope",
-    title: "Who this applies to",
+    title: "Who is bound by this",
     body: (
       <p>
-        This policy applies to everyone who visits {F.domain} or creates an account. It forms part of our{" "}
-        <Link href="/policies/terms">Terms and conditions</Link>.
+        Anyone who opens {F.domain}, and anyone who registers here, is bound by what follows. It is part of the{" "}
+        <Link href="/policies/terms">Terms and conditions</Link> rather than a separate undertaking.
       </p>
     ),
   },
@@ -23,41 +23,41 @@ const sections: PolicySection[] = [
     title: "Accounts",
     body: (
       <ul>
-        <li>You must be {F.minAge} or over to hold an account.</li>
-        <li>One account per person, registered in your own name with accurate details.</li>
-        <li>Keep your password private. Do not share your account or use someone else’s.</li>
+        <li>An account holder must have reached {F.minAge}.</li>
+        <li>One person, one account, in that person’s own name, with details that are correct.</li>
+        <li>A password is yours alone. Do not lend your account out and do not borrow anyone else’s.</li>
         <li>
-          Accounts may not be opened from, or used to order for delivery to, {F.restrictedCountries} or {F.restrictedTerritories}. Do not
-          use a VPN, proxy or false address to get around this.
+          No account may be opened from {F.restrictedCountries} or {F.restrictedTerritories}, nor used to order anything for delivery
+          there. A VPN, a proxy or an invented address to work around that is itself a breach.
         </li>
       </ul>
     ),
   },
   {
     id: "not-allowed",
-    title: "What is not allowed",
+    title: "Conduct we will not permit",
     body: (
       <ul>
-        <li>Using stolen or unauthorised payment cards, or placing orders you do not intend to pay for.</li>
-        <li>Buying in order to resell, or getting around the limit of {F.maxItemsPerOrder} items per order.</li>
-        <li>Linking a Steam account or saving a trade URL that is not your own, or using {F.brand} to move items between accounts for someone else.</li>
-        <li>Accepting an item and then reversing the trade, or opening a chargeback for an item you received, to obtain the item without paying.</li>
-        <li>Automated access that puts load on the site, such as scraping, bulk account creation or repeated checkout attempts.</li>
-        <li>Trying to access other customers’ data, our admin area or systems you are not authorised to use, or testing for security weaknesses without our written permission.</li>
-        <li>Uploading or sending malware, spam or anything unlawful.</li>
+        <li>Paying with a card that is stolen or that you have no authority over, or ordering with no intention of paying at all.</li>
+        <li>Buying to resell, or manoeuvring around the ceiling of {F.maxItemsPerOrder} lots to an order.</li>
+        <li>Connecting a Steam account or storing a trade URL belonging to someone else, or treating {F.brand} as a way of shifting lots between accounts on another person’s behalf.</li>
+        <li>Taking a lot and then reversing the trade, or raising a chargeback over a lot that did arrive, so as to end up with it unpaid for.</li>
+        <li>Hitting the site with automated traffic — scraping, creating accounts in bulk, hammering checkout.</li>
+        <li>Reaching for another customer’s data, for our admin area or for any system you have no authority over, and probing for security weaknesses without our written permission.</li>
+        <li>Sending or uploading malware, spam, or anything the law forbids.</li>
       </ul>
     ),
   },
   {
     id: "breach",
-    title: "If these rules are broken",
+    title: "Consequences",
     body: (
       <>
         <p>
-          We may cancel an order and refund it, or suspend or close the account. Where the law requires it, for example in a
-          case of card fraud, we report the matter to the relevant authority.
+          The responses open to us are cancelling an order and refunding it, or suspending the account, or closing it. Where the law
+          obliges us to report something — card fraud being the obvious case — we report it to the appropriate authority.
         </p>
-        <p>If you think we have made a mistake, email {F.email} and we will review the decision.</p>
+        <p>Think we have got it wrong? Write to {F.email} and the decision will be looked at again.</p>
       </>
     ),
   },

@@ -19,7 +19,7 @@ function usePreview(slug: string | null) {
     const cached = readCached<{ data: SkinProduct[] }>({ cacheKey, storage: "session" });
     if (cached) setProduct(cached.data?.find((p) => p.images?.length) ?? null);
     let cancelled = false;
-    cachedFetchJSON<{ data: SkinProduct[] }>(`/api/products?category=${encodeURIComponent(slug)}&pageSize=4&inStock=true&sort=price-desc`, { cacheKey, storage: "session" })
+    cachedFetchJSON<{ data: SkinProduct[] }>(`/api/products?category=${encodeURIComponent(slug)}&pageSize=4&inStock=true&sort=rarity-desc`, { cacheKey, storage: "session" })
       .then((res) => {
         if (!cancelled) setProduct(res.data?.find((p) => p.images?.length) ?? null);
       })

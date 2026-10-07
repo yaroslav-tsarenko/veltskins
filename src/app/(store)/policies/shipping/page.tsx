@@ -4,30 +4,30 @@ import { POLICY_FACTS as F } from "@/lib/policy-facts";
 
 export const generateMetadata = policyMetadata(
   "shipping",
-  `How ${F.brand} delivers ${F.game} items: a ${F.deliveryMethod} to your Steam account, ${F.deliveryUsual}. Steam trade protection, trade holds and what you need.`,
+  `Delivery at ${F.brand}: every ${F.game} lot arrives as a ${F.deliveryMethod} ${F.deliveryUsual}, with Steam trade protection and trade holds explained.`,
 );
 
 const sections: PolicySection[] = [
   {
     id: "how",
-    title: "How items are delivered",
+    title: "The mechanics of delivery",
     body: (
       <>
         <p>
-          There is no parcel and no delivery charge. Each item you buy is sent as a {F.deliveryMethod} to the Steam account linked to your{" "}
-          {F.brand} account, using the trade URL you saved. The offer comes from a delivery account that holds the item; it is not sent
-          from a person you are trading with.
+          Nothing is posted and nothing is charged for carriage. A lot you buy reaches you as a {F.deliveryMethod} addressed to the
+          Steam account tied to your {F.brand} account, at the trade URL you stored. The offer originates from a delivery account
+          holding the lot, not from some individual on the other side of a trade.
         </p>
         <p>
-          We request each trade offer straight once your payment has been confirmed by our payment provider. Offers are sent {F.deliveryUsual}.
-          Orders with several items are delivered item by item, so you may receive more than one offer.
+          We request the offer as soon as our payment provider confirms your payment, and offers go out {F.deliveryUsual}. Where an
+          order contains several lots, each is delivered on its own, so more than one offer may arrive.
         </p>
       </>
     ),
   },
   {
     id: "requirements",
-    title: "What you need before you buy",
+    title: "What has to be in place first",
     body: (
       <>
         <ul>
@@ -36,85 +36,89 @@ const sections: PolicySection[] = [
           ))}
         </ul>
         <p>
-          You save your trade URL under <Link href="/account/steam">Steam account</Link>. You find it in Steam under Inventory, Trade
-          Offers, “Who can send me Trade Offers?”. We check that the trade URL belongs to the Steam account you linked.
+          Your trade URL is stored from <Link href="/account/steam">Steam account</Link>. Steam itself keeps it under Inventory, then
+          Trade Offers, then “Who can send me Trade Offers?”. We verify that the URL you give belongs to the Steam account
+          you linked.
         </p>
       </>
     ),
   },
   {
     id: "accepting",
-    title: "Accepting the trade offer",
+    title: "Accepting the offer",
     body: (
       <>
         <p>
-          Open the Steam app or steamcommunity.com and go to Inventory, then Trade Offers. Before you accept, check that the offer gives you
-          the item named in your order and asks for nothing from your inventory. Confirm it in the Steam Guard Mobile Authenticator if Steam
-          asks you to.
+          In the Steam app, or at steamcommunity.com, open Inventory and then Trade Offers. Check two things before accepting: that the
+          lot named on your order is what the offer contains, and that nothing of yours is being asked for. Steam may then want the
+          Steam Guard Mobile Authenticator to confirm it.
         </p>
         <p>
-          {F.offerExpiryNote} Your order page shows the status of each item: payment confirmed, processing, trade offer sent, delivered,
-          or refunded.
+          {F.offerExpiryNote} Each lot’s progress is visible on your order page — payment confirmed, processing, trade offer sent,
+          delivered, or refunded.
         </p>
         <p>
-          We never ask for your Steam password, Steam Guard codes or API key, and we never ask you to send items to us.
+          A Steam password, a Steam Guard code and an API key are things we will never request, and we will never ask you to send
+          anything to us.
         </p>
       </>
     ),
   },
   {
     id: "protection",
-    title: "Steam trade protection and trade holds",
+    title: "Trade protection and trade holds at Steam",
     body: (
       <>
         <p>
-          Steam may place items you receive in a trade under trade protection for up to {F.tradeProtectionDays} days. During that time the
-          item is in your inventory and can be used in the game, but it cannot be traded or sold on the Steam Community Market.
+          A lot received in a trade can be put under trade protection by Steam for as long as {F.tradeProtectionDays} days. Throughout
+          that period it sits in your inventory and plays in game as normal, but it cannot be traded away or listed on the Steam
+          Community Market.
         </p>
         <p>
-          If your account has not had the Steam Guard Mobile Authenticator turned on for at least 7 days, Steam can hold the trade itself
-          for up to {F.tradeHoldMaxDays} days before the item arrives. These rules are set by Steam and we cannot shorten them.
+          Where the Steam Guard Mobile Authenticator has been active on your account for fewer than 7 days, Steam may additionally hold
+          the trade for up to {F.tradeHoldMaxDays} days before the lot lands. Valve sets both periods and neither can be shortened by
+          us.
         </p>
         <p>
-          If Steam reverses a trade during the protection period, so that the item leaves your inventory, we refund the price you paid for
-          that item. See our <Link href="/policies/warranty">Item guarantee</Link>.
+          Should Steam reverse a trade inside the protection period, taking the lot back out of your inventory, we return what you paid
+          for it. The <Link href="/policies/warranty">Item guarantee</Link> covers this.
         </p>
       </>
     ),
   },
   {
     id: "failed",
-    title: "If delivery does not happen",
+    title: "When a lot does not arrive",
     body: (
       <>
         <p>
-          If we cannot deliver an item within {F.deliveryDeadlineHours} hours of payment confirmation, we refund the price you paid for it
-          within {F.refundDays} days to {F.refundMethod}. We email you when this happens.
+          Fail to deliver within {F.deliveryDeadlineHours} hours of the payment being confirmed and we refund the price paid for that
+          lot, inside {F.refundDays} days, to {F.refundMethod}. You get an email when this happens.
         </p>
         <p>
-          Some problems are on the Steam account side: an invalid or outdated trade URL, a private inventory, a trade ban or cooldown, or a
-          Steam Guard restriction. We tell you what went wrong on your order page. You can fix the account settings and buy again once the
-          refund is made.
+          Sometimes the obstacle lies with the Steam account: a trade URL that is wrong or out of date, an inventory kept private, a
+          trade ban or cooldown, a Steam Guard restriction. Your order page names the cause. Put the account setting right and, once the
+          refund has landed, buy again.
         </p>
       </>
     ),
   },
   {
     id: "where",
-    title: "Where we sell",
+    title: "Where we deliver",
     body: (
       <p>
-        We sell to customers in the {F.marketCountries}. We do not sell to {F.restrictedCountries}, or to {F.restrictedTerritories}.
+        Our customers are in the {F.marketCountries}. We sell neither to {F.restrictedCountries} nor to {F.restrictedTerritories}.
       </p>
     ),
   },
   {
     id: "ownership",
-    title: "When the item becomes yours",
+    title: "The point at which the lot is yours",
     body: (
       <p>
-        An item is delivered when you accept the trade offer and it appears in your Steam inventory. It is held in your Steam account under
-        Steam’s terms of service. Questions about an order: email {F.email}.
+        Delivery is done once you have accepted the offer and the lot shows in your Steam inventory, where it then sits under
+        Steam’s terms of service. Anything else about an order: {F.email}.
       </p>
     ),
   },

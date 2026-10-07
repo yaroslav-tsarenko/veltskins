@@ -4,18 +4,18 @@
   "breadcrumbHome": "Home",
   "breadcrumb": "About",
   "hero": {
-    "title": "A store for Counter-Strike 2 skins",
-    "lead": "{brand} sells weapon skins, knives and gloves for {game} to customers in the {countries}. You buy each skin from us, at the price shown, and we deliver it to your Steam account as a trade offer."
+    "title": "A Counter-Strike 2 skin shop",
+    "lead": "Weapon finishes, knives and gloves for {game}, sold to customers across the {countries}. Each skin is bought from us outright at the price on the label, and arrives in your Steam account as a trade offer."
   },
   "range": {
     "title": "What we sell",
-    "body": "Cosmetic items for weapons, knives and gloves, sorted by weapon type and then by weapon:"
+    "body": "Cosmetics only — weapon finishes, knives and gloves — arranged by weapon type and then by the weapon itself:"
   },
   "listing": {
     "title": "What every listing shows",
-    "single": "One item in one condition. Each listing can be bought once.",
-    "exterior": "Rarity, exterior and quality, with the float range that exterior allows for the finish.",
-    "image": "The standard Steam image of the item.",
+    "single": "A single item in a single condition, and therefore available to buy exactly once.",
+    "exterior": "Classification, condition and quality, together with the float range that condition permits on that finish.",
+    "image": "Steam's own standard render of the item.",
     "prices": "A price you can view in {currencies}, confirmed again before you pay."
   },
   "notSold": {
@@ -23,8 +23,8 @@
     "items": {
       "marketplace": "Buy items from users or swap items with them. {brand} does not take items in.",
       "cases": "Sell cases, keys, stickers or agents.",
-      "accounts": "Sell Steam accounts, or ask for your Steam password or Steam Guard codes.",
-      "other": "Offer gambling, case openings or anything with a random outcome."
+      "accounts": "Deal in Steam accounts, or ask you for a Steam password or a Steam Guard code.",
+      "other": "Run gambling, case openings, or anything else settled by chance."
     }
   },
   "ordering": {
@@ -46,7 +46,7 @@
     },
     "withdrawal": {
       "label": "Cancelling",
-      "body": "You can cancel for free until delivery begins. The {days}-day right to cancel ends once delivery has begun at your request.",
+      "body": "Cancelling is free right up to the point delivery starts. Once it has started at your own request, the {days}-day cancellation right is spent.",
       "link": "Refund policy"
     }
   },

@@ -4,104 +4,105 @@ import { POLICY_FACTS as F } from "@/lib/policy-facts";
 
 export const generateMetadata = policyMetadata(
   "returns",
-  `When ${F.brand} refunds ${F.game} items: undelivered items, Steam trade reversals and cancellations before delivery begins. Refunds within ${F.refundDays} days to ${F.refundMethod}.`,
+  `The grounds on which ${F.brand} refunds a ${F.game} lot — non-delivery, a reversed Steam trade, cancellation before delivery starts — and the ${F.refundDays} day route back to ${F.refundMethod}.`,
 );
 
 const sections: PolicySection[] = [
   {
     id: "summary",
-    title: "In short",
+    title: "The short version",
     body: (
       <ul>
-        <li>If we cannot deliver an item within {F.deliveryDeadlineHours} hours of payment confirmation, we refund the price you paid for it.</li>
-        <li>If Steam reverses the trade while the item is under trade protection, we put the price of that item back on your card.</li>
-        <li>You can cancel free of charge before {F.cancelBefore}.</li>
-        <li>Once delivery has begun, the {F.withdrawalDays}-day right to cancel no longer applies, because you asked us at checkout to start delivery straight away.</li>
-        <li>Refunds are made within {F.refundDays} days to {F.refundMethod}, in the currency you paid in.</li>
+        <li>A lot we fail to deliver inside {F.deliveryDeadlineHours} hours of the payment being confirmed is refunded at the price you paid.</li>
+        <li>A trade that Steam reverses while the lot is under trade protection sends that lot’s price back to your card.</li>
+        <li>Cancellation before {F.cancelBefore} costs nothing.</li>
+        <li>Delivery, once started, closes the {F.withdrawalDays} day cancellation right, because that is what you asked us to do at checkout.</li>
+        <li>Money returns inside {F.refundDays} days to {F.refundMethod}, in whichever currency you paid.</li>
       </ul>
     ),
   },
   {
     id: "withdrawal",
-    title: "Right to cancel and immediate delivery",
+    title: "Cancellation and immediate delivery",
     body: (
       <>
         <p>
-          The Consumer Contracts Regulations 2013 (UK) and the Consumer Rights Directive (EU) give consumers {F.withdrawalDays} days to
-          cancel a contract for digital content, unless delivery has begun with their express consent and acknowledgement that the
-          right is lost.
+          {F.withdrawalDays} days is the cancellation period a consumer has over a contract for digital content under the Consumer
+          Contracts Regulations 2013 in the UK and the Consumer Rights Directive in the EU. The exception is delivery that has already
+          begun with the consumer’s express consent and their acknowledgement that the right falls away.
         </p>
         <p>
-          Our items are delivered straight after payment. At checkout you tick a separate box, which is not ticked in advance: “
-          {F.waiverText}” Without it the order cannot be placed. We store the time and the wording with your order and repeat it in your
-          confirmation email.
+          Our lots go out as soon as payment clears, so that consent is taken at checkout through its own box, unticked until you tick
+          it: “{F.waiverText}” An order will not submit without it. The timestamp and the wording are both filed with the
+          order and quoted back in your confirmation email.
         </p>
         <p>
-          Delivery begins when we send the Steam trade offer for an item. Until then you can cancel without charge: email {F.email} or use
-          the <Link href="/contact">contact form</Link> with your order number.
+          Delivery starts with the Steam trade offer. Before it goes out you may still cancel at no cost — email {F.email} or use the{" "}
+          <Link href="/contact">contact form</Link>, quoting the order number.
         </p>
       </>
     ),
   },
   {
     id: "when-we-refund",
-    title: "The cases we refund",
+    title: "Grounds for a refund",
     body: (
       <>
         <ul>
-          <li>The item could not be sourced or the trade offer could not be sent within {F.deliveryDeadlineHours} hours of payment confirmation.</li>
-          <li>The trade offer failed or expired before you could accept it, for a reason on our side.</li>
-          <li>Steam reversed the trade while the item was under trade protection and the item left your inventory.</li>
-          <li>The item delivered is not the item named in your order (a different market name, exterior or quality).</li>
-          <li>You maycelled before {F.cancelBefore}.</li>
+          <li>Neither sourcing the lot nor sending the trade offer proved possible within {F.deliveryDeadlineHours} hours of the payment being confirmed.</li>
+          <li>The offer failed, or ran out before you could accept, for a reason sitting on our side.</li>
+          <li>Steam reversed the trade during trade protection and took the lot back out of your inventory.</li>
+          <li>What arrived was not what your order named — a different market name, exterior or quality.</li>
+          <li>You cancel before {F.cancelBefore}.</li>
         </ul>
         <p>
-          If an offer cannot be completed because of the receiving Steam account, for example an invalid trade URL, a private inventory, a
-          trade ban or cooldown, or a Steam Guard restriction, we put the price of that item back on your card and tell you what to change before buying again.
+          Where the receiving Steam account is what blocks the offer — a trade URL that is invalid, an inventory set to private, a trade
+          ban or cooldown, a Steam Guard restriction — that lot’s price goes back on your card and we tell you what needs changing
+          before you buy again.
         </p>
       </>
     ),
   },
   {
     id: "not-refundable",
-    title: "When we do not refund",
+    title: "Grounds that are not",
     body: (
       <>
         <p>
-          Once an item is in your Steam inventory and the trade is not reversed by Steam, we do not take it back or refund it because you
-          changed your mind, found a lower price elsewhere, or wanted a different float or pattern within the stated range.
+          A lot sitting in your Steam inventory, with no reversal by Steam, is not taken back and not refunded on account of a change of
+          mind, a cheaper price found elsewhere, or a wish for a different float or pattern from within the range we published.
         </p>
         <p>
-          Changes Valve makes to {F.game} or to Steam, such as changes to how an item looks or to trading rules, are outside our control and
-          are not grounds for a refund.
+          Whatever Valve alters about {F.game} or Steam — the look of a lot, the rules of trading — lies outside our hands and is not a
+          ground for refund.
         </p>
       </>
     ),
   },
   {
     id: "how-refunds",
-    title: "How the money comes back",
+    title: "The route the money takes",
     body: (
       <>
         <p>
-          The refund is made within {F.refundDays} days of the day we confirm the refund to you. The money goes to {F.refundMethod}, in the currency you
-          paid in. Where an order had several items, we refund only the items affected. We do not charge a fee for refunds. Your bank may take
-          a few further working days to show it on your statement.
+          Counting from the day we confirm the refund to you, the money is sent inside {F.refundDays} days, to {F.refundMethod}, in the
+          currency of your payment. On a multi-lot order only the affected lots are refunded. Refunds carry no fee from us, though your
+          bank may need a few more working days to post it.
         </p>
         <p>
-          Each item on your <Link href="/account/orders">order page</Link> shows its status, including “Refund pending” and
-          “Refunded”. We also email you when a refund is issued.
+          Status for every lot, “Refund pending” and “Refunded” among the states, is on your{" "}
+          <Link href="/account/orders">order page</Link>. An email goes out as well when a refund is issued.
         </p>
       </>
     ),
   },
   {
     id: "contact",
-    title: "Asking about a refund",
+    title: "Chasing a refund",
     body: (
       <p>
-        Write to {F.email}, or use the <Link href="/contact">contact form</Link> with your order number. We reply {F.replyTime}. If you are not
-        satisfied with our answer, see our <Link href="/policies/complaints">Complaints policy</Link>.
+        Email {F.email}, or use the <Link href="/contact">contact form</Link> with the order number. We answer {F.replyTime}. An answer
+        you are unhappy with can go further, by way of our <Link href="/policies/complaints">Complaints policy</Link>.
       </p>
     ),
   },

@@ -1,11 +1,11 @@
 {
-  "siteDescription": "A catalogue of Counter-Strike 2 skins with the condition, classification and price printed on every lot. Pay by card; we send the skin to your Steam account as a trade offer.",
+  "siteDescription": "Counter-Strike 2 skins hung as lots, each with its condition, classification and price on the label. Pay by card and the skin reaches your Steam account as a trade offer.",
   "ogFrom": "From {price}",
   "ogItems": "{count, plural, one {# lot} other {# lots}}",
   "ogShop": "Catalogue",
   "ogProductAlt": "{name} from {brand}",
   "ogCategoryAlt": "{name} at {brand}",
-  "catalogTitle": "Counter-Strike 2 skins, knives and gloves",
+  "catalogTitle": "Skins, knives and gloves for Counter-Strike 2",
   "ogDelivery": "Delivered by {method}",
   "ogGuarantee": "Refund if not delivered within {hours} hours"
 }

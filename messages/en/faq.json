@@ -13,28 +13,28 @@
       "title": "Orders",
       "items": {
         "place": {
-          "q": "How do I place an order?",
-          "a": "Sign in, link your Steam account and save your trade URL. Put the lots you want in your cart, open checkout, give us your contact and billing details, tick the two confirmation boxes and pay on our payment provider's secure page. Your confirmation email goes out as soon as the payment is confirmed."
+          "q": "What are the steps to ordering?",
+          "a": "Four things in order: sign in and connect Steam, store your trade URL against the account, fill your cart and open checkout. There you give us contact and billing details, tick both confirmation boxes, and pay on the provider's secure page. The confirmation email follows the moment the payment clears."
         },
         "account": {
-          "q": "Do I need an account to order?",
-          "a": "Yes. Everything we sell is delivered to a Steam account, so checkout needs an account here with your Steam account linked to it. You can sign in through Steam, or register with an email and password and link Steam afterwards."
+          "q": "Must I register before buying?",
+          "a": "Yes. A lot can only go to a Steam account, which means checkout needs an account here with Steam connected to it. Signing in through Steam does that in one move; registering with an email and password and connecting Steam later works equally well."
         },
         "unique": {
-          "q": "Why can I only add one of each lot?",
+          "q": "Why is a lot limited to one per cart?",
           "a": "Every lot in the catalogue is one skin in one condition, so a lot can only be bought once. A single order can hold up to {maxItems} different lots."
         },
         "float": {
-          "q": "Will I get the exact float shown?",
+          "q": "Is the float on the label the float I receive?",
           "a": "The label prints the float range for the condition, not a measured value for your copy. Every copy of a skin has its own float fixed at the moment it drops; yours falls somewhere inside the printed range, and Steam shows the exact figure once the item is in your inventory."
         },
         "change": {
-          "q": "Can I cancel my order?",
+          "q": "Is cancelling possible?",
           "a": "You can cancel free of charge at any point before {cancelBefore}. After that the lot is on its way and the cancellation wording at checkout applies. Write to {email} with your order number and we will stop it if we still can."
         },
         "noEmail": {
-          "q": "I paid but did not get a confirmation email.",
-          "a": "Check your spam folder first, then open My purchases, where every order and its status is listed. If the order is there but the email is not, write to {email} and we will send it again."
+          "q": "My payment went through but nothing arrived by email.",
+          "a": "Spam folder first; after that, My purchases lists every order with its current status. An order showing there without an email in your inbox just needs a nudge to {email} and we will resend it."
         }
       }
     },
@@ -42,28 +42,28 @@
       "title": "Delivery via Steam",
       "items": {
         "how": {
-          "q": "How do I receive the lot?",
+          "q": "In what form does the lot arrive?",
           "a": "As a {method}. Once your payment is confirmed we send the skin to the trade URL saved on your account, {usual}. Open Steam, go to Inventory, then Trade Offers, and accept it."
         },
         "time": {
-          "q": "How long does delivery take?",
+          "q": "How quickly does a lot arrive?",
           "a": "We send the offer {usual}. If we cannot deliver within {deadlineHours} hours of the payment being confirmed, we refund the lot."
         },
         "requirements": {
-          "q": "What does my Steam account need?",
-          "a": "A Steam account in good standing with no trade ban or cooldown, the Steam Guard Mobile Authenticator turned on for at least 7 days, a public inventory, and a current trade URL from that same account saved here."
+          "q": "What state does my Steam account have to be in?",
+          "a": "Good standing with no trade ban and no cooldown; the Steam Guard Mobile Authenticator enabled for 7 days or longer; an inventory set to public; and a trade URL from that same account, current and stored here."
         },
         "protection": {
-          "q": "Why can't I trade the item straight away?",
+          "q": "Why is the skin locked when it lands?",
           "a": "Steam can hold items you receive under trade protection for up to {protectionDays} days, and accounts without the Mobile Authenticator can see trade holds of up to {holdDays} days. Those are Valve's rules, applied to every trade on Steam, and not something we set or can shorten."
         },
         "expired": {
-          "q": "I missed the trade offer. What now?",
+          "q": "The trade offer lapsed before I saw it. What now?",
           "a": "Write to us with your order number. If the offer ran out before you accepted it, we send it again where we can; if we cannot, we refund the lot."
         },
         "safety": {
-          "q": "How do I know the offer is from you?",
-          "a": "Your purchase page shows the status of every lot and links straight to the offer once it is sent. The offer only hands you the skin you bought and never asks for anything from your inventory. We never ask for your Steam password or your Steam Guard codes."
+          "q": "How can I be sure an offer really came from you?",
+          "a": "Each lot on your purchase page carries its status and, once sent, a direct link to the offer itself. A genuine offer hands over the skin you paid for and requests nothing of yours in return. Neither your Steam password nor a Steam Guard code is something we would ever ask you for."
         }
       }
     },
@@ -71,7 +71,7 @@
       "title": "Refunds",
       "items": {
         "when": {
-          "q": "When do I get a refund?",
+          "q": "In which situations do you refund?",
           "a": "If we cannot deliver a lot within {deadlineHours} hours, if the offer fails for a reason on our side, or if Steam reverses the trade while the item is under trade protection. The full wording is in our <warranty>Item guarantee</warranty>."
         },
         "withdrawal": {
@@ -79,11 +79,11 @@
           "a": "Before delivery begins, yes, and at no cost. At checkout you ask us to start delivery straight away and confirm that you lose the {withdrawalDays}-day right to cancel once the trade offer is sent, so a delivered item cannot be returned because you changed your mind."
         },
         "refund": {
-          "q": "How long does a refund take?",
-          "a": "We refund within {refundDays} days to {refundMethod}, in the currency you paid in. Your bank may take a few more working days to show it on your statement."
+          "q": "How quickly does the money come back?",
+          "a": "Inside {refundDays} days, to {refundMethod}, in the currency you paid. Allow your bank a few further working days before it appears on the statement."
         },
         "account": {
-          "q": "The trade failed because of my Steam account. Do I get a refund?",
+          "q": "The trade failed on my account's side. Am I still refunded?",
           "a": "Yes. If the offer cannot be completed because the trade URL is wrong, the inventory is private, or the account carries a trade ban or a Steam Guard restriction, we refund the lot and tell you exactly what to change."
         }
       }
@@ -96,23 +96,23 @@
           "a": "By {cardMethods} card. You type your card details on the payment provider's own PCI DSS compliant page. We take no other payment method."
         },
         "safe": {
-          "q": "Is my card information safe?",
+          "q": "What happens to my card details?",
           "a": "We never store or process full card details. Every card payment runs on our PCI DSS compliant provider's hosted page, and your bank may ask you to confirm it with 3-D Secure, usually in your banking app."
         },
         "currencies": {
-          "q": "Which currencies can I pay in?",
+          "q": "What currencies are available?",
           "a": "{currencies}. You are charged in the currency chosen at checkout. If your card is held in a different currency, your bank may add its own conversion fee."
         },
         "vatNo": {
-          "q": "Do your prices include VAT?",
+          "q": "Is VAT part of the price?",
           "a": "{company} is not registered for VAT, so no VAT is charged and nothing is added at checkout."
         },
         "vatYes": {
-          "q": "Do your prices include VAT?",
+          "q": "Is VAT included in what I see?",
           "a": "Yes. The price on the label includes VAT at the rate that applies to your order."
         },
         "when": {
-          "q": "When is my card charged?",
+          "q": "At what point am I charged?",
           "a": "When you complete the payment on the provider's page. We only ask for the lot to be delivered once that payment is confirmed. If the payment is declined or you cancel it, nothing is charged."
         }
       }
@@ -122,10 +122,10 @@
       "items": {
         "what": {
           "q": "What do you sell?",
-          "a": "Cosmetic items for Counter-Strike 2: weapon skins, knives and gloves. They change how a weapon looks in game and have no effect on how it plays."
+          "a": "Cosmetics for Counter-Strike 2, and nothing else: weapon finishes, knives and gloves. They alter a weapon's appearance in game and leave its behaviour exactly as it was."
         },
         "store": {
-          "q": "Do you buy skins from customers?",
+          "q": "Will you buy skins from me?",
           "a": "No. {brand} is a store. We sell lots we source ourselves; you cannot list, sell or trade anything to us here."
         },
         "rarity": {
@@ -133,7 +133,7 @@
           "a": "Classification is the drop tier the game assigns, from Consumer Grade up to Covert, with knives and gloves marked ★. Condition (Factory New to Battle-Scarred) is the band the item's float falls in. Quality is Standard, StatTrak™ (which counts kills) or Souvenir (dropped at a Major)."
         },
         "affiliation": {
-          "q": "Are you connected to Valve or Steam?",
+          "q": "Is there any link between you and Valve?",
           "a": "No. {brand} is an independent store and is not affiliated with, sponsored by or endorsed by Valve Corporation. Items sit in your Steam account under Steam's own terms."
         }
       }
@@ -142,19 +142,19 @@
       "title": "Account",
       "items": {
         "who": {
-          "q": "Who can open an account?",
-          "a": "Anyone aged {minAge} or over in a country we sell to. You can sign in through Steam or register with an email and password."
+          "q": "Who is allowed to register?",
+          "a": "Anybody of {minAge} or more, resident in a country we trade with. Either route in works: Steam sign-in, or an email address with a password."
         },
         "steam": {
-          "q": "What do you get from my Steam account?",
-          "a": "Your Steam ID and your public profile name, avatar and profile link. Steam confirms the Steam ID to us when you sign in; we never see your Steam password. The detail is in our <privacy>Privacy policy</privacy>."
+          "q": "Which details do you take from Steam?",
+          "a": "Your Steam ID and your public profile name, avatar and profile link. On sign-in Steam vouches for the Steam ID; the Steam password stays with you. The detail is in our <privacy>Privacy policy</privacy>."
         },
         "password": {
           "q": "I forgot my password.",
-          "a": "Choose “Forgot your password?” on the sign-in page and enter your email. If an account exists for it, we send a link to set a new one. If you signed in through Steam, sign in through Steam again instead."
+          "a": "Choose “Forgot your password?” on the sign-in page and enter your email. If an account exists for it, we send a link to set a new one. Steam sign-in users should simply go back through Steam."
         },
         "delete": {
-          "q": "How do I delete my account or my data?",
+          "q": "How do I have my account and my data removed?",
           "a": "Email {email} from the address on your account. We close the account and delete your data, apart from the order records we are required to keep by law, as set out in our <privacy>Privacy policy</privacy>."
         }
       }

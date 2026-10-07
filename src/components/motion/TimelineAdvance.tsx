@@ -7,7 +7,6 @@ import { cssEase, MOTION_DURATION } from "@/lib/motion/tokens";
 interface Snapshot {
   status: string;
   reached: number;
-  jaw: { x: number; y: number } | null;
 }
 
 function reachedIndex(nodes: HTMLElement[]): number {
@@ -16,14 +15,6 @@ function reachedIndex(nodes: HTMLElement[]): number {
     if (node.dataset.node && node.dataset.node !== "upcoming") reached = i;
   });
   return reached;
-}
-
-function jawOffset(root: HTMLElement): { x: number; y: number } | null {
-  const jaw = root.querySelector<HTMLElement>("[data-timeline-jaw]");
-  if (!jaw) return null;
-  const a = jaw.getBoundingClientRect();
-  const b = root.getBoundingClientRect();
-  return { x: a.left - b.left, y: a.top - b.top };
 }
 
 export function TimelineAdvance({ status }: { status: string }) {
@@ -35,9 +26,8 @@ export function TimelineAdvance({ status }: { status: string }) {
     if (!root) return;
     const nodes = Array.from(root.querySelectorAll<HTMLElement>("[data-node]"));
     const reached = reachedIndex(nodes);
-    const jaw = jawOffset(root);
     const before = previous.current;
-    previous.current = { status, reached, jaw };
+    previous.current = { status, reached };
     if (!before || before.status === status || window.matchMedia(REDUCED_MOTION_QUERY).matches) return;
 
     const timing = { duration: MOTION_DURATION.cartFlight, easing: cssEase("hang"), fill: "backwards" as const };
@@ -55,15 +45,6 @@ export function TimelineAdvance({ status }: { status: string }) {
         delay: step * MOTION_DURATION.ui + MOTION_DURATION.cartFlight * 0.6,
       });
       step += 1;
-    }
-
-    const moved = root.querySelector<HTMLElement>("[data-timeline-jaw]");
-    if (moved && jaw && before.jaw) {
-      const dx = before.jaw.x - jaw.x;
-      const dy = before.jaw.y - jaw.y;
-      if (Math.abs(dx) + Math.abs(dy) > 1) {
-        moved.animate([{ transform: `translate(${dx}px, ${dy}px)` }, { transform: "none" }], { duration: MOTION_DURATION.cartFlight + step * MOTION_DURATION.ui, easing: cssEase("hang") });
-      }
     }
   }, [status]);
 

@@ -16,16 +16,16 @@ export const STORE_POLICY = {
   delivery: {
     method: "Steam trade offer",
     game: "Counter-Strike 2",
-    usualTime: "usually within minutes of payment confirmation",
+    usualTime: "normally a matter of minutes after the payment clears",
     deadlineHours: 24,
-    offerExpiryNote: "Each trade offer has an expiry time. It is shown on the offer in Steam and on your order page.",
+    offerExpiryNote: "Every trade offer runs to an expiry time, printed both on the offer inside Steam and on your order page.",
     tradeProtectionDays: 7,
     tradeHoldMaxDays: 15,
     requirements: [
-      "a Steam account in good standing, with no trade ban or trade cooldown",
-      "Steam Guard Mobile Authenticator turned on for at least 7 days",
-      "a public Steam inventory",
-      "a current Steam trade URL saved in your account",
+      "a Steam account in good standing, carrying neither a trade ban nor a trade cooldown",
+      "the Steam Guard Mobile Authenticator enabled for 7 days or longer",
+      "a Steam inventory set to public",
+      "a current Steam trade URL stored against your account",
     ],
   },
   returns: {
@@ -34,7 +34,7 @@ export const STORE_POLICY = {
     refundMethod: "the original payment method",
   },
   guarantee: {
-    summary: "If we cannot deliver an item you paid for, or Steam reverses the trade while the item is under Steam trade protection, we refund the full price you paid for that item.",
+    summary: "Where an item you have paid for cannot be delivered, or where Steam reverses the trade while that item sits under Steam trade protection, the full price you paid for it comes back to you.",
   },
   limits: {
     maxQtyPerItem: 1,
@@ -44,7 +44,7 @@ export const STORE_POLICY = {
   policiesLastUpdated: POLICY_DATE,
   waiver: {
     version: POLICY_DATE,
-    text: "I ask you to start delivery straight after payment and I understand I lose my right to cancel once the trade offer is sent.",
+    text: "I want delivery to begin as soon as my payment goes through, and I accept that my right to cancel ends once the trade offer has been sent.",
   },
   support: {
     replyTime: "within 1 business day",
@@ -56,18 +56,18 @@ export const STORE_POLICY = {
     chargeCurrencies: ["USD", "EUR", "GBP"],
   },
   orders: {
-    cancelBefore: "we send the Steam trade offer",
+    cancelBefore: "the Steam trade offer leaves us",
   },
   complaints: {
     acknowledgeTime: "within 1 business day",
     responseDays: 14,
   },
   processors: [
-    { role: "Card payments", purpose: "Takes card payments on its own hosted page and runs 3-D Secure checks", name: null as string | null },
-    { role: "Item delivery partner", purpose: "Sources the item you bought and sends the Steam trade offer to your account, using your Steam ID and trade URL", name: null as string | null },
-    { role: "Steam (Valve Corporation)", purpose: "Signs you in when you choose Steam sign-in and carries the trade offer to your account", name: "Valve Corporation" as string | null },
-    { role: "Website hosting and database", purpose: "Runs the store and stores account and order records", name: null as string | null },
-    { role: "Email delivery", purpose: "Sends order, account and support emails", name: null as string | null },
+    { role: "Card payments", purpose: "Handles card payments on a hosted page of its own and carries out the 3-D Secure checks", name: null as string | null },
+    { role: "Item delivery partner", purpose: "Obtains the item you bought and dispatches the Steam trade offer to your account from your Steam ID and trade URL", name: null as string | null },
+    { role: "Steam (Valve Corporation)", purpose: "Authenticates you whenever you pick Steam sign-in, and conveys the trade offer into your account", name: "Valve Corporation" as string | null },
+    { role: "Website hosting and database", purpose: "Keeps the shop running and holds the account and order records", name: null as string | null },
+    { role: "Email delivery", purpose: "Dispatches the order, account and support email", name: null as string | null },
   ],
   retention: {
     orderRecordsYears: 6,

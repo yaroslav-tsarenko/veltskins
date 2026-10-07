@@ -1,3 +1,7 @@
+:root {
+  --dur-spot-sweep: 1800ms;
+}
+
 @property --sx {
   syntax: "<percentage>";
   inherits: false;
@@ -36,18 +40,62 @@
   }
 }
 
+[data-scene="hang"] [data-lot] {
+  --n: 0;
+}
+
+[data-scene="hang"] :nth-child(1) > [data-lot]:not([data-variant="anchor"]) {
+  --n: 1;
+}
+
+[data-scene="hang"] :nth-child(2) > [data-lot]:not([data-variant="anchor"]) {
+  --n: 2;
+}
+
+[data-scene="hang"] :nth-child(3) > [data-lot]:not([data-variant="anchor"]) {
+  --n: 3;
+}
+
+[data-scene="hang"] :nth-child(4) > [data-lot]:not([data-variant="anchor"]) {
+  --n: 4;
+}
+
 @media (prefers-reduced-motion: no-preference) {
   [data-anim="words"] [data-word] {
     animation: word-settle var(--dur-reveal) calc(120ms + var(--i, 0) * 36ms) var(--ease-hang) both;
   }
 
-  [data-rail][data-reveal="in"] {
+  [data-rail][data-reveal="in"],
+  [data-scene="hang"] [data-rail] {
     animation: rail-draw 520ms var(--ease-hang) both;
     transform-origin: left center;
   }
 
-  [data-scene="hang"] [data-spot-surface] {
-    animation: spot-sweep 1800ms var(--ease-in-out) 600ms backwards;
+  [data-scene="hang"] [data-lot] > span:has(.wire) {
+    animation: fade-in 260ms var(--ease-std) calc(400ms + var(--n) * 70ms) both;
+  }
+
+  [data-scene="hang"] [data-lot] .wire {
+    animation: wire-drop 320ms var(--ease-hang) calc(400ms + var(--n) * 70ms) both;
+    transform-origin: top center;
+  }
+
+  [data-scene="hang"] [data-lot] [data-render-box] {
+    animation: hang-drop var(--dur-reveal) var(--ease-hang) calc(560ms + var(--n) * 90ms) both;
+  }
+
+  [data-scene="hang"] [data-lot] .wall-label {
+    animation: label-in 420ms var(--ease-settle) calc(600ms + var(--n) * 90ms) both;
+  }
+
+  [data-scene="hang"] [data-lot] > div:last-child {
+    animation: fade-in 320ms var(--ease-std) calc(680ms + var(--n) * 90ms) both;
+  }
+
+  [data-scene="hang"] [data-lot] [data-render-box][data-spot-surface] {
+    animation:
+      hang-drop var(--dur-reveal) var(--ease-hang) calc(560ms + var(--n) * 90ms) both,
+      spot-sweep var(--dur-spot-sweep) var(--ease-in-out) 1500ms backwards;
   }
 
   [data-cart-target][data-arriving] .animate-count-roll {
@@ -62,12 +110,34 @@
     opacity: 0;
     transition: opacity var(--dur-panel-close) var(--ease-std);
   }
+
+  [data-scene="inspect"] [data-render],
+  [data-scene="inspect"] canvas[data-spot] {
+    transition: transform var(--dur-ui) var(--ease-settle);
+  }
+
+  [data-scene="inspect"][data-dragging] [data-render],
+  [data-scene="inspect"][data-dragging] canvas[data-spot] {
+    transition: none;
+  }
 }
 
 @media (hover: hover) and (pointer: fine) {
-  [data-lot] [data-lot-body] {
+  [data-lot] [data-sway] {
     transform-origin: top center;
-    transition: rotate var(--dur-panel) var(--ease-settle);
+  }
+
+  [data-lot] [data-sway][style*="rotate"] {
+    will-change: rotate;
+  }
+
+  [data-scene="inspect"][data-rotate="on"] {
+    cursor: grab;
+  }
+
+  [data-scene="inspect"][data-rotate="on"][data-dragging] {
+    cursor: grabbing;
+    user-select: none;
   }
 
   [data-room-row] {

@@ -2,8 +2,8 @@
   "metaTitle": "{brand} — a catalogue of Counter-Strike 2 skins, knives and gloves",
   "metaDescription": "Buy Counter-Strike 2 weapon skins, knives and gloves from {brand}. Every lot carries its condition, classification and price, and is delivered to your Steam account by {method} once payment is confirmed.",
   "hero": {
-    "title": "Counter-Strike 2 skins, sent to your Steam inventory",
-    "lead": "Weapon skins, knives and gloves for {game}. Every listing is one item in one condition, with its exterior and float range shown before you pay.",
+    "title": "Counter-Strike 2 skins, hung and ready for your inventory",
+    "lead": "Finishes, knives and gloves for {game}. One item to a listing, one condition to an item, with its condition and float range printed well before you pay.",
     "browse": "Browse the catalogue",
     "knives": "Knives",
     "factItems": "Items listed",
@@ -18,7 +18,7 @@
   },
   "featured": {
     "title": "Covert, knives and gloves",
-    "lead": "The rarest grades in the catalogue, one per weapon.",
+    "lead": "The top classifications on the wall, a single lot from each weapon.",
     "link": "Rarest first"
   },
   "rarity": {
@@ -34,19 +34,19 @@
     "policyLink": "Read the delivery policy",
     "account": {
       "title": "Sign in with Steam",
-      "body": "Link the Steam account that should receive the items. We only read your public Steam ID and profile name."
+      "body": "Connect whichever Steam account the lots should land in. All we read is the Steam ID and profile name your profile already publishes."
     },
     "tradeUrl": {
       "title": "Save your trade URL",
-      "body": "Paste the trade URL from your Steam inventory settings. We check that it belongs to the linked account."
+      "body": "Copy the trade URL out of your Steam inventory settings and paste it here. We verify it against the account you connected."
     },
     "pay": {
-      "title": "Pay on the secure page",
-      "body": "Card payment runs on our payment provider's page. We confirm the price again before you pay."
+      "title": "Settle on the secure page",
+      "body": "The card itself is handled on our provider's page. Prices get one final check before anything is charged."
     },
     "accept": {
       "title": "Accept the trade offer",
-      "body": "We send the offer {usual}. Accept it in Steam before it expires. Steam can hold or protect received items for up to {protection} days; without the Mobile Authenticator a hold can last up to {hold} days."
+      "body": "We send the offer {usual}. Take it in Steam before it lapses. Steam can hold or protect received items for up to {protection} days; without the Mobile Authenticator a hold can last up to {hold} days."
     }
   }
 }

@@ -14,6 +14,11 @@ export interface MotionEnv {
   scrollTimeline: boolean;
   saveData: boolean;
   lowPower: boolean;
+  forcedSpot: boolean;
+}
+
+function params(): URLSearchParams {
+  return new URLSearchParams(window.location.search);
 }
 
 export function readMotionEnv(): MotionEnv {
@@ -29,13 +34,14 @@ export function readMotionEnv(): MotionEnv {
     scrollTimeline: typeof CSS !== "undefined" && CSS.supports("animation-timeline: view()"),
     saveData: Boolean(hints.connection?.saveData),
     lowPower: memory < 4 || cores < 4,
+    forcedSpot: /^(1|on|force)$/i.test(params().get("spot") ?? ""),
   };
 }
 
 export function frozenTime(): number | null {
-  const params = new URLSearchParams(window.location.search);
-  if (!params.has("t")) return null;
-  return Math.max(0, Number(params.get("t")) || 0);
+  const search = params();
+  if (!search.has("t")) return null;
+  return Math.max(0, Number(search.get("t")) || 0);
 }
 
 export function interactiveDesktop(env: MotionEnv): boolean {
@@ -43,12 +49,10 @@ export function interactiveDesktop(env: MotionEnv): boolean {
 }
 
 export function webglAllowed(env: MotionEnv): boolean {
-  if (frozenTime() !== null) return !env.reduced;
+  if (env.reduced) return false;
+  if (env.forcedSpot) return true;
+  if (frozenTime() !== null) return true;
   return interactiveDesktop(env) && !env.saveData && !env.lowPower;
-}
-
-export function documentTop(el: Element): number {
-  return el.getBoundingClientRect().top + window.scrollY;
 }
 
 export function onIdle(task: () => void, timeout = 1200): () => void {

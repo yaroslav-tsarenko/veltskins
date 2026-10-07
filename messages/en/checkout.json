@@ -1,7 +1,7 @@
 {
   "meta": {
     "title": "Secure checkout",
-    "description": "Enter your contact and billing details, confirm the Steam account that receives the items, and pay on our payment provider's secure page."
+    "description": "Give us contact and billing details, confirm which Steam account receives the lots, then pay on our provider's secure page."
   },
   "title": "Checkout",
   "stepsLabel": "Checkout steps",
@@ -9,7 +9,7 @@
   "back": "Back",
   "empty": {
     "title": "Your cart is empty",
-    "subtitle": "Add a skin to your cart to check out.",
+    "subtitle": "Put a skin in the cart before checking out.",
     "action": "Browse the catalogue"
   },
   "errors": {
@@ -17,16 +17,16 @@
   },
   "contact": {
     "title": "Contact",
-    "emailHint": "We send the order confirmation, invoice and delivery updates here.",
-    "phoneOptional": "Phone number is optional. We only use it if there is a problem with your order."
+    "emailHint": "Confirmation, invoice and delivery updates all come to this address.",
+    "phoneOptional": "Phone number is optional. It is used only when an order runs into trouble."
   },
   "delivery": {
     "title": "Billing and Steam delivery",
     "billingTitle": "Billing address",
-    "billingHint": "The address registered with your card. It appears on your invoice.",
+    "billingHint": "Whatever address your card is registered to. Your invoice carries it.",
     "steamTitle": "Steam account for delivery",
     "steamLead": "Items are sent as a {method} to this account, {usual}.",
-    "steamRequired": "Link your Steam account and save your trade URL before you continue."
+    "steamRequired": "Connect Steam and store your trade URL before going further."
   },
   "review": {
     "title": "Review & pay",
@@ -36,16 +36,16 @@
     "billing": "Billing: {address}",
     "itemsTitle": "Your items",
     "accept": "I have read and agree to the <terms>Terms and Conditions</terms> and the <refunds>Refund policy</refunds>.",
-    "acceptLabelShort": "Terms and Conditions and Refund policy",
+    "acceptLabelShort": "the Terms and Conditions together with the Refund policy",
     "pay": "Pay {amount}",
     "payPending": "Calculating total…",
-    "hosted": "When you press Pay, you go to our payment provider's secure page to enter your card details. Card numbers are never typed into this site.",
-    "processedBy": "Card payments are processed securely by {provider}. We never see or store your full card number.",
-    "processedByProvider": "Card payments are processed securely by our PCI DSS compliant payment provider. We never see or store your full card number.",
-    "threeDs": "Your bank may ask you to confirm the payment in your banking app (3-D Secure).",
+    "hosted": "Pressing Pay hands you to our provider's secure page, where the card details go in. No card number is ever typed on this site.",
+    "processedBy": "Card payments are processed securely by {provider}. A full card number is neither seen nor stored by us.",
+    "processedByProvider": "Our PCI DSS compliant provider handles the card processing. Your full card number is neither seen nor kept here.",
+    "threeDs": "Expect your bank to want the payment confirmed in its app, by way of 3-D Secure.",
     "steamTo": "Steam trade offer to {name}",
     "waiverLabelShort": "Request for immediate delivery",
-    "waiverNote": "Without this request we cannot start delivery. Once delivery begins, the {days}-day right to cancel no longer applies. <link>How cancelling works</link>."
+    "waiverNote": "Delivery cannot begin until you make that request. Once delivery begins, the {days}-day right to cancel no longer applies. <link>How cancelling works</link>."
   },
   "totals": {
     "subtotal": "Subtotal",
@@ -86,40 +86,40 @@
     "copyright": "© {year} {brand}. All rights reserved."
   },
   "paymentFailed": {
-    "title": "Your payment didn't go through",
-    "body": "You haven't been charged. Your details are still filled in, so you can try again.",
+    "title": "That payment was not completed",
+    "body": "You haven't been charged. Everything you entered is still there for another attempt.",
     "retry": "Try again"
   },
   "problems": {
-    "title": "We couldn't take this order",
+    "title": "This order could not be taken",
     "totalChangedTitle": "Your total has changed",
-    "PAYMENTS_NOT_CONNECTED": "Card payments are being connected. Nothing has been charged.",
-    "PAYMENT_UNAVAILABLE": "Card payments are not available at the moment, so we can't take this order. Nothing has been charged. Please try again later or email {email}.",
-    "PAYMENT_LINK_FAILED": "We couldn't open the secure payment page. Nothing has been charged. Please try again in a few minutes.",
-    "TOTAL_CHANGED": "The price of an item or the exchange rate has changed, so your total is now {total}. Check it and press Pay again.",
-    "ORDER_LIMIT": "One order can hold up to {max} items. Remove some items from your cart to continue.",
-    "PRODUCT_UNAVAILABLE": "{name} is no longer available. Remove it from your cart to continue.",
-    "PRICE_UNAVAILABLE": "We couldn't confirm the current price of {name}. Nothing has been charged. Please try again in a moment.",
-    "STEAM_NOT_LINKED": "Link your Steam account before you pay.",
-    "TRADE_URL_REQUIRED": "Save your Steam trade URL before you pay.",
-    "AGE_REQUIRED": "You must be {minAge} or over to order. Add your date of birth under Account → Profile, then come back to pay. Nothing has been charged.",
+    "PAYMENTS_NOT_CONNECTED": "Card payment is being wired up. Nothing has been charged.",
+    "PAYMENT_UNAVAILABLE": "Card payment is down for the moment, so this order cannot be taken. Nothing has been charged. Please try again later or email {email}.",
+    "PAYMENT_LINK_FAILED": "The secure payment page would not open. Nothing has been charged. Give it a few minutes and try once more.",
+    "TOTAL_CHANGED": "The price of an item or the exchange rate has changed, so your total is now {total}. Look it over, then press Pay again.",
+    "ORDER_LIMIT": "One order can hold up to {max} items. Take something out of the cart to go on.",
+    "PRODUCT_UNAVAILABLE": "{name} is no longer available. Take it out of the cart to go on.",
+    "PRICE_UNAVAILABLE": "We couldn't confirm the current price of {name}. Nothing has been charged. Try once more in a moment.",
+    "STEAM_NOT_LINKED": "Connect Steam first, then pay.",
+    "TRADE_URL_REQUIRED": "Store your Steam trade URL first, then pay.",
+    "AGE_REQUIRED": "You must be {minAge} or over to order. Fill in your date of birth under Account → Profile and return here to pay. Nothing has been charged.",
     "CART_EMPTY": "Your cart is empty.",
-    "INVALID_REQUEST": "Some details are missing or not valid. Check each step and try again.",
-    "RATE_LIMITED": "Too many attempts in a short time. Wait a minute and try again.",
-    "UNAUTHORISED": "Your session has ended. Sign in again to continue.",
-    "NETWORK": "We couldn't reach the store. Check your connection and try again.",
-    "SERVER_ERROR": "Something went wrong on our side. Nothing has been charged. Please try again."
+    "INVALID_REQUEST": "Something is missing, or not valid. Work back through the steps and try again.",
+    "RATE_LIMITED": "That is too many attempts too quickly. Leave it a minute, then try again.",
+    "UNAUTHORISED": "Your session has ended. Another sign-in is needed to go on.",
+    "NETWORK": "The store was out of reach. Check the connection, then try again.",
+    "SERVER_ERROR": "The fault is at our end. Nothing has been charged. Please try again."
   },
   "confirmed": {
     "meta": {
       "title": "Order confirmation",
-      "description": "The status of your Veltskins order and payment."
+      "description": "Where your Veltskins order and its payment stand."
     },
     "itemsTitle": "Your order",
     "lineQty": "{count} × {unit}",
     "deliveryTitle": "Delivering to",
     "whenTitle": "What happens next",
-    "when": "We send each item as a Steam trade offer, {usual}. Accept it in Steam before it expires. You can follow every item on your order page.",
+    "when": "We send each item as a Steam trade offer, {usual}. Take it in Steam before it lapses. Your order page tracks each lot.",
     "viewOrder": "View your order",
     "continueShopping": "Continue browsing",
     "contactUs": "Contact us",
@@ -129,50 +129,50 @@
     },
     "checking": {
       "title": "Checking your payment",
-      "body": "We're confirming the payment with our payment provider. This usually takes a few seconds. Please keep this page open."
+      "body": "The payment is being confirmed with our provider. A few seconds is the usual wait. Leave this page open."
     },
     "confirmedState": {
       "title": "Thank you, {name}",
-      "titleNoName": "Thank you for your order",
+      "titleNoName": "Your order is confirmed",
       "email": "We've sent a confirmation to {email}.",
       "paid": "Payment of {total} received."
     },
     "failed": {
-      "title": "Your payment didn't go through",
-      "body": "You haven't been charged. The items are still in your cart, so you can try again or use another card.",
+      "title": "The payment did not complete",
+      "body": "You haven't been charged. Your lots are still in the cart, so try again or reach for a different card.",
       "retry": "Try again",
       "cart": "Back to cart",
       "help": "If money has left your account, email {email} and we'll look into it."
     },
     "pending": {
-      "title": "Your payment is still being confirmed",
-      "body": "Your bank hasn't confirmed the payment yet. Please don't pay again. We'll email {email} as soon as it's confirmed, or contact {support} if you don't hear from us.",
+      "title": "Confirmation of your payment is still pending",
+      "body": "Your bank has yet to confirm it. Please don't pay again. We'll email {email} as soon as it's confirmed, or contact {support} if you don't hear from us.",
       "recheck": "Check again"
     },
     "review": {
       "title": "We're checking your payment",
-      "body": "The payment confirmed by our provider doesn't match this order, so we've paused it before requesting any delivery. We'll contact you at {email} {replyTime}."
+      "body": "What our provider confirmed does not match this order, so we have held it and requested no delivery. We'll contact you at {email} {replyTime}."
     },
     "unavailable": {
-      "title": "We can't confirm this payment right now",
-      "body": "Our payment provider can't be reached at the moment, so we haven't marked the order as paid. We'll email {email} once it's confirmed, or contact {support}."
+      "title": "This payment cannot be confirmed just now",
+      "body": "Our provider is unreachable for the moment, which is why the order is not yet marked paid. We'll email {email} once it's confirmed, or contact {support}."
     },
     "missing": {
       "title": "No order to show",
-      "body": "This page shows an order after you pay. If you've just paid, use the link in your confirmation email or check your orders.",
+      "body": "This page is for showing an order once payment is done. Just paid? Follow the link in your confirmation email, or look under your orders.",
       "orders": "Your orders"
     },
     "error": {
-      "title": "We couldn't load this order",
-      "notFound": "We can't find an order for this payment.",
-      "generic": "Something went wrong while checking the payment.",
+      "title": "This order would not load",
+      "notFound": "No order matches this payment.",
+      "generic": "Checking the payment went wrong.",
       "body": "Nothing is lost. Try again in a moment, or email {email} with the time of your payment."
     },
     "steamTo": "Steam account {id}"
   },
   "signIn": {
-    "title": "Sign in to check out",
-    "body": "Items are delivered to a Steam account by trade offer, so checkout needs an account with your Steam account linked. Your cart stays as it is while you sign in.",
+    "title": "Sign in to continue to checkout",
+    "body": "A lot travels to a Steam account by trade offer, so checkout needs an account here with Steam connected. Signing in leaves your cart untouched.",
     "steam": "Sign in through Steam",
     "email": "Sign in with email"
   }

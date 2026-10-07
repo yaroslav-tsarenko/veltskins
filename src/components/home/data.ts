@@ -28,6 +28,26 @@ function rotate<T>(candidates: T[], offset = 0): T | null {
   return candidates[(dayOfYear() + offset) % candidates.length];
 }
 
+function groupBy<T extends { group: string; id: string }>(rows: T[]): Map<string, string[]> {
+  const out = new Map<string, string[]>();
+  for (const row of rows) {
+    const list = out.get(row.group);
+    if (list) list.push(row.id);
+    else out.set(row.group, [row.id]);
+  }
+  return out;
+}
+
+function rotatePerGroup(rows: { group: string; id: string }[], order: string[], offsetBase: number): Map<string, string> {
+  const grouped = groupBy(rows);
+  const out = new Map<string, string>();
+  for (const [index, key] of order.entries()) {
+    const pick = rotate(grouped.get(key) ?? [], offsetBase + index * 13);
+    if (pick) out.set(key, pick);
+  }
+  return out;
+}
+
 export async function getHomeData(): Promise<HomeData> {
   const claimed = new Set<string>();
   const claim = (ids: (string | null)[]) => ids.forEach((id) => id && claimed.add(id));
@@ -90,14 +110,19 @@ export async function getHomeData(): Promise<HomeData> {
   claim(todayRows.map((r) => r.id));
 
   const typeStats = new Map(typeRows.map((r) => [r.weaponType, r]));
-  const roomRenders = await prisma.$queryRaw<{ weaponType: string; id: string }[]>`
-    SELECT DISTINCT ON (s."weaponType") s."weaponType", p."id"
-    FROM "Skin" s JOIN "Product" p ON p."id" = s."productId"
-    WHERE ${LIVE} AND ${HAS_RENDER} ${notIn(claimed)}
-    ORDER BY s."weaponType", p."price" DESC`;
-  claim(roomRenders.map((r) => r.id));
-  const roomProducts = await loadSkinProducts(roomRenders.map((r) => r.id));
-  const roomByType = new Map(roomRenders.map((r) => [r.weaponType, roomProducts.find((p) => p.id === r.id) ?? null]));
+  const roomCandidates = await prisma.$queryRaw<{ group: string; id: string }[]>`
+    SELECT "group", "id" FROM (
+      SELECT s."weaponType" AS "group", p."id", row_number() OVER (PARTITION BY s."weaponType" ORDER BY p."sku" ASC) AS rn
+      FROM "Skin" s JOIN "Product" p ON p."id" = s."productId"
+      WHERE ${LIVE} AND ${HAS_RENDER} ${notIn(claimed)}
+    ) x WHERE x.rn <= 160
+    ORDER BY x."group", x.rn`;
+  const roomPicks = rotatePerGroup(roomCandidates, WEAPON_TYPES.map((t) => t.key), 3);
+  claim([...roomPicks.values()]);
+  const roomProducts = await loadSkinProducts([...roomPicks.values()]);
+  const roomByType = new Map(
+    [...roomPicks.entries()].map(([type, id]) => [type, roomProducts.find((p) => p.id === id) ?? null] as const),
+  );
 
   const types = WEAPON_TYPES.map((type) => {
     const stat = typeStats.get(type.key);
@@ -153,19 +178,25 @@ export async function getHomeData(): Promise<HomeData> {
     product: conditionProducts.find((p) => p.id === conditionIds[i]) ?? null,
   }));
 
-  const marks = async (column: "isStatTrak" | "isSouvenir", limit: number) => {
-    const rows = await prisma.$queryRaw<IdRow[]>`
-      SELECT id FROM (
-        SELECT DISTINCT ON (s."weaponType") p."id", p."price"
+  const marks = async (column: "isStatTrak" | "isSouvenir", limit: number, offsetBase: number) => {
+    const rows = await prisma.$queryRaw<{ group: string; id: string }[]>`
+      SELECT "group", "id" FROM (
+        SELECT s."weaponType" AS "group", p."id", row_number() OVER (PARTITION BY s."weaponType" ORDER BY p."sku" ASC) AS rn
         FROM "Skin" s JOIN "Product" p ON p."id" = s."productId"
         WHERE ${LIVE} AND ${HAS_RENDER} AND s.${Prisma.raw(`"${column}"`)} = true ${notIn(claimed)}
-        ORDER BY s."weaponType", p."price" DESC
-      ) x ORDER BY x."price" DESC LIMIT ${limit}`;
-    claim(rows.map((r) => r.id));
-    return loadSkinProducts(rows.map((r) => r.id));
+      ) x WHERE x.rn <= 160
+      ORDER BY x."group", x.rn`;
+    const all = WEAPON_TYPES.map((t) => t.key);
+    const start = dayOfYear() % all.length;
+    const order = [...all.slice(start), ...all.slice(0, start)];
+    const picks = rotatePerGroup(rows, order, offsetBase);
+    const chosen = order.map((key) => picks.get(key)).filter((id): id is string => Boolean(id)).slice(0, limit);
+    claim(chosen);
+    const products = await loadSkinProducts(chosen);
+    return chosen.map((id) => products.find((p) => p.id === id)).filter((p): p is NonNullable<typeof p> => Boolean(p));
   };
-  const souvenir = await marks("isSouvenir", MERCH.souvenir);
-  const stattrak = await marks("isStatTrak", MERCH.stattrak);
+  const souvenir = await marks("isSouvenir", MERCH.souvenir, 29);
+  const stattrak = await marks("isStatTrak", MERCH.stattrak, 47);
 
   const bands = [];
   for (const band of PRICE_BANDS) {

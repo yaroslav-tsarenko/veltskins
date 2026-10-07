@@ -28,10 +28,6 @@ export function addTick(tick: Tick): () => void {
   };
 }
 
-export function damp(current: number, target: number, lambda: number, dt: number): number {
-  return current + (target - current) * (1 - Math.exp(-lambda * dt));
-}
-
 export function lerpPerFrame(current: number, target: number, perFrame: number, dtMs: number): number {
   return current + (target - current) * (1 - Math.pow(1 - perFrame, dtMs / (1000 / 60)));
 }
@@ -60,22 +56,6 @@ export function stepSpring(s: Spring, target: number, dtMs: number): boolean {
     s.velocity = 0;
   }
   return settled;
-}
-
-export function cubicBezier(x1: number, y1: number, x2: number, y2: number): (t: number) => number {
-  const sample = (a1: number, a2: number, t: number) => ((1 - 3 * a2 + 3 * a1) * t + (3 * a2 - 6 * a1)) * t * t + 3 * a1 * t;
-  const slope = (a1: number, a2: number, t: number) => 3 * (1 - 3 * a2 + 3 * a1) * t * t + 2 * (3 * a2 - 6 * a1) * t + 3 * a1;
-  return (x: number) => {
-    if (x <= 0) return 0;
-    if (x >= 1) return 1;
-    let t = x;
-    for (let i = 0; i < 6; i++) {
-      const d = slope(x1, x2, t);
-      if (Math.abs(d) < 1e-6) break;
-      t -= (sample(x1, x2, t) - x) / d;
-    }
-    return sample(y1, y2, Math.min(1, Math.max(0, t)));
-  };
 }
 
 export function clamp(v: number, lo: number, hi: number): number {

@@ -6,7 +6,7 @@ import { POLICY_FACTS as F } from "@/lib/policy-facts";
 
 export const generateMetadata = policyMetadata(
   "cookies",
-  `Every cookie, local storage and session storage key ${F.brand} uses, what each one does, how long it lasts and how to change your choice.`,
+  `A full register of the cookies and browser storage keys in use at ${F.brand}: what each holds, how long it survives and how to revise your consent.`,
 );
 
 function CookieTable({ rows }: { rows: CookieRecord[] }) {
@@ -55,26 +55,27 @@ const consentKey = COOKIE_TABLE.necessary.find((r) => r.name.endsWith("-consent"
 const sections: PolicySection[] = [
   {
     id: "what",
-    title: "What this policy covers",
+    title: "The ground this covers",
     body: (
       <>
         <p>
-          Cookies are small text files a website stores in your browser. Local storage and session storage are similar browser features
-          that keep data on your device only. This policy lists every cookie and storage key {F.brand} uses on {F.domain}.
+          A cookie is a short text file a site leaves in your browser. Local storage and session storage do a comparable job, holding
+          their contents on your own device and nowhere else. Set out below is the complete register of cookies and storage keys that{" "}
+          {F.brand} puts on {F.domain}.
         </p>
         <p>
-          The list is the same one shown under “Show cookies” in Cookie settings. Your saved items are kept in your account on
-          our server, not in your browser.
+          It is the same register that Cookie settings reveals under “Show cookies”. Lots you save sit in your account on our
+          server; nothing about them is held in the browser.
         </p>
       </>
     ),
   },
   {
     id: "necessary",
-    title: "Necessary cookies and storage",
+    title: "The ones that cannot be switched off",
     body: (
       <>
-        <p>{necessary?.purpose} These are always on, because the store cannot work without them. They are not used for advertising.</p>
+        <p>{necessary?.purpose} There is no switch for these, since the shop would not function without them, and none of them serves advertising.</p>
         <CookieTable rows={COOKIE_TABLE.necessary} />
       </>
     ),
@@ -85,9 +86,9 @@ const sections: PolicySection[] = [
     body: (
       <>
         <p>
-          {F.brand} does not currently set any analytics or marketing cookies. Both categories are in Cookie settings and are off until you
-          switch them on. If we add an analytics or marketing tool, we will list each of its cookies in this policy first, and it will only
-          load after you allow that category.
+          Neither an analytics cookie nor a marketing cookie is set by {F.brand} as things stand. Both categories appear in Cookie
+          settings and stay off unless you turn them on. Should we ever adopt such a tool, each cookie it sets will be registered on this
+          page beforehand, and it will load only once you have allowed that category.
         </p>
         {COOKIE_TABLE.analytics.length ? <CookieTable rows={COOKIE_TABLE.analytics} /> : null}
         {COOKIE_TABLE.marketing.length ? <CookieTable rows={COOKIE_TABLE.marketing} /> : null}
@@ -96,46 +97,46 @@ const sections: PolicySection[] = [
   },
   {
     id: "choice",
-    title: "Changing the choice you made",
+    title: "Revising your choice",
     body: (
       <>
         <p>
-          On your first visit, the cookie banner offers Accept all, Reject all and Customise. You can change your choice at any time from
-          the <strong>Cookie settings</strong> link at the bottom of every page, or with the button below. Withdrawing consent is as easy
-          as giving it and takes effect straight away.
+          Accept all, Reject all and Customise are the three options the banner puts to you on a first visit. Nothing about that choice
+          is permanent: the <strong>Cookie settings</strong> link in the footer of every page reopens it, as does the button below.
+          Taking consent back is exactly as easy as granting it, and it bites immediately.
         </p>
         <p>
-          Your choice is stored in local storage under <code className="font-mono text-ui-xs">{consentKey}</code> for 12 months. After that
-          we ask again.
+          Local storage keeps the record of your choice under <code className="font-mono text-ui-xs">{consentKey}</code> for 12 months,
+          and the question is put to you afresh once that runs out.
         </p>
         <div className="mt-6">
           <CookieSettingsButton />
         </div>
         <p>
-          You can also delete cookies and site data in your browser settings. If you delete the necessary ones, your bag empties and you
-          are signed out.
+          Clearing cookies and site data from your browser settings works too. Clear the necessary ones and you will find your bag empty
+          and yourself signed out.
         </p>
       </>
     ),
   },
   {
     id: "third-party",
-    title: "The payment page",
+    title: "The provider\u2019s payment page",
     body: (
       <p>
-        When you pay, you are taken to our payment provider’s hosted page. That page is run by the provider on its own domain and may
-        set its own cookies for security and fraud prevention, under the provider’s own cookie policy. See our{" "}
-        <Link href="/policies/payment">Payment policy</Link>.
+        Paying sends you to a page hosted by our payment provider. The provider operates that page on a domain of its own and may set
+        cookies there for security and fraud prevention, governed by its cookie policy rather than this one. The{" "}
+        <Link href="/policies/payment">Payment policy</Link> has the rest.
       </p>
     ),
   },
   {
     id: "changes",
-    title: "Changes to this policy",
+    title: "Revisions",
     body: (
       <p>
-        We update this list whenever we add or remove a cookie or storage key. Questions go to {F.email}. How we handle personal data is set
-        out in our <Link href="/policies/privacy">Privacy policy</Link>.
+        Add or drop a cookie or a storage key and this register is revised to match. Anything unclear: {F.email}. Our treatment of
+        personal data belongs to the <Link href="/policies/privacy">Privacy policy</Link>.
       </p>
     ),
   },
