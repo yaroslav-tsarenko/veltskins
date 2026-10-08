@@ -7,19 +7,16 @@ import { Search } from "lucide-react";
 import { Button } from "@/components/ui/Button";
 import { LotRender } from "@/components/skin/LotRender";
 import { WallLabel } from "@/components/skin/WallLabel";
-import { Lot, LotAnnotations, skinFace, type SkinProduct } from "@/components/skin/Lot";
+import { LotAnnotations, skinFace, type SkinProduct } from "@/components/skin/Lot";
 import { Wire } from "@/components/skin/HangLine";
 import { PriceDisplay } from "@/components/shared/PriceDisplay/PriceDisplay";
 import { SplitWords } from "@/components/motion/SplitWords";
 import { cn } from "@/lib/utils/cn";
 
-const WIRES = [18, 48, 56, 64];
-const SMALL_PLACE = [
-  "lg:col-start-7 lg:col-end-13 lg:row-start-1",
-  "lg:col-start-8 lg:col-end-13 lg:row-start-2 lg:mt-6",
-  "lg:col-start-1 lg:col-end-5 lg:row-start-3",
-  "lg:col-start-5 lg:col-end-10 lg:row-start-3 lg:mt-10",
-];
+// Every satellite starts at the second rail and is dropped by the length of its own wire,
+// never by a margin — a wire that starts in mid-air is what made the row read as floating
+// debris rather than as a hang. No two lengths are equal, so no two tops align.
+const WIRES = [18, 72, 40, 96];
 
 function HeroSearch({ liveCount }: { liveCount: number }) {
   const router = useRouter();
@@ -59,7 +56,7 @@ function AnchorLot({ product }: { product: SkinProduct }) {
   const face = skinFace(product.name, product.skin, product.category);
   return (
     <article data-lot="" data-variant="anchor" data-rarity={face.rarity} className="relative flex min-w-0 flex-col">
-      <Wire length={24} offset="14%" />
+      <Wire length={24} offset="14%" className="hidden lg:block" />
       <div data-lot-body="" className="flex min-w-0 flex-col">
         <LotRender
           src={product.imageUrl ?? product.images?.[0]?.url}
@@ -88,8 +85,37 @@ function AnchorLot({ product }: { product: SkinProduct }) {
   );
 }
 
+/**
+ * A satellite in the hang. Same plate and wire as a full lot, but the label stops at the
+ * price — the anchor is the only lot on this wall that carries a full label and an action,
+ * which is what keeps the three sizes reading as a hierarchy rather than as five cards.
+ */
+function SatelliteLot({ product, wire, className }: { product: SkinProduct; wire: number; className?: string }) {
+  const face = skinFace(product.name, product.skin, product.category);
+  return (
+    <article data-lot="" data-variant="satellite" data-rarity={face.rarity} className={cn("relative flex min-w-0 flex-col", className)}>
+      {/* Only the desktop hang has a rail above this row; stacked on mobile the lots are a
+          plain 2×2 block, and a wire with no rail to hang from just reads as a stray line. */}
+      <Wire length={wire} offset="12%" className="hidden lg:block" />
+      <LotRender
+        src={product.imageUrl ?? product.images?.[0]?.url}
+        alt={product.images?.[0]?.alt || product.name}
+        aspect="5/4"
+        sizes="(min-width: 1280px) 260px, (min-width: 1024px) 220px, 45vw"
+      >
+        <div className="absolute left-0 top-0 z-[5] flex flex-wrap items-center gap-2">
+          <LotAnnotations face={face} className="contents" />
+        </div>
+      </LotRender>
+      <WallLabel face={face} sku={product.sku} href={`/product/${product.slug}`} size="standard" reserveLines={false} className="mt-3">
+        <PriceDisplay price={Number(product.price)} size="sm" className="mt-2.5 block" />
+      </WallLabel>
+    </article>
+  );
+}
+
 export function TheHang({ liveCount, anchor, hang }: { liveCount: number; anchor: SkinProduct | null; hang: SkinProduct[] }) {
-  const small = hang.slice(0, 4);
+  const satellites = hang.slice(0, 4);
   return (
     <section data-scene="hang" aria-labelledby="hang-title" className="relative bg-surface lg:min-h-[calc(100svh-var(--header-height))]">
       <div className="relative mx-auto max-w-wide px-gutter pb-18 lg:pb-24">
@@ -126,21 +152,26 @@ export function TheHang({ liveCount, anchor, hang }: { liveCount: number; anchor
 
           {anchor ? (
             <div className="mt-14 lg:col-span-7 lg:mt-0">
-              <div className="lg:grid lg:grid-cols-12 lg:grid-rows-[auto_auto_auto] lg:gap-x-5 lg:gap-y-8">
-                <div className="lg:col-start-1 lg:col-end-7 lg:row-start-1 lg:row-end-3">
-                  <AnchorLot product={anchor} />
-                </div>
-                <div className="mt-10 grid grid-cols-2 gap-x-3 gap-y-8 lg:mt-0 lg:contents">
-                  {small.map((p, i) => (
-                    <div key={p.id} className={cn("min-w-0", SMALL_PLACE[i])}>
-                      <Lot product={p} wire={WIRES[i]} sizes="(min-width: 1024px) 300px, 50vw" />
-                    </div>
-                  ))}
-                </div>
-              </div>
+              <AnchorLot product={anchor} />
             </div>
           ) : null}
         </div>
+
+        {/* The satellites step across the whole room rather than crowding the anchor's
+            columns, so the wall carries weight under the headline instead of leaving a
+            hole there. They hang off a second rail at their own wire lengths. */}
+        {satellites.length > 0 ? (
+          <div className="relative mt-12 lg:mt-20">
+            <div aria-hidden="true" className="hang-rail absolute inset-x-0 top-0 hidden lg:block" data-rail="" />
+            <div className="grid grid-cols-2 gap-x-4 gap-y-10 lg:grid-cols-12 lg:items-start lg:gap-x-6">
+              {satellites.map((p, i) => (
+                <div key={p.id} className="min-w-0 lg:col-span-3">
+                  <SatelliteLot product={p} wire={WIRES[i]} />
+                </div>
+              ))}
+            </div>
+          </div>
+        ) : null}
       </div>
     </section>
   );

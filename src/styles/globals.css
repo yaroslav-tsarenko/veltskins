@@ -89,7 +89,9 @@
   --text-step-4: clamp(1.75rem, 1.47rem + 1.38vw, 2.0736rem);
   --text-step-5: clamp(2rem, 1.56rem + 2.2vw, 2.4883rem);
   --text-step-6: clamp(2.375rem, 1.72rem + 3.28vw, 2.986rem);
-  --text-display-xl: clamp(3rem, 1.1rem + 8.2vw, 6.25rem);
+  /* Reaches its ceiling at ~1920, not at ~1010 — the old curve ran out of room the moment
+     the two-column hang appeared, so the H1 sat at full size inside a 400px column. */
+  --text-display-xl: clamp(3rem, 1.7rem + 3.8vw, 6.25rem);
   --text-ui-md: 0.9375rem;
   --text-ui-sm: 0.875rem;
   --text-ui-xs: 0.8125rem;
