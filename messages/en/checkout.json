@@ -108,7 +108,9 @@
     "RATE_LIMITED": "That is too many attempts too quickly. Leave it a minute, then try again.",
     "UNAUTHORISED": "Your session has ended. Another sign-in is needed to go on.",
     "NETWORK": "The store was out of reach. Check the connection, then try again.",
-    "SERVER_ERROR": "The fault is at our end. Nothing has been charged. Please try again."
+    "SERVER_ERROR": "The fault is at our end. Nothing has been charged. Please try again.",
+    "BALANCE_TOO_LOW": "Your test balance doesn't cover this order. Nothing has been charged.",
+    "BALANCE_UNAVAILABLE": "This account has no test balance."
   },
   "confirmed": {
     "meta": {
